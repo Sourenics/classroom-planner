@@ -1,6 +1,6 @@
 # 🏫 Classroom Planner
 
-> ⚠️ **vibe-coded project**
+> ⚠️ **Vibe-coded project**
 > Este proyecto ha sido desarrollado siguiendo la filosofía *vibe coding* (con la ayuda de IA). Es una herramienta experimental y práctica, creada para resolver una necesidad concreta y en constante desarrollo, por lo que está sujeta a continuas mejoras y ajustes. ¡Cualquier sugerencia o feedback es más que bienvenido!
 
 [![Live Demo](https://img.shields.io/badge/Demo-Online-brightgreen?style=for-the-badge&logo=github)](https://sourenics.github.io/classroom-planner.github.io/)
