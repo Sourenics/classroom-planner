@@ -12,7 +12,7 @@
 
 No requiere registros, servidores ni configuraciones avanzadas. Puedes usar la herramienta directamente desde tu navegador:
 
-👉 **[Acceder a Classroom Planner (Página Oficial)](https://sourenics.github.io/classroom-planner.github.io/)**
+👉 **[Acceder a Classroom Planner (Página Oficial)](https://sourenics.github.io/classroom-planner/)**
 
 ---
 
