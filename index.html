@@ -86,6 +86,7 @@
   .fdesk.swap-select{ outline:2px solid #7fd1c9; z-index:5; }
   .fdesk.inactive{ opacity: 0.3; background-repeat:no-repeat; }
   .fdesk.dragging{ cursor:grabbing; opacity:0.85; z-index:10; }
+  .freecanvas.locked .fdesk{ cursor:pointer; }
   .fdesk .dots{ position:absolute; top:3px; left:4px; display:flex; gap:2px; }
   .fdesk .dot{ width:6px; height:6px; border-radius:50%; }
   .fdesk .clearx{ position:absolute; top:-6px; right:-6px; width:16px; height:16px; line-height:1; padding:0; border-radius:50%; background:rgba(192,87,74,0.9); color:#fff; font-size:11px; border:none; }
@@ -169,7 +170,15 @@
         <button class="block secondary" id="addSingleBtn">+ Mesa</button>
         <button class="block secondary" id="addPairBtn">+ Pareja de mesas</button>
         <button class="block secondary" id="addQuadBtn">+ Grupo de 4</button>
-        <p class="hint">Arrastra cualquier mesa a la posición que quieras. Haz clic (sin arrastrar) en una mesa vacía para etiquetarla.</p>
+        <p class="hint">Arrastra cualquier mesa a la posición que quieras. Haz clic (sin arrastrar) en una mesa vacía para etiquetarla. Para mover o intercambiar alumnado, haz clic en una mesa ocupada y luego en la mesa destino.</p>
+      </section>
+
+      <section>
+        <h2>Bloquear diseño</h2>
+        <label class="toggle-row">
+          <input type="checkbox" id="layoutLocked">
+          <span>Bloquear el diseño del aula (evita mover, añadir o eliminar mesas por error). Con el diseño bloqueado sigues pudiendo mover alumnos entre mesas haciendo clic.</span>
+        </label>
       </section>
 
       <section>
@@ -367,6 +376,7 @@
   let seatAssignment = {}; // deskId -> studentId
   let selectedDeskId = null;
   let selectedSwapId = null;
+  let layoutLocked = false;
   let nextDeskId=1, nextTagId=1, nextStudentId=1, nextRuleId=1;
   const DESK_SIZE = 68;
   const ADJ_THRESHOLD = 82; // px between desk centers to count as "adjacent"
@@ -415,17 +425,20 @@
   }
 
   $('addSingleBtn').onclick = () => {
+    if(layoutLocked) return;
     const p = nextCascadePos();
     addDeskAt(p.x, p.y);
     renderCanvas();
   };
   $('addPairBtn').onclick = () => {
+    if(layoutLocked) return;
     const p = nextCascadePos();
     addDeskAt(p.x, p.y);
     addDeskAt(p.x + DESK_SIZE, p.y);
     renderCanvas();
   };
   $('addQuadBtn').onclick = () => {
+    if(layoutLocked) return;
     const p = nextCascadePos();
     addDeskAt(p.x, p.y);
     addDeskAt(p.x + DESK_SIZE, p.y);
@@ -434,6 +447,16 @@
     renderCanvas();
   };
 
+  $('layoutLocked').addEventListener('change', (e) => {
+    layoutLocked = e.target.checked;
+    $('addSingleBtn').disabled = layoutLocked;
+    $('addPairBtn').disabled = layoutLocked;
+    $('addQuadBtn').disabled = layoutLocked;
+    $('canvas').classList.toggle('locked', layoutLocked);
+    if(layoutLocked){ selectedDeskId = null; }
+    renderCanvas(); renderDeskEditor();
+  });
+
   function isAdjacent(deskIdA, deskIdB){
     const a = desks.find(d=>d.id===deskIdA), b = desks.find(d=>d.id===deskIdB);
     if(!a||!b) return false;
@@ -441,6 +464,9 @@
     return Math.sqrt(dx*dx + dy*dy) <= ADJ_THRESHOLD;
   }
 
+  // Mueve/intercambia alumnado entre mesas. Primer clic en una mesa ocupada marca el origen;
+  // un segundo clic en cualquier otra mesa (vacía u ocupada) completa el movimiento/intercambio.
+  // Funciona siempre, incluso con el diseño del aula bloqueado.
   function trySwap(deskId){
     if(selectedSwapId === null){ selectedSwapId = deskId; }
     else if(selectedSwapId === deskId){ selectedSwapId = null; }
@@ -461,10 +487,11 @@
       origX = d.x; origY = d.y; moved = false;
       pointerId = e.pointerId;
       el.setPointerCapture(pointerId);
-      el.classList.add('dragging');
+      if(!layoutLocked) el.classList.add('dragging');
     });
     el.addEventListener('pointermove', (e) => {
       if(startX === undefined) return;
+      if(layoutLocked) return; // diseño bloqueado: nunca reposicionar, siempre se tratará como clic
       const dx = e.clientX - startX, dy = e.clientY - startY;
       if(Math.abs(dx) > 3 || Math.abs(dy) > 3) moved = true;
       if(moved){
@@ -481,8 +508,16 @@
       startX = undefined;
       if(!moved){
         // treat as click
-        const sid = seatAssignment[d.id];
-        if(sid){ trySwap(d.id); } else { selectDesk(d.id); }
+        if(selectedSwapId !== null){
+          // ya hay una mesa origen marcada: cualquier mesa destino (vacía u ocupada) completa el movimiento
+          trySwap(d.id);
+        } else if(seatAssignment[d.id]){
+          // mesa ocupada: la marca como origen para mover/intercambiar su alumno
+          trySwap(d.id);
+        } else if(!layoutLocked){
+          // mesa vacía y sin movimiento en curso: abre el editor de la mesa (solo si el diseño no está bloqueado)
+          selectDesk(d.id);
+        }
       } else {
         renderCanvas();
       }
@@ -1095,6 +1130,7 @@
       version: 1,
       canvasW, canvasH, className,
       showLastNames: $('showLastNames').checked,
+      layoutLocked: $('layoutLocked').checked,
       desks, tags, students, rules, seatAssignment,
       wheelPool: wheelPool.map(s=>s.id),
       nextDeskId, nextTagId, nextStudentId, nextRuleId
@@ -1157,7 +1193,13 @@
         $('canvasW').value = canvasW; $('canvasH').value = canvasH;
         $('className').value = className;
         $('showLastNames').checked = typeof data.showLastNames === 'boolean' ? data.showLastNames : false;
+        layoutLocked = typeof data.layoutLocked === 'boolean' ? data.layoutLocked : false;
+        $('layoutLocked').checked = layoutLocked;
+        $('addSingleBtn').disabled = layoutLocked;
+        $('addPairBtn').disabled = layoutLocked;
+        $('addQuadBtn').disabled = layoutLocked;
         const c = $('canvas'); c.style.width = canvasW+'px'; c.style.height = canvasH+'px';
+        c.classList.toggle('locked', layoutLocked);
 
         renderTags(); renderStudents(); renderRuleFields(); renderRules(); renderCanvas(); renderDeskEditor(); renderWheel();
         $('pickerHistory').innerHTML = '';
