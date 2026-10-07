@@ -1,0 +1,52 @@
+name: Sugerencia
+description: Propón una mejora o una nueva función para el Generador GIFT
+title: "[Sugerencia] "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ¡Gracias por proponer una mejora! Antes de enviarla, revisa si alguien ya ha sugerido algo parecido en las [incidencias abiertas](https://github.com/Sourenics/generador-gift/issues).
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: ¿A qué parte afecta?
+      options:
+        - Nuevo tipo de pregunta
+        - Un tipo de pregunta existente
+        - Exportación (GIFT / Moodle XML)
+        - Guardar, abrir o reutilizar exámenes
+        - Interfaz y facilidad de uso
+        - Otra
+    validations:
+      required: true
+
+  - type: textarea
+    id: idea
+    attributes:
+      label: ¿Qué te gustaría?
+      description: Describe la idea. Si se refiere a un tipo de pregunta concreto, indícalo.
+    validations:
+      required: true
+
+  - type: textarea
+    id: why
+    attributes:
+      label: ¿Para qué te sería útil?
+      description: Cuéntanos cómo lo usarías en clase o al preparar tus exámenes.
+    validations:
+      required: true
+
+  - type: textarea
+    id: example
+    attributes:
+      label: Ejemplo (opcional)
+      description: Un ejemplo de pregunta, el código GIFT/XML que esperarías obtener o una captura de cómo lo imaginas.
+      render: text
+
+  - type: input
+    id: moodle
+    attributes:
+      label: Versión de Moodle (opcional)
+      description: Si la sugerencia depende de Moodle, indica la versión que usas (por ejemplo, 4.5).
