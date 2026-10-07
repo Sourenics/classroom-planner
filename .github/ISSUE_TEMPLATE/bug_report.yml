@@ -1,0 +1,70 @@
+name: Informe de error
+description: Algo no funciona como debería en Classroom Planner
+title: "[Error] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ¡Gracias por avisar! Rellena los campos obligatorios: sin ellos normalmente no podemos reproducir el problema.
+
+        ⚠️ **No incluyas nombres ni datos reales de tus alumnos** en el texto, las capturas ni los archivos: las incidencias son públicas.
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: ¿Qué ha pasado?
+      description: Describe el problema y qué esperabas que ocurriera.
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Pasos para reproducirlo
+      description: ¿Qué hiciste y en qué orden?
+      placeholder: |
+        1. Creo un plano con ...
+        2. Añado ...
+        3. Pulso ...
+    validations:
+      required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: ¿En qué parte ocurre?
+      options:
+        - Diseño del plano (pupitres, distribución)
+        - Gestión de alumnos
+        - Exportar .json
+        - Importar .json
+        - Impresión o exportación del plano
+        - Otra
+    validations:
+      required: true
+
+  - type: input
+    id: browser
+    attributes:
+      label: Navegador y sistema
+      placeholder: "Ej.: Firefox 131 en macOS 15"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: device
+    attributes:
+      label: Dispositivo
+      options:
+        - Ordenador
+        - Tableta
+        - Móvil
+    validations:
+      required: true
+
+  - type: textarea
+    id: file
+    attributes:
+      label: Archivo .json o capturas
+      description: Si el fallo tiene que ver con importar o exportar, arrastra aquí el .json **con los nombres sustituidos por otros inventados** (Alumno 1, Alumno 2...). También puedes añadir capturas.
