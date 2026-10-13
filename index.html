@@ -843,7 +843,7 @@
       const checked = d.tags.includes(t.id);
       const label = document.createElement('label');
       label.className = 'tag-toggle';
-      label.innerHTML = `<input type="checkbox" ${checked?'checked':''}> <span class="tag-swatch" style="background:${t.color}"></span> ${escapeHtml(t.name)}`;
+      label.innerHTML = `<input type="checkbox" ${checked?'checked':''}> <span class="tag-swatch" style="background:${escapeHtml(t.color)}"></span> ${escapeHtml(t.name)}`;
       label.querySelector('input').onchange = (e) => {
         if(e.target.checked){ if(!d.tags.includes(t.id)) d.tags.push(t.id); }
         else { d.tags = d.tags.filter(x=>x!==t.id); }
@@ -876,7 +876,7 @@
     const list = $('tagList'); list.innerHTML = '';
     tags.forEach(t => {
       const li = document.createElement('li');
-      li.innerHTML = `<span style="display:inline-flex; align-items:center; gap:6px;"><span class="tag-swatch" style="background:${t.color}"></span>${escapeHtml(t.name)}</span>`;
+      li.innerHTML = `<span style="display:inline-flex; align-items:center; gap:6px;"><span class="tag-swatch" style="background:${escapeHtml(t.color)}"></span>${escapeHtml(t.name)}</span>`;
       const btn = document.createElement('button'); btn.className='danger'; btn.innerHTML=icon('cerrar'); btn.title='Eliminar'; btn.setAttribute('aria-label','Eliminar');
       btn.onclick = () => {
         tags = tags.filter(x=>x.id!==t.id);
@@ -1453,31 +1453,103 @@
     }
   };
 
-  // Aplica un estado completo (usado por Importar sesión y por Cargar ejemplo)
-  function applyState(data){
-    if(!data || !Array.isArray(data.students) || !Array.isArray(data.desks)){
+  // Valida y limpia una sesión venida de fuera (archivo importado o copia guardada).
+  // Todo lo que no tenga el tipo esperado se descarta, de modo que un archivo manipulado
+  // no pueda colar HTML/JS en la página ni dejar la app en un estado incoherente.
+  const LIMITS = { desks: 400, tags: 50, students: 250, rules: 500, text: 80 };
+  function sanitizeState(data){
+    if(!data || typeof data !== 'object' || Array.isArray(data) || !Array.isArray(data.students) || !Array.isArray(data.desks)){
       throw new Error('Formato no reconocido');
     }
-    canvasW = data.canvasW || canvasW;
-    canvasH = data.canvasH || canvasH;
-    className = typeof data.className === 'string' ? data.className : className;
-    desks = data.desks || [];
-    tags = data.tags || [];
-    students = (data.students || []).map(s => ({ ...s, lastName: s.lastName || '' }));
-    rules = data.rules || [];
-    seatAssignment = data.seatAssignment || {};
-    nextDeskId = data.nextDeskId || (Math.max(0,...desks.map(d=>d.id))+1);
-    nextTagId = data.nextTagId || (Math.max(0,...tags.map(t=>t.id))+1);
-    nextStudentId = data.nextStudentId || (Math.max(0,...students.map(s=>s.id))+1);
-    nextRuleId = data.nextRuleId || (Math.max(0,...rules.map(r=>r.id))+1);
-    wheelPool = Array.isArray(data.wheelPool) ? data.wheelPool.map(id => students.find(s=>s.id===id)).filter(Boolean) : students.slice();
+    const isId = v => Number.isInteger(v) && v > 0 && v < 1e9;
+    const str = (v, max) => (typeof v === 'string' ? v : '').replace(/[\u0000-\u001f\u007f]/g, ' ').trim().slice(0, max || LIMITS.text);
+    const num = (v, min, max, def) => (typeof v === 'number' && isFinite(v)) ? Math.min(max, Math.max(min, v)) : def;
+    const color = v => (typeof v === 'string' && /^#[0-9a-f]{6}$/i.test(v)) ? v.toLowerCase() : '#e0a458';
+    const uniqueById = (arr, max) => { const seen = new Set(); return arr.filter(x => x && typeof x === 'object' && isId(x.id) && !seen.has(x.id) && seen.add(x.id)).slice(0, max); };
+
+    const out = {};
+    out.canvasW = Math.round(num(data.canvasW, 300, 2000, 760));
+    out.canvasH = Math.round(num(data.canvasH, 300, 2000, 560));
+    out.className = str(data.className);
+    out.showLastNames = data.showLastNames === true;
+    out.layoutLocked = data.layoutLocked === true;
+
+    out.tags = uniqueById(Array.isArray(data.tags) ? data.tags : [], LIMITS.tags)
+      .map(t => ({ id: t.id, name: str(t.name, 40) || 'Etiqueta', color: color(t.color) }));
+    const tagIds = new Set(out.tags.map(t => t.id));
+
+    out.desks = uniqueById(data.desks, LIMITS.desks).map(d => ({
+      id: d.id,
+      x: Math.round(num(d.x, 0, out.canvasW - DESK_SIZE, 0)),
+      y: Math.round(num(d.y, 0, out.canvasH - DESK_SIZE, 0)),
+      tags: Array.isArray(d.tags) ? [...new Set(d.tags.filter(tid => tagIds.has(tid)))] : [],
+      active: d.active !== false
+    }));
+    const deskIds = new Set(out.desks.map(d => d.id));
+
+    out.students = uniqueById(data.students, LIMITS.students)
+      .map(st => ({ id: st.id, name: str(st.name, 60), lastName: str(st.lastName, 60) }))
+      .filter(st => st.name);
+    const studentIds = new Set(out.students.map(st => st.id));
+
+    out.rules = uniqueById(Array.isArray(data.rules) ? data.rules : [], LIMITS.rules).filter(r => {
+      if(r.type === 'apart' || r.type === 'together') return studentIds.has(r.studentA) && studentIds.has(r.studentB) && r.studentA !== r.studentB;
+      if(r.type === 'tag') return studentIds.has(r.studentId) && tagIds.has(r.tagId);
+      if(r.type === 'fixed') return studentIds.has(r.studentId) && deskIds.has(r.deskId);
+      return false;
+    }).map(r => (r.type === 'apart' || r.type === 'together')
+      ? { id: r.id, type: r.type, studentA: r.studentA, studentB: r.studentB }
+      : r.type === 'tag' ? { id: r.id, type: 'tag', studentId: r.studentId, tagId: r.tagId }
+      : { id: r.id, type: 'fixed', studentId: r.studentId, deskId: r.deskId });
+
+    out.seatAssignment = sanitizeSeats(data.seatAssignment, deskIds, studentIds);
+
+    out.wheelPool = Array.isArray(data.wheelPool) ? [...new Set(data.wheelPool.filter(id => studentIds.has(id)))] : null;
+
+    const maxId = arr => Math.max(0, ...arr.map(x => x.id)) + 1;
+    const nextId = (v, arr) => Math.max(isId(v) ? v : 1, maxId(arr));
+    out.nextDeskId = nextId(data.nextDeskId, out.desks);
+    out.nextTagId = nextId(data.nextTagId, out.tags);
+    out.nextStudentId = nextId(data.nextStudentId, out.students);
+    out.nextRuleId = nextId(data.nextRuleId, out.rules);
+    return out;
+  }
+
+  // Asignación mesa -> alumno: solo mesas y alumnos existentes, y cada alumno en una sola mesa.
+  function sanitizeSeats(raw, deskIds, studentIds){
+    const seats = {}, used = new Set();
+    if(raw && typeof raw === 'object' && !Array.isArray(raw)){
+      Object.keys(raw).forEach(k => {
+        const deskId = Number(k), sid = raw[k];
+        if(deskIds.has(deskId) && studentIds.has(sid) && !used.has(sid)){ seats[deskId] = sid; used.add(sid); }
+      });
+    }
+    return seats;
+  }
+
+  // Aplica un estado completo (usado por Importar sesión y por Cargar ejemplo)
+  function applyState(raw){
+    const data = sanitizeState(raw);
+    canvasW = data.canvasW;
+    canvasH = data.canvasH;
+    className = data.className;
+    desks = data.desks;
+    tags = data.tags;
+    students = data.students;
+    rules = data.rules;
+    seatAssignment = data.seatAssignment;
+    nextDeskId = data.nextDeskId;
+    nextTagId = data.nextTagId;
+    nextStudentId = data.nextStudentId;
+    nextRuleId = data.nextRuleId;
+    wheelPool = data.wheelPool ? data.wheelPool.map(id => students.find(s=>s.id===id)) : students.slice();
     wheelRotation = 0;
     selectedDeskId = null; selectedSwapId = null;
 
     $('canvasW').value = canvasW; $('canvasH').value = canvasH;
     $('className').value = className;
-    $('showLastNames').checked = typeof data.showLastNames === 'boolean' ? data.showLastNames : false;
-    layoutLocked = typeof data.layoutLocked === 'boolean' ? data.layoutLocked : false;
+    $('showLastNames').checked = data.showLastNames;
+    layoutLocked = data.layoutLocked;
     $('layoutLocked').checked = layoutLocked;
     $('addSingleBtn').disabled = layoutLocked;
     $('addPairBtn').disabled = layoutLocked;
@@ -1494,6 +1566,7 @@
   $('importFile').addEventListener('change', (e) => {
     const file = e.target.files[0];
     if(!file) return;
+    if(file.size > 5*1024*1024){ setImportExportStatus('El archivo es demasiado grande para ser una sesión de esta herramienta.', true); $('importFile').value=''; return; }
     const reader = new FileReader();
     reader.onload = () => {
       try{
