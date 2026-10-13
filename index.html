@@ -119,10 +119,6 @@
   .save-state .link{ background:none; border:none; padding:0; color: var(--ochre-ink); font-weight:600; font-size:0.8rem; text-decoration: underline; text-underline-offset: 2px; text-decoration-color: rgba(232,171,92,0.45); }
   .save-state .link:hover{ filter:none; text-decoration-color: var(--ochre); }
   .header-status .status .link{ margin-left:8px; background:none; border:none; padding:0; color: var(--ochre-ink); font-weight:600; font-size:inherit; text-decoration: underline; }
-  .choice-box{ max-width: 480px; text-align:left; }
-  .choice-box h2{ margin:0 0 8px; font-family: var(--font-display); color: var(--ochre-ink); font-size:1.3rem; }
-  .choice-box p{ margin:0 0 18px; font-size:0.9rem; line-height:1.5; color: var(--muted); }
-  .choice-box .modal-actions{ justify-content:flex-start; }
   .header-status .status:empty{ display:none; }
   .header-status .status{ display:inline-block; margin: 0; padding:6px 12px; border-radius:14px; background: var(--surface-2); border:1px solid var(--line); color: var(--text-soft); }
   .header-status .status.error{ background: var(--danger-soft); border-color: rgba(227,130,111,0.35); }
@@ -472,8 +468,8 @@
       <button id="exportPdfBtn" title="Descargar el plano como PDF imprimible"><svg class="icon" aria-hidden="true"><use href="#i-pdf"/></svg>PDF</button>
     </div>
     <div class="btn-group">
-      <button id="saveBtn" title="Guardar la sesión en un archivo (por ejemplo, en tu carpeta de OneDrive)"><svg class="icon" aria-hidden="true"><use href="#i-guardar"/></svg>Guardar</button>
-      <button id="importBtn" title="Abrir una sesión guardada (.json)"><svg class="icon" aria-hidden="true"><use href="#i-subir"/></svg>Abrir</button>
+      <button id="saveBtn" title="Descargar una copia de seguridad (.json) con toda la clase, para guardarla donde quieras"><svg class="icon" aria-hidden="true"><use href="#i-guardar"/></svg>Guardar copia</button>
+      <button id="importBtn" title="Cargar una copia de seguridad (.json) guardada antes"><svg class="icon" aria-hidden="true"><use href="#i-subir"/></svg>Restaurar copia</button>
     </div>
     <input type="file" id="importFile" accept="application/json" style="display:none;">
   </div>
@@ -741,14 +737,6 @@
 
 <div id="toast" class="toast" role="status" aria-live="polite" hidden><span id="toastMsg"></span><button class="toast-action" id="toastUndo">Deshacer</button></div>
 
-<div id="choiceModal" class="modal-overlay" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="choiceTitle">
-  <div class="modal-box choice-box">
-    <h2 id="choiceTitle"></h2>
-    <p id="choiceText"></p>
-    <div class="modal-actions" id="choiceActions"></div>
-  </div>
-</div>
-
 <div id="pickerModal" class="modal-overlay" style="display:none;">
   <div class="modal-box">
     <div class="picked-label">Elegido</div>
@@ -807,11 +795,11 @@
     <h3>Guardar y compartir</h3>
     <ul>
       <li>La app <strong>se guarda sola en este navegador</strong>: si cierras la pestaña, al volver lo encontrarás todo.</li>
-      <li>Para tenerlo en varios equipos, pulsa <strong>Guardar</strong> y elige tu carpeta de <strong>OneDrive</strong> (u otra carpeta sincronizada). A partir de ahí se guarda sola en ese archivo con cada cambio. En otro equipo, pulsa <strong>Abrir</strong> y elige el mismo archivo. Si el archivo se cambió desde otro equipo, la app te preguntará qué versión conservar.</li>
-      <li>Guardar directamente en un archivo funciona en <strong>Edge y Chrome</strong>. En otros navegadores, <strong>Guardar</strong> descarga el archivo y puedes moverlo tú a OneDrive.</li>
+      <li>Aun así, el navegador puede borrar esos datos (al limpiar el historial, en otro equipo…). Pulsa <strong>Guardar copia</strong> de vez en cuando: descarga un archivo con toda la clase que puedes guardar donde quieras (un pendrive, tu nube…). Arriba verás cuándo hiciste la última copia.</li>
+      <li>Si se pierde la información, o quieres usar la clase en otro equipo, pulsa <strong>Restaurar copia</strong> y elige ese archivo.</li>
       <li><strong>PNG / PDF</strong> genera una versión imprimible del plano (en la vista elegida: alumnado o profesor) para dejarla al resto del profesorado.</li>
     </ul>
-    <p class="help-note">Tus datos no salen de tu equipo: no se envían a ningún servidor. Solo se guardan en este navegador y en el archivo que tú elijas.</p>
+    <p class="help-note">Tus datos no salen de tu equipo: no se envían a ningún servidor. Solo se guardan en este navegador y en las copias que tú descargues.</p>
 
     <div class="modal-actions">
       <button id="helpCloseBtn">Entendido</button>
@@ -2178,36 +2166,25 @@
     if(action){ const b = document.createElement('button'); b.className = 'link'; b.textContent = action.label; b.onclick = action.fn; el.appendChild(b); }
   }
 
-  // Ventana con varias opciones; devuelve una promesa con el valor elegido (o null al cerrar)
-  function askChoice({ title, text, choices }){
-    return new Promise(resolve => {
-      $('choiceTitle').textContent = title; $('choiceText').textContent = text;
-      const box = $('choiceActions'); box.innerHTML = '';
-      const done = v => { $('choiceModal').style.display = 'none'; document.removeEventListener('keydown', onKey); resolve(v); };
-      const onKey = e => { if(e.key === 'Escape') done(null); };
-      choices.forEach(c => { const b = document.createElement('button'); if(!c.primary) b.className = 'secondary'; b.textContent = c.label; b.onclick = () => done(c.value); box.appendChild(b); });
-      document.addEventListener('keydown', onKey);
-      $('choiceModal').style.display = 'flex';
-      box.firstChild && box.firstChild.focus();
-    });
-  }
-
+  // Copia de seguridad: descarga un .json con toda la sesión para guardarlo donde se quiera
   function downloadSession(){
     try{
-      const data = JSON.stringify({ ...collectState(), savedAt: new Date().toISOString() }, null, 2);
+      const json = sessionJson();
+      const data = JSON.stringify({ ...JSON.parse(json), savedAt: new Date().toISOString() }, null, 2);
       const blob = new Blob([data], { type: 'application/json' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       const stamp = new Date().toISOString().slice(0,10);
       a.href = url;
-      a.download = `${sessionBaseName()}-${stamp}.json`;
+      a.download = `copia-${sessionBaseName()}-${stamp}.json`;
       document.body.appendChild(a);
       a.click();
       a.remove();
       URL.revokeObjectURL(url);
-      setImportExportStatus(FS_SUPPORTED ? 'Copia descargada.' : 'Sesión descargada. Muévela a tu carpeta de OneDrive si quieres tenerla en otros equipos.', false);
+      markBackup(json);
+      setImportExportStatus('Copia de seguridad descargada. Guárdala donde quieras (un pendrive, tu nube…): con "Restaurar copia" recuperas la clase si se pierde.', false);
     } catch(e){
-      setImportExportStatus('No se pudo descargar la sesión.', true);
+      setImportExportStatus('No se pudo descargar la copia.', true);
     }
   }
 
@@ -2337,7 +2314,10 @@
     return { expired };
   }
 
-  $('importBtn').onclick = () => { FS_SUPPORTED ? openWithPicker() : $('importFile').click(); };
+  $('importBtn').onclick = () => {
+    if((students.length || desks.length) && !window.confirm('Se sustituirá la clase actual por la de la copia que elijas. ¿Continuar?')) return;
+    $('importFile').click();
+  };
 
   $('importFile').addEventListener('change', (e) => {
     const file = e.target.files[0];
@@ -2348,9 +2328,9 @@
       try{
         const data = JSON.parse(reader.result);
         const res = applyState(data);
-        unlinkFile();
-        setStatus('Sesión importada correctamente.', false);
-        setImportExportStatus(`Sesión abierta: ${students.length} alumnos, ${desks.length} mesas, ${rules.length} reglas.${res.expired ? ' Se han borrado las ausencias de otro día.' : ''}`, false);
+        markBackup(sessionJson());
+        setStatus('Copia restaurada correctamente.', false);
+        setImportExportStatus(`Copia restaurada: ${students.length} alumnos, ${desks.length} mesas, ${rules.length} reglas.${res.expired ? ' Se han borrado las ausencias de otro día.' : ''}`, false);
       } catch(err){
         setImportExportStatus('El archivo no es una sesión válida de esta herramienta.', true);
       }
@@ -2359,22 +2339,15 @@
     reader.readAsText(file);
   });
 
-  // ---------- Guardar: copia automática en el navegador y en un archivo (p.ej. en OneDrive) ----------
-  // En Edge/Chrome se puede elegir un archivo y la app sigue escribiendo en él con cada cambio (API File System Access).
-  // En otros navegadores, "Guardar" descarga el archivo. Además, siempre hay una copia en este navegador (localStorage).
+  // ---------- Guardado: copia automática en el navegador + copias de seguridad en archivo ----------
+  // La sesión se guarda sola en este navegador (localStorage) y se recupera al volver a abrir la app.
+  // Como el navegador puede borrar esos datos, "Guardar copia" descarga un .json para ponerlo a salvo donde se quiera.
   const AUTOSAVE_KEY = 'planoAsientos.autosave';
+  const BACKUP_KEY = 'planoAsientos.ultimaCopia';
   const BEFORE_SAMPLE_KEY = 'planoAsientos.antesDelEjemplo';
-  const FS_SUPPORTED = typeof window.showSaveFilePicker === 'function' && typeof window.showOpenFilePicker === 'function';
-  const JSON_TYPES = [{ description: 'Sesión de Plano de Asientos', accept: { 'application/json': ['.json'] } }];
-  let fileHandle = null;       // archivo vinculado
-  let fileSavedAt = null;      // marca "savedAt" de la última versión del archivo que conocemos (escrita o leída)
-  let filePermission = 'none'; // 'granted' | 'prompt' | 'denied' | 'none'
-  let filePaused = false;      // guardado automático en el archivo en pausa (conflicto o error)
-  let fileBusy = false;
-  let lastFileJson = null;     // estado que coincide con el archivo (null = desconocido / hay cambios)
   let lastLocalJson = null;
-  let lastFileWrite = null;
   let autosaveReady = false;
+  let lastBackup = null; // { at, hash } de la última copia descargada o restaurada en este navegador
 
   const sessionJson = () => JSON.stringify(collectState());
   const sessionBaseName = () => {
@@ -2382,221 +2355,75 @@
     return slug ? `plano-${slug}` : 'plano-asientos';
   };
   const fmtWhen = iso => { const d = new Date(iso); return isNaN(d) ? '' : d.toLocaleDateString('es-ES', { weekday:'long', day:'numeric', month:'short' }) + ' a las ' + d.toLocaleTimeString('es-ES', { hour:'2-digit', minute:'2-digit' }); };
-
-  // Pequeño almacén en IndexedDB para recordar el archivo vinculado entre visitas
-  function idbOpen(){ return new Promise((res, rej) => { const r = indexedDB.open('planoAsientos', 1); r.onupgradeneeded = () => r.result.createObjectStore('kv'); r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error); }); }
-  async function idbSet(key, val){
-    try{ const db = await idbOpen(); await new Promise((res, rej) => { const tx = db.transaction('kv', 'readwrite'); if(val === undefined) tx.objectStore('kv').delete(key); else tx.objectStore('kv').put(val, key); tx.oncomplete = res; tx.onerror = () => rej(tx.error); }); }catch(e){}
-  }
-  async function idbGet(key){
-    try{ const db = await idbOpen(); return await new Promise(res => { const rq = db.transaction('kv', 'readonly').objectStore('kv').get(key); rq.onsuccess = () => res(rq.result); rq.onerror = () => res(undefined); }); }catch(e){ return undefined; }
-  }
+  const fmtAgo = iso => {
+    const d = new Date(iso); if(isNaN(d)) return '';
+    const days = Math.floor((new Date(todayStr()) - new Date(d.toISOString().slice(0,10))) / 86400000);
+    const hm = d.toLocaleTimeString('es-ES', { hour:'2-digit', minute:'2-digit' });
+    if(days <= 0) return `hoy a las ${hm}`;
+    if(days === 1) return `ayer a las ${hm}`;
+    if(days < 7) return `hace ${days} días`;
+    return d.toLocaleDateString('es-ES', { day:'numeric', month:'short', year:'numeric' });
+  };
+  // Huella corta del estado, para saber si ha cambiado desde la última copia
+  const hashStr = str => { let h = 5381; for(let i = 0; i < str.length; i++) h = ((h << 5) + h + str.charCodeAt(i)) | 0; return (h >>> 0).toString(36); };
 
   function saveLocal(json){
-    try{
-      localStorage.setItem(AUTOSAVE_KEY, JSON.stringify({ savedAt: new Date().toISOString(), fileSavedAt, matchesFile: json === lastFileJson, state: JSON.parse(json) }));
-      lastLocalJson = json;
-    }catch(e){ /* almacenamiento lleno o bloqueado: seguimos sin copia local */ }
+    try{ localStorage.setItem(AUTOSAVE_KEY, JSON.stringify({ savedAt: new Date().toISOString(), state: JSON.parse(json) })); lastLocalJson = json; }
+    catch(e){ /* almacenamiento lleno o bloqueado: seguimos sin copia local */ }
   }
-
-  async function readFileState(){
-    try{
-      const f = await fileHandle.getFile();
-      if(f.size > 5*1024*1024) return null;
-      const txt = await f.text();
-      if(!txt.trim()) return null;
-      const data = JSON.parse(txt);
-      return { data, savedAt: typeof data.savedAt === 'string' ? data.savedAt : null };
-    }catch(e){ return null; }
-  }
-
-  async function ensurePermission(interactive){
-    if(!fileHandle) return false;
-    const opts = { mode: 'readwrite' };
-    try{
-      let p = fileHandle.queryPermission ? await fileHandle.queryPermission(opts) : 'granted';
-      if(p !== 'granted' && interactive && fileHandle.requestPermission) p = await fileHandle.requestPermission(opts);
-      filePermission = p;
-    }catch(e){ filePermission = 'denied'; }
-    renderSaveState();
-    return filePermission === 'granted';
-  }
-
-  function adoptFileData(data, savedAt){
-    const res = applyState(data);
-    fileSavedAt = savedAt; lastFileJson = sessionJson(); filePaused = false;
-    saveLocal(lastFileJson);
-    return res;
-  }
-
-  // El archivo ha cambiado desde otro equipo: decide qué versión conservar
-  async function resolveConflict(cur){
-    const choice = await askChoice({
-      title: 'El archivo ha cambiado en otro equipo',
-      text: `«${fileHandle.name}» se guardó ${fmtWhen(cur.savedAt) ? 'el ' + fmtWhen(cur.savedAt) : 'desde otro sitio'}, y en este equipo también hay cambios que no están en el archivo. ¿Qué versión quieres conservar?`,
-      choices: [
-        { label: 'Abrir la versión del archivo', value: 'load', primary: true },
-        { label: 'Conservar la de este equipo', value: 'keep' },
-        { label: 'Decidir luego', value: null }
-      ]
-    });
-    if(choice === 'load'){ const res = adoptFileData(cur.data, cur.savedAt); toast(`Abierta la versión de «${fileHandle.name}»`); if(res.expired) setImportExportStatus('Se han borrado las ausencias de otro día.', false); }
-    if(choice === null) filePaused = true;
-    return choice;
-  }
-
-  async function writeToFile(json, force){
-    if(!fileHandle || fileBusy) return false;
-    fileBusy = true; renderSaveState();
-    try{
-      if(!force && fileSavedAt !== null){
-        const cur = await readFileState();
-        if(cur && cur.savedAt && cur.savedAt !== fileSavedAt){
-          const choice = await resolveConflict(cur);
-          if(choice !== 'keep') return false;
-        }
-      }
-      const savedAt = new Date().toISOString();
-      const w = await fileHandle.createWritable();
-      await w.write(JSON.stringify({ ...JSON.parse(json), savedAt }, null, 2));
-      await w.close();
-      fileSavedAt = savedAt; lastFileJson = json; lastFileWrite = new Date(); filePaused = false;
-      saveLocal(json);
-      return true;
-    }catch(e){
-      filePaused = true;
-      setImportExportStatus(`No se pudo guardar en «${fileHandle.name}». Pulsa Guardar para reintentarlo o elegir otro archivo.`, true);
-      return false;
-    }finally{
-      fileBusy = false; renderSaveState();
-    }
-  }
-
-  async function saveAs(){
-    try{
-      const h = await window.showSaveFilePicker({ suggestedName: sessionBaseName() + '.json', types: JSON_TYPES });
-      fileHandle = h; fileSavedAt = null; lastFileJson = null; filePermission = 'granted';
-      await idbSet('fileHandle', h);
-      if(await writeToFile(sessionJson(), true)) toast(`Guardado en «${h.name}». A partir de ahora se guarda solo.`);
-    }catch(e){
-      if(e && e.name === 'AbortError') return;
-      setImportExportStatus('No se pudo guardar el archivo.', true);
-    }
-  }
-
-  async function saveNow(){
-    if(!FS_SUPPORTED){ downloadSession(); return; }
-    if(fileHandle && await ensurePermission(true)){
-      if(await writeToFile(sessionJson(), false)) toast(`Guardado en «${fileHandle.name}»`);
-      return;
-    }
-    await saveAs();
-  }
-  $('saveBtn').onclick = saveNow;
-
-  async function openWithPicker(){
-    let h;
-    try{ [h] = await window.showOpenFilePicker({ types: JSON_TYPES, multiple: false }); }
-    catch(e){ if(e && e.name !== 'AbortError') setImportExportStatus('No se pudo abrir el archivo.', true); return; }
-    try{ if(h.requestPermission) await h.requestPermission({ mode: 'readwrite' }); }catch(e){}
-    const prevHandle = fileHandle;
-    fileHandle = h;
-    const cur = await readFileState();
-    if(!cur){ fileHandle = prevHandle; setImportExportStatus('El archivo no es una sesión válida de esta herramienta.', true); return; }
-    try{
-      const res = adoptFileData(cur.data, cur.savedAt);
-      await idbSet('fileHandle', h);
-      await ensurePermission(false);
-      setStatus('Sesión abierta correctamente.', false);
-      setImportExportStatus(`Sesión abierta: ${students.length} alumnos, ${desks.length} mesas, ${rules.length} reglas.${res.expired ? ' Se han borrado las ausencias de otro día.' : ''}`, false);
-    }catch(e){
-      fileHandle = prevHandle;
-      setImportExportStatus('El archivo no es una sesión válida de esta herramienta.', true);
-    }
-  }
-
-  function unlinkFile(){
-    fileHandle = null; fileSavedAt = null; lastFileJson = null; filePermission = 'none'; filePaused = false;
-    idbSet('fileHandle', undefined);
-    renderSaveState();
-  }
-
-  // Si el archivo vinculado es más reciente (guardado desde otro equipo), se carga o se pregunta
-  async function checkFileForUpdates(){
-    if(!fileHandle) return;
-    const cur = await readFileState();
-    if(!cur || !cur.savedAt || cur.savedAt === fileSavedAt) return;
-    const localChanged = lastFileJson === null || sessionJson() !== lastFileJson;
-    if(!localChanged || fileSavedAt === null){
-      const res = adoptFileData(cur.data, cur.savedAt);
-      toast(`Cargada la versión más reciente de «${fileHandle.name}»`);
-      if(res.expired) setImportExportStatus('Se han borrado las ausencias de otro día.', false);
-    } else {
-      await resolveConflict(cur);
-    }
+  function markBackup(json){
+    lastBackup = { at: new Date().toISOString(), hash: hashStr(json) };
+    try{ localStorage.setItem(BACKUP_KEY, JSON.stringify(lastBackup)); }catch(e){}
     renderSaveState();
   }
 
   function renderSaveState(){
     const el = $('saveState'); el.innerHTML = ''; el.className = 'save-state';
-    const add = (html) => { const span = document.createElement('span'); span.innerHTML = html; el.appendChild(span); };
-    const link = (label, fn, title) => { const b = document.createElement('button'); b.className = 'link'; b.textContent = label; if(title) b.title = title; b.onclick = fn; el.appendChild(b); return b; };
+    if(!students.length && !desks.length) return;
     const dot = document.createElement('span'); dot.className = 'dot'; el.appendChild(dot);
-    const name = fileHandle ? `«<strong>${escapeHtml(fileHandle.name)}</strong>»` : '';
-    if(fileHandle && filePermission === 'granted' && !filePaused){
+    const txt = document.createElement('span');
+    let changed = true;
+    if(lastBackup){ try{ changed = hashStr(sessionJson()) !== lastBackup.hash; }catch(e){} }
+    if(!lastBackup){
+      el.classList.add('warn');
+      txt.innerHTML = 'Se guarda solo en este navegador. Aún no has guardado ninguna <strong>copia de seguridad</strong>: si se borran los datos del navegador, no podrás recuperar la clase.';
+    } else if(changed){
+      el.classList.add('warn');
+      txt.innerHTML = `Se guarda solo en este navegador · Última copia de seguridad: <strong>${escapeHtml(fmtAgo(lastBackup.at))}</strong> (ha habido cambios desde entonces)`;
+    } else {
       el.classList.add('ok');
-      const pending = lastFileJson === null || sessionJson() !== lastFileJson;
-      add(fileBusy ? `Guardando en ${name}…` : pending ? `Cambios pendientes de guardar en ${name}…` : `Guardado en ${name}${lastFileWrite ? ' a las ' + lastFileWrite.toLocaleTimeString('es-ES', { hour:'2-digit', minute:'2-digit' }) : ''} · se guarda solo`);
-      link('Otro archivo…', saveAs, 'Guardar la sesión en otro archivo y seguir guardando allí');
-    } else if(fileHandle && filePaused){
-      el.classList.add('warn');
-      add(`Guardado automático en ${name} en pausa`);
-      link('Guardar ahora', saveNow);
-    } else if(fileHandle){
-      el.classList.add('warn');
-      add(`Vinculado a ${name}`);
-      link('Reconectar', async () => { if(await ensurePermission(true)){ await checkFileForUpdates(); } }, 'Permite a la app leer y guardar ese archivo; si se cambió desde otro equipo, se cargará la versión más reciente');
-    } else if(students.length || desks.length){
-      add(FS_SUPPORTED ? 'Se guarda solo en este navegador. Pulsa <strong>Guardar</strong> para tenerlo también en un archivo (p.ej. en OneDrive) y usarlo en varios equipos.' : 'Se guarda solo en este navegador. Pulsa <strong>Guardar</strong> para descargar una copia (puedes moverla a OneDrive).');
-    } else { el.innerHTML = ''; return; }
-    if(FS_SUPPORTED) link('Descargar copia', downloadSession, 'Descargar una copia del archivo de sesión (para enviarla o guardarla aparte)').id = 'downloadCopyBtn';
+      txt.innerHTML = `Se guarda solo en este navegador · Copia de seguridad al día (<strong>${escapeHtml(fmtAgo(lastBackup.at))}</strong>)`;
+    }
+    el.appendChild(txt);
+    if(changed){
+      const b = document.createElement('button'); b.className = 'link'; b.id = 'backupNowBtn'; b.textContent = 'Guardar copia ahora';
+      b.onclick = downloadSession; el.appendChild(b);
+    }
   }
 
-  // Comprueba cada poco si algo ha cambiado y guarda (en el navegador y, si hay, en el archivo)
-  async function autosaveTick(){
+  // Cada poco, si algo ha cambiado, se guarda en el navegador
+  function autosaveTick(){
     if(!autosaveReady) return;
     let json; try{ json = sessionJson(); }catch(e){ return; }
-    if(json !== lastLocalJson) saveLocal(json);
-    if(fileHandle && filePermission === 'granted' && !filePaused && !fileBusy && json !== lastFileJson && $('choiceModal').style.display === 'none'){
-      await writeToFile(json, false);
-    }
-    renderSaveState();
+    if(json !== lastLocalJson){ saveLocal(json); renderSaveState(); }
   }
 
-  async function restoreOnStartup(){
+  function restoreOnStartup(){
     let restored = null;
+    try{ lastBackup = JSON.parse(localStorage.getItem(BACKUP_KEY) || 'null'); }catch(e){ lastBackup = null; }
     try{
       const raw = localStorage.getItem(AUTOSAVE_KEY);
       if(raw){
         const saved = JSON.parse(raw);
         const res = applyState(saved.state);
-        fileSavedAt = typeof saved.fileSavedAt === 'string' ? saved.fileSavedAt : null;
         restored = { savedAt: saved.savedAt, expired: res.expired };
       }
     }catch(e){ restored = null; }
-    if(FS_SUPPORTED){
-      const h = await idbGet('fileHandle');
-      if(h && typeof h.getFile === 'function'){
-        fileHandle = h;
-        let saved = null; try{ saved = JSON.parse(localStorage.getItem(AUTOSAVE_KEY) || 'null'); }catch(e){}
-        lastFileJson = (saved && saved.matchesFile) ? sessionJson() : null;
-        if(await ensurePermission(false)) await checkFileForUpdates();
-      }
-    }
     lastLocalJson = sessionJson();
     autosaveReady = true;
     renderSaveState();
     setInterval(autosaveTick, 1500);
+    window.addEventListener('pagehide', autosaveTick);
     return restored;
   }
 
@@ -2789,6 +2616,7 @@
     }, 'image/jpeg', 0.92);
   }
 
+  $('saveBtn').onclick = downloadSession;
   $('exportPngBtn').onclick = () => { exportPlanPNG(); if(desks.length) savePlanToHistory(true); };
   $('exportPdfBtn').onclick = () => { exportPlanPDF(); if(desks.length) savePlanToHistory(true); };
 
@@ -2840,29 +2668,22 @@
     const hadClass = students.length > 0 || desks.length > 0;
     if(hadClass){
       let ok = true;
-      try{ ok = window.confirm('Se cargará la clase de ejemplo en lugar de la tuya. Tu clase se aparta y podrás recuperarla con "Volver a mi clase"' + (fileHandle ? ` (el archivo «${fileHandle.name}» no se toca).` : '.') + ' ¿Continuar?'); }catch(e){ ok = true; }
+      try{ ok = window.confirm('Se cargará la clase de ejemplo en lugar de la tuya. Tu clase se aparta y podrás recuperarla con "Volver a mi clase". ¿Continuar?'); }catch(e){ ok = true; }
       if(!ok) return;
-      try{ localStorage.setItem(BEFORE_SAMPLE_KEY, JSON.stringify({ state: collectState(), fileSavedAt, hadFile: !!fileHandle })); }catch(e){}
+      try{ localStorage.setItem(BEFORE_SAMPLE_KEY, JSON.stringify({ state: collectState() })); }catch(e){}
     }
-    if(fileHandle){ fileHandle = null; filePermission = 'none'; filePaused = false; lastFileJson = null; renderSaveState(); }
     applyState(buildSampleState());
     $('groupsGrid').innerHTML = '';
     shuffle();
     setImportExportStatus('Clase de ejemplo cargada: 22 alumnos ficticios, 24 mesas (primera fila con etiqueta "Visión") y 5 reglas. Explora las pestañas o pulsa "Ayuda".', false,
       hadClass ? { label: 'Volver a mi clase', fn: restoreBeforeSample } : null);
   }
-  async function restoreBeforeSample(){
+  function restoreBeforeSample(){
     let stash = null; try{ stash = JSON.parse(localStorage.getItem(BEFORE_SAMPLE_KEY) || 'null'); }catch(e){}
     if(!stash){ setImportExportStatus('No hay ninguna clase apartada que recuperar.', true); return; }
     applyState(stash.state);
-    fileSavedAt = stash.fileSavedAt || null;
-    if(stash.hadFile && FS_SUPPORTED){
-      const h = await idbGet('fileHandle');
-      if(h && typeof h.getFile === 'function'){ fileHandle = h; lastFileJson = null; await ensurePermission(false); }
-    }
     try{ localStorage.removeItem(BEFORE_SAMPLE_KEY); }catch(e){}
     setImportExportStatus('Has vuelto a tu clase.', false);
-    renderSaveState();
   }
   $('sampleBtn').onclick = loadSample;
 
@@ -2887,15 +2708,16 @@
   renderCanvas();
   renderTimerDisplay();
   setStatus('Diseña el aula, añade alumnado y reglas, y pulsa "Barajar asientos".', false);
-  restoreOnStartup().then(restored => {
-    if(restored && (students.length || desks.length)){
-      setImportExportStatus(`Recuperada tu sesión de este navegador${fmtWhen(restored.savedAt) ? ' (' + fmtWhen(restored.savedAt) + ')' : ''}.${restored.expired ? ' Se han borrado las ausencias de otro día.' : ''}`, false);
-    }
-    // Muestra la ayuda automáticamente la primera vez que se abre la app en este navegador
+  const restored = restoreOnStartup();
+  if(restored && (students.length || desks.length)){
+    setImportExportStatus(`Recuperada tu sesión de este navegador${fmtWhen(restored.savedAt) ? ' (' + fmtWhen(restored.savedAt) + ')' : ''}.${restored.expired ? ' Se han borrado las ausencias de otro día.' : ''}`, false);
+  }
+  // Muestra la ayuda automáticamente la primera vez que se abre la app en este navegador
+  (function(){
     let seen = false;
     try{ seen = localStorage.getItem(HELP_SEEN_KEY) === '1'; }catch(e){ seen = false; }
     if(!seen) openHelp();
-  });
+  })();
 })();
 </script>
 

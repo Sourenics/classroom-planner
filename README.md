@@ -26,13 +26,13 @@ No requiere registros, servidores ni configuraciones avanzadas. Puedes usar la h
 * 👩‍🏫 **Vista del profesor:** El aula con la pizarra abajo, tal como se ve desde la mesa del docente, también en las exportaciones.
 * 🖨️ **Plano en PNG y PDF (A4):** Versión imprimible en blanco y negro, con nombres en cualquier alfabeto.
 * 🎲 **Grupos, ruleta y temporizador:** Grupos aleatorios (opcionalmente con las reglas), ruleta para elegir alumno y cuenta atrás grande para proyectar.
-* 💾 **Guardado automático y copia en OneDrive:**
-  * La sesión se guarda sola en tu navegador.
-  * En Edge y Chrome, **Guardar** vincula un archivo `.json` (por ejemplo, en tu carpeta de OneDrive) y la app sigue guardando en él automáticamente, para **usar la misma clase en varios equipos**. Si el archivo cambió desde otro equipo, pregunta qué versión conservar.
-  * En otros navegadores, **Guardar** descarga el archivo y **Abrir** lo recupera.
+* 💾 **Guardado automático y copias de seguridad en `.json`:**
+  * La sesión se guarda sola en tu navegador y se recupera al volver a abrir la app.
+  * **Guardar copia** descarga un archivo `.json` ligero con toda la clase (aula, alumnado, reglas, planos e historial) para ponerlo a salvo donde quieras. La app te recuerda cuándo hiciste la última copia y si ha habido cambios desde entonces.
+  * **Restaurar copia** recupera la clase si se borran los datos del navegador, o te permite **trasladarla a otros dispositivos y navegadores**.
 * 🎨 **Tema oscuro (pizarra) y claro:** El tema claro está pensado para proyectar en aulas con mucha luz.
 * ⚡ **100% Client-side (Sin servidor):** Funciona directamente en tu navegador. No requiere registro ni conexión a bases de datos.
-* 🔒 **Privacidad garantizada:** La app no envía los datos de tus estudiantes a ningún servidor: solo se guardan en tu navegador y en el archivo que tú elijas.
+* 🔒 **Privacidad garantizada:** La app no envía los datos de tus estudiantes a ningún servidor: solo se guardan en tu navegador y en las copias que tú descargues.
 * 🖥️ **Diseño limpio y accesible:** Pensado para un uso ágil en el día a día docente.
 
 ---
