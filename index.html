@@ -82,7 +82,8 @@
     padding: 7px 14px; border-radius: 999px; cursor:pointer; font-size: 0.86rem; font-weight:500; font-family: inherit;
     transition: background .15s, color .15s, border-color .15s;
   }
-  .tabs button .ico{ font-size: 0.95rem; line-height:1; }
+  .tabs button .icon{ width:1.25rem; height:1.25rem; opacity:.85; }
+  .tabs button.active .icon{ opacity:1; }
   .tabs button:hover{ color: var(--chalk); background: var(--surface-2); filter:none; }
   .tabs button.active{ color: #2a1d10; background: var(--ochre); font-weight:600; box-shadow: 0 2px 10px rgba(232,171,92,0.28); }
 
@@ -110,21 +111,27 @@
   input[type=color]::-webkit-color-swatch-wrapper{ padding:0; }
   input[type=color]::-webkit-color-swatch{ border:none; border-radius:4px; }
   input::placeholder, textarea::placeholder{ color: var(--faint); }
+  .icon{ width:1.2em; height:1.2em; flex-shrink:0; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; overflow:visible; }
+  button .icon{ margin:-2px 0; }
+  .btn-group button .icon, button.secondary .icon, .rule-item .icon{ color: var(--ochre); }
+  .panel h2{ display:flex; align-items:center; gap:8px; }
+  .panel h2 .icon, .rule-item .icon{ width:28px; height:28px; padding:5px; border-radius:8px; background: var(--ochre-soft); color: var(--ochre); stroke-width:1.9; }
+  .panel h2 .icon{ margin-left:-2px; }
   input[type=checkbox]{ accent-color: var(--ochre); width:16px; height:16px; cursor:pointer; }
 
-  button{ background: var(--ochre); color: #2a1d10; border:1px solid transparent; padding: 8px 14px; border-radius: var(--radius-sm); font-weight:600; font-size:0.85rem; cursor:pointer; font-family:inherit; line-height:1.2;
+  button{ display:inline-flex; align-items:center; justify-content:center; gap:7px; background: var(--ochre); color: #2a1d10; border:1px solid transparent; padding: 8px 14px; border-radius: var(--radius-sm); font-weight:600; font-size:0.85rem; cursor:pointer; font-family:inherit; line-height:1.2;
     transition: filter .15s, background .15s, border-color .15s, transform .08s, box-shadow .15s; }
   button:hover{ filter:brightness(1.07); }
   button:active{ transform: translateY(1px); }
   button:focus-visible, .tabs button:focus-visible{ outline: 2px solid var(--ochre); outline-offset: 2px; }
   button.secondary{ background: var(--surface-2); color: var(--chalk); border-color: var(--line-strong); font-weight:500; }
   button.secondary:hover{ background: var(--surface-3); border-color: rgba(244,241,230,0.3); filter:none; }
-  button.danger{ background:transparent; color: var(--danger); border:1px solid rgba(227,130,111,0.4); font-weight:500; padding:4px 9px; font-size:0.76rem; border-radius:6px; }
+  button.danger{ background:transparent; color: var(--danger); border:1px solid rgba(227,130,111,0.4); font-weight:500; padding:4px 7px; font-size:0.76rem; border-radius:6px; }
   button.danger:hover{ background: var(--danger-soft); border-color: var(--danger); filter:none; }
   button:disabled{ opacity:0.4; cursor:not-allowed; transform:none; }
-  button.block{ width:100%; margin-bottom:8px; text-align:left; }
+  button.block{ width:100%; margin-bottom:8px; text-align:left; justify-content:flex-start; }
   .panel section > button.block:last-of-type{ margin-bottom:0; }
-  button.big{ padding: 12px 16px; font-size: 0.95rem; text-align:center; box-shadow: 0 4px 16px rgba(232,171,92,0.25); }
+  button.big{ padding: 12px 16px; font-size: 0.95rem; text-align:center; justify-content:center; box-shadow: 0 4px 16px rgba(232,171,92,0.25); }
 
   .student-list{ list-style:none; padding:0; margin:10px 0 0; max-height:320px; overflow-y:auto; }
   .student-list:empty{ display:none; }
@@ -136,6 +143,7 @@
   .tag-list{ list-style:none; padding:0; margin:8px 0 0; }
   .tag-list li{ display:flex; justify-content:space-between; align-items:center; padding:6px 8px; font-size:0.88rem; border-radius:6px; background: rgba(244,241,230,0.03); margin-bottom:4px; }
 
+  .rule-item > div{ display:flex; align-items:center; gap:8px; }
   .rule-item{ display:flex; justify-content:space-between; align-items:center; gap:10px; background: rgba(0,0,0,0.14); border:1px solid var(--line); border-radius: var(--radius-sm); padding:8px 10px; margin-bottom:6px; font-size:0.85rem; }
   .rule-item button.danger{ margin-top:0 !important; flex-shrink:0; }
   #ruleList:empty::before{ content:'Todavía no hay reglas.'; display:block; font-size:0.8rem; color: var(--faint); }
@@ -194,7 +202,7 @@
   .freecanvas.locked .fdesk{ cursor:pointer; }
   .fdesk .dots{ position:absolute; top:5px; left:5px; display:flex; gap:3px; }
   .fdesk .dot{ width:7px; height:7px; border-radius:50%; box-shadow: 0 0 0 1.5px rgba(0,0,0,0.3); }
-  .fdesk .clearx{ position:absolute; top:-7px; right:-7px; width:20px; height:20px; line-height:1; padding:0; border-radius:50%; background: #c0574a; color:#fff; font-size:13px; font-weight:600; border:2px solid var(--bg);
+  .fdesk .clearx{ position:absolute; top:-7px; right:-7px; width:20px; height:20px; line-height:1; padding:0; border-radius:50%; background: #c0574a; color:#fff; font-size:12px; border:2px solid var(--bg);
     display:grid; place-items:center; opacity:0; transform: scale(0.7); transition: opacity .15s, transform .15s; box-shadow: 0 2px 6px rgba(0,0,0,0.35); }
   .fdesk:hover .clearx, .fdesk.swap-select .clearx, .fdesk .clearx:focus-visible{ opacity:1; transform: scale(1); }
   @media (hover: none){ .fdesk .clearx{ opacity:0.9; transform: scale(0.85); } }
@@ -272,6 +280,30 @@
 </style>
 </head>
 <body>
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+  <symbol id="i-aula" viewBox="0 0 24 24"><path d="M4 4.5h16" stroke-width="2.4"/><rect x="3.5" y="10" width="7.5" height="6" rx="1.5" fill="currentColor" fill-opacity=".28"/><rect x="13" y="10" width="7.5" height="6" rx="1.5" fill="currentColor" fill-opacity=".28"/><path d="M7.25 16v3.5M16.75 16v3.5"/></symbol>
+  <symbol id="i-alumnado" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2" fill="currentColor" fill-opacity=".28"/><path d="M3.5 19.5c.6-3.3 2.8-5.2 5.5-5.2s4.9 1.9 5.5 5.2"/><path d="M15.2 5.3a3 3 0 1 1 .9 5.7"/><path d="M16.6 14.4c2.3.4 3.7 2.1 4.2 5"/></symbol>
+  <symbol id="i-reglas" viewBox="0 0 24 24"><rect x="5" y="4.5" width="14" height="16.5" rx="2.2" fill="currentColor" fill-opacity=".28"/><rect x="9" y="2.8" width="6" height="3.4" rx="1.2"/><path d="m8.6 13.2 2.3 2.3 4.6-4.9"/></symbol>
+  <symbol id="i-barajar" viewBox="0 0 24 24"><path d="M3 7h3.2c2 0 3.2.9 4.3 2.6l2.9 4.8c1.1 1.7 2.3 2.6 4.3 2.6H21"/><path d="M3 17h3.2c1.5 0 2.6-.5 3.5-1.5M14.3 8.5c.9-1 2-1.5 3.4-1.5H21"/><path d="m18.5 4.5 2.5 2.5-2.5 2.5M18.5 14.5l2.5 2.5-2.5 2.5"/></symbol>
+  <symbol id="i-grupos" viewBox="0 0 24 24"><circle cx="8" cy="8.5" r="3.4" fill="currentColor" fill-opacity=".28"/><circle cx="16" cy="8.5" r="3.4"/><circle cx="12" cy="15.8" r="3.4" fill="currentColor" fill-opacity=".28"/></symbol>
+  <symbol id="i-ruleta" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.6" fill="currentColor" fill-opacity=".28"/><path d="M12 3.4v17.2M4.55 7.7l14.9 8.6M4.55 16.3l14.9-8.6"/><circle cx="12" cy="12" r="1.9" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-reloj" viewBox="0 0 24 24"><path d="M6.5 3.5h11M6.5 20.5h11"/><path d="M8 3.5c0 4.2 4 5 4 8.5s-4 4.3-4 8.5M16 3.5c0 4.2-4 5-4 8.5s4 4.3 4 8.5"/><path d="M9.2 20c.6-2.2 2.8-3.4 2.8-3.4s2.2 1.2 2.8 3.4z" fill="currentColor" stroke="none" fill-opacity=".55"/></symbol>
+  <symbol id="i-ayuda" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.6" fill="currentColor" fill-opacity=".28"/><path d="M9.5 9.6a2.6 2.6 0 1 1 3.7 2.4c-.8.4-1.2 1-1.2 1.8v.5"/><circle cx="12" cy="17" r="1.1" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-ejemplo" viewBox="0 0 24 24"><path d="M11 3.5 12.9 8.6 18 10.5l-5.1 1.9L11 17.5l-1.9-5.1L4 10.5l5.1-1.9z" fill="currentColor" fill-opacity=".28"/><path d="m18 15 .8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z"/></symbol>
+  <symbol id="i-imagen" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="14" rx="2.2" fill="currentColor" fill-opacity=".28"/><circle cx="8.6" cy="9.8" r="1.6"/><path d="m4 17 4.5-4.4 3.4 3.3 2.6-2.5 5.5 5"/></symbol>
+  <symbol id="i-pdf" viewBox="0 0 24 24"><path d="M7 3.5h7.2l4.3 4.3v11.4A1.8 1.8 0 0 1 16.7 21H7a1.8 1.8 0 0 1-1.8-1.8V5.3A1.8 1.8 0 0 1 7 3.5z" fill="currentColor" fill-opacity=".28"/><path d="M14 3.7V8h4.3M8.6 12.8h6.8M8.6 16.3h4.6"/></symbol>
+  <symbol id="i-descargar" viewBox="0 0 24 24"><path d="M12 3.8v11M7.6 10.4 12 14.8l4.4-4.4"/><path d="M4.5 16v2.3a2.2 2.2 0 0 0 2.2 2.2h10.6a2.2 2.2 0 0 0 2.2-2.2V16"/></symbol>
+  <symbol id="i-subir" viewBox="0 0 24 24"><path d="M12 14.8v-11M7.6 8.2 12 3.8l4.4 4.4"/><path d="M4.5 16v2.3a2.2 2.2 0 0 0 2.2 2.2h10.6a2.2 2.2 0 0 0 2.2-2.2V16"/></symbol>
+  <symbol id="i-separar" viewBox="0 0 24 24"><circle cx="5.5" cy="12" r="2.6" fill="currentColor" fill-opacity=".28"/><circle cx="18.5" cy="12" r="2.6" fill="currentColor" fill-opacity=".28"/><path d="M12 4v16" stroke-dasharray="2.2 2.6"/></symbol>
+  <symbol id="i-juntar" viewBox="0 0 24 24"><circle cx="9" cy="12" r="5" fill="currentColor" fill-opacity=".28"/><circle cx="15" cy="12" r="5" fill="currentColor" fill-opacity=".28"/></symbol>
+  <symbol id="i-etiqueta" viewBox="0 0 24 24"><path d="M3.6 5.2v5.9c0 .5.2 1 .6 1.4l7.4 7.4a2 2 0 0 0 2.8 0l5.4-5.4a2 2 0 0 0 0-2.8L12.4 4.3a2 2 0 0 0-1.4-.6H5.1a1.5 1.5 0 0 0-1.5 1.5z" fill="currentColor" fill-opacity=".28"/><circle cx="8.2" cy="8.3" r="1.5"/></symbol>
+  <symbol id="i-chincheta" viewBox="0 0 24 24"><path d="M8.5 3.5h7M9.8 3.5 9.2 9.6 6.3 13h11.4l-2.9-3.4-.6-6.1" fill="currentColor" fill-opacity=".28"/><path d="M12 13v7.5"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.2v13.6l10.8-6.8z" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-pausa" viewBox="0 0 24 24"><rect x="6.8" y="5.5" width="3.6" height="13" rx="1.2" fill="currentColor" stroke="none"/><rect x="13.6" y="5.5" width="3.6" height="13" rx="1.2" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-reiniciar" viewBox="0 0 24 24"><path d="M4.6 12a7.4 7.4 0 1 0 2.2-5.3L4.6 9"/><path d="M4.6 4.5V9h4.5"/></symbol>
+  <symbol id="i-cerrar" viewBox="0 0 24 24"><path d="m6.5 6.5 11 11M17.5 6.5l-11 11"/></symbol>
+  <symbol id="i-mas" viewBox="0 0 24 24"><path d="M12 5.5v13M5.5 12h13"/></symbol>
+</svg>
 
 <header class="app-header">
   <div class="brand">
@@ -291,16 +323,16 @@
   </div>
   <div class="header-actions">
     <div class="btn-group">
-      <button id="helpBtn">❓ Ayuda</button>
-      <button id="sampleBtn">🧪 Ejemplo</button>
+      <button id="helpBtn"><svg class="icon" aria-hidden="true"><use href="#i-ayuda"/></svg>Ayuda</button>
+      <button id="sampleBtn"><svg class="icon" aria-hidden="true"><use href="#i-ejemplo"/></svg>Ejemplo</button>
     </div>
     <div class="btn-group">
-      <button id="exportPngBtn" title="Descargar el plano como imagen">📷 PNG</button>
-      <button id="exportPdfBtn" title="Descargar el plano como PDF imprimible">📄 PDF</button>
+      <button id="exportPngBtn" title="Descargar el plano como imagen"><svg class="icon" aria-hidden="true"><use href="#i-imagen"/></svg>PNG</button>
+      <button id="exportPdfBtn" title="Descargar el plano como PDF imprimible"><svg class="icon" aria-hidden="true"><use href="#i-pdf"/></svg>PDF</button>
     </div>
     <div class="btn-group">
-      <button id="exportBtn" title="Guardar toda la sesión en un archivo .json">⬇ Exportar sesión</button>
-      <button id="importBtn" title="Abrir un archivo .json guardado antes">⬆ Importar</button>
+      <button id="exportBtn" title="Guardar toda la sesión en un archivo .json"><svg class="icon" aria-hidden="true"><use href="#i-descargar"/></svg>Exportar sesión</button>
+      <button id="importBtn" title="Abrir un archivo .json guardado antes"><svg class="icon" aria-hidden="true"><use href="#i-subir"/></svg>Importar</button>
     </div>
     <input type="file" id="importFile" accept="application/json" style="display:none;">
   </div>
@@ -309,13 +341,13 @@
 
 <nav class="tabs-bar">
   <div class="tabs" role="tablist">
-    <button class="tab-btn active" data-tab="aula"><span class="ico" aria-hidden="true">📐</span>Diseñar aula</button>
-    <button class="tab-btn" data-tab="alumnado"><span class="ico" aria-hidden="true">👥</span>Alumnado</button>
-    <button class="tab-btn" data-tab="reglas"><span class="ico" aria-hidden="true">📋</span>Reglas</button>
-    <button class="tab-btn" data-tab="barajar"><span class="ico" aria-hidden="true">🔀</span>Barajar</button>
-    <button class="tab-btn" data-tab="grupos"><span class="ico" aria-hidden="true">🧩</span>Grupos</button>
-    <button class="tab-btn" data-tab="picker"><span class="ico" aria-hidden="true">🎡</span>Ruleta</button>
-    <button class="tab-btn" data-tab="timer"><span class="ico" aria-hidden="true">⏱️</span>Temporizador</button>
+    <button class="tab-btn active" data-tab="aula"><svg class="icon" aria-hidden="true"><use href="#i-aula"/></svg>Diseñar aula</button>
+    <button class="tab-btn" data-tab="alumnado"><svg class="icon" aria-hidden="true"><use href="#i-alumnado"/></svg>Alumnado</button>
+    <button class="tab-btn" data-tab="reglas"><svg class="icon" aria-hidden="true"><use href="#i-reglas"/></svg>Reglas</button>
+    <button class="tab-btn" data-tab="barajar"><svg class="icon" aria-hidden="true"><use href="#i-barajar"/></svg>Barajar</button>
+    <button class="tab-btn" data-tab="grupos"><svg class="icon" aria-hidden="true"><use href="#i-grupos"/></svg>Grupos</button>
+    <button class="tab-btn" data-tab="picker"><svg class="icon" aria-hidden="true"><use href="#i-ruleta"/></svg>Ruleta</button>
+    <button class="tab-btn" data-tab="timer"><svg class="icon" aria-hidden="true"><use href="#i-reloj"/></svg>Temporizador</button>
   </div>
 </nav>
 
@@ -340,9 +372,9 @@
 
       <section>
         <h2>Añadir mesas</h2>
-        <button class="block secondary" id="addSingleBtn">+ Mesa</button>
-        <button class="block secondary" id="addPairBtn">+ Pareja de mesas</button>
-        <button class="block secondary" id="addQuadBtn">+ Grupo de 4</button>
+        <button class="block secondary" id="addSingleBtn"><svg class="icon" aria-hidden="true"><use href="#i-mas"/></svg>Mesa</button>
+        <button class="block secondary" id="addPairBtn"><svg class="icon" aria-hidden="true"><use href="#i-mas"/></svg>Pareja de mesas</button>
+        <button class="block secondary" id="addQuadBtn"><svg class="icon" aria-hidden="true"><use href="#i-mas"/></svg>Grupo de 4</button>
         <p class="hint">Arrastra cualquier mesa a la posición que quieras. Haz clic (sin arrastrar) en una mesa vacía para etiquetarla. Para mover o intercambiar alumnado, haz clic en una mesa ocupada y luego en la mesa destino.</p>
       </section>
 
@@ -359,7 +391,7 @@
         <div class="row">
           <input type="text" id="tagName" placeholder="Nombre de etiqueta (p.ej. Visión)">
           <input type="color" id="tagColor" value="#e0a458">
-          <button id="addTagBtn">+</button>
+          <button id="addTagBtn" title="Añadir etiqueta" aria-label="Añadir etiqueta"><svg class="icon" aria-hidden="true"><use href="#i-mas"/></svg></button>
         </div>
         <ul class="tag-list" id="tagList"></ul>
       </section>
@@ -393,35 +425,35 @@
 
     <div class="tab-panel" data-tab="reglas" style="display:none;">
       <section class="rule-card">
-        <h2>🚫 Mantener separados</h2>
+        <h2><svg class="icon" aria-hidden="true"><use href="#i-separar"/></svg>Mantener separados</h2>
         <p class="hint" style="margin-top:-4px;">Dos alumnos que nunca deben acabar en mesas contiguas.</p>
         <div class="row"><select id="rf_apart_a"></select></div>
         <div class="row"><select id="rf_apart_b"></select></div>
-        <button class="secondary" id="addApartBtn">+ Regla de separar</button>
+        <button class="secondary" id="addApartBtn"><svg class="icon" aria-hidden="true"><use href="#i-mas"/></svg>Regla de separar</button>
       </section>
 
       <section class="rule-card">
-        <h2>🤝 Mantener juntos</h2>
+        <h2><svg class="icon" aria-hidden="true"><use href="#i-juntar"/></svg>Mantener juntos</h2>
         <p class="hint" style="margin-top:-4px;">Dos alumnos que siempre deben acabar en mesas contiguas.</p>
         <div class="row"><select id="rf_together_a"></select></div>
         <div class="row"><select id="rf_together_b"></select></div>
-        <button class="secondary" id="addTogetherBtn">+ Regla de juntar</button>
+        <button class="secondary" id="addTogetherBtn"><svg class="icon" aria-hidden="true"><use href="#i-mas"/></svg>Regla de juntar</button>
       </section>
 
       <section class="rule-card">
-        <h2>🏷️ Etiqueta de mesa</h2>
+        <h2><svg class="icon" aria-hidden="true"><use href="#i-etiqueta"/></svg>Etiqueta de mesa</h2>
         <p class="hint" style="margin-top:-4px;">Restringe a un alumno a mesas con una etiqueta concreta (pestaña "Diseñar aula").</p>
         <div class="row"><select id="rf_tag_student"></select></div>
         <div class="row"><select id="rf_tag_tag"></select></div>
-        <button class="secondary" id="addTagRuleBtn">+ Regla de etiqueta</button>
+        <button class="secondary" id="addTagRuleBtn"><svg class="icon" aria-hidden="true"><use href="#i-mas"/></svg>Regla de etiqueta</button>
       </section>
 
       <section class="rule-card">
-        <h2>📌 Sitio fijo</h2>
+        <h2><svg class="icon" aria-hidden="true"><use href="#i-chincheta"/></svg>Sitio fijo</h2>
         <p class="hint" style="margin-top:-4px;">Un alumno que siempre debe sentarse en la misma mesa exacta.</p>
         <div class="row"><select id="rf_fixed_student"></select></div>
         <div class="row"><select id="rf_fixed_desk"></select></div>
-        <button class="secondary" id="addFixedBtn">+ Regla de sitio fijo</button>
+        <button class="secondary" id="addFixedBtn"><svg class="icon" aria-hidden="true"><use href="#i-mas"/></svg>Regla de sitio fijo</button>
       </section>
 
       <section>
@@ -433,7 +465,7 @@
     <div class="tab-panel" data-tab="barajar" style="display:none;">
       <section>
         <h2>Generar plano</h2>
-        <button id="shuffleBtn" class="block big">🔀 Barajar asientos</button>
+        <button id="shuffleBtn" class="block big"><svg class="icon" aria-hidden="true"><use href="#i-barajar"/></svg>Barajar asientos</button>
         <div class="status" id="statusMsg" style="margin-top:10px;"></div>
         <p class="hint">Prueba combinaciones aleatorias hasta encontrar una que cumpla todas las reglas activas. Si no lo consigue, te lo indicará.</p>
       </section>
@@ -450,7 +482,7 @@
           <input type="checkbox" id="groupsRespectRules">
           <span>Respetar las reglas de "mantener juntos" y "mantener separados" al crear los grupos</span>
         </label>
-        <button id="genGroupsBtn" class="block big">🔀 Generar grupos</button>
+        <button id="genGroupsBtn" class="block big"><svg class="icon" aria-hidden="true"><use href="#i-grupos"/></svg>Generar grupos</button>
         <div class="status" id="groupsStatus" style="margin-top:6px;"></div>
       </section>
     </div>
@@ -463,7 +495,7 @@
           <input type="checkbox" id="pickerAutoRemove" checked>
           <span>Eliminar automáticamente al alumno elegido, para que no pueda volver a salir</span>
         </label>
-        <button id="spinBtn" class="block big">🎡 Girar</button>
+        <button id="spinBtn" class="block big"><svg class="icon" aria-hidden="true"><use href="#i-ruleta"/></svg>Girar</button>
         <button id="resetWheelBtn" class="secondary block">Restablecer con todo el alumnado</button>
         <div class="status" id="pickerStatus" style="margin-top:6px;"></div>
         <div class="row" style="justify-content:space-between; margin-top:18px;">
@@ -525,9 +557,9 @@
           <button class="secondary" data-preset="15">15 min</button>
         </div>
         <div class="timer-controls">
-          <button id="timerStartBtn">▶ Iniciar</button>
-          <button class="secondary" id="timerPauseBtn">⏸ Pausar</button>
-          <button class="secondary" id="timerResetBtn">↺ Reiniciar</button>
+          <button id="timerStartBtn"><svg class="icon" aria-hidden="true"><use href="#i-play"/></svg>Iniciar</button>
+          <button class="secondary" id="timerPauseBtn"><svg class="icon" aria-hidden="true"><use href="#i-pausa"/></svg>Pausar</button>
+          <button class="secondary" id="timerResetBtn"><svg class="icon" aria-hidden="true"><use href="#i-reiniciar"/></svg>Reiniciar</button>
         </div>
       </div>
     </div>
@@ -547,9 +579,9 @@
 
 <div id="helpModal" class="modal-overlay" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="helpTitle">
   <div class="modal-box help-box">
-    <button class="help-close" id="helpCloseX" title="Cerrar">✕</button>
+    <button class="help-close" id="helpCloseX" title="Cerrar" aria-label="Cerrar"><svg class="icon" aria-hidden="true"><use href="#i-cerrar"/></svg></button>
     <h2 id="helpTitle">Cómo funciona</h2>
-    <p>Todo funciona en local, sin conexión. Si quieres probarlo antes de meter a tu clase, pulsa <strong>🧪 Ejemplo</strong>: carga un aula con mesas, 22 alumnos ficticios y algunas reglas ya puestas.</p>
+    <p>Todo funciona en local, sin conexión. Si quieres probarlo antes de meter a tu clase, pulsa <strong>Ejemplo</strong>: carga un aula con mesas, 22 alumnos ficticios y algunas reglas ya puestas.</p>
 
     <h3>1. Diseñar aula</h3>
     <ul>
@@ -595,7 +627,7 @@
 
     <div class="modal-actions">
       <button id="helpCloseBtn">Entendido</button>
-      <button class="secondary" id="helpSampleBtn">🧪 Probar con la clase de ejemplo</button>
+      <button class="secondary" id="helpSampleBtn"><svg class="icon" aria-hidden="true"><use href="#i-ejemplo"/></svg>Probar con la clase de ejemplo</button>
     </div>
   </div>
 </div>
@@ -617,6 +649,7 @@
   const ADJ_THRESHOLD = 82; // px between desk centers to count as "adjacent"
 
   const $ = id => document.getElementById(id);
+  const icon = name => `<svg class="icon" aria-hidden="true"><use href="#i-${name}"/></svg>`;
   function escapeHtml(str){ return String(str).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
 
   // ---------- Tabs ----------
@@ -778,7 +811,7 @@
       el.appendChild(label);
       if(sid){
         const clearBtn = document.createElement('button');
-        clearBtn.className = 'clearx'; clearBtn.textContent = '×'; clearBtn.title='Vaciar esta mesa';
+        clearBtn.className = 'clearx'; clearBtn.innerHTML = icon('cerrar'); clearBtn.title='Vaciar esta mesa'; clearBtn.setAttribute('aria-label','Vaciar esta mesa');
         clearBtn.addEventListener('pointerdown', e => e.stopPropagation());
         clearBtn.onclick = (e) => { e.stopPropagation(); delete seatAssignment[d.id]; if(selectedSwapId===d.id) selectedSwapId=null; renderCanvas(); };
         el.appendChild(clearBtn);
@@ -844,7 +877,7 @@
     tags.forEach(t => {
       const li = document.createElement('li');
       li.innerHTML = `<span style="display:inline-flex; align-items:center; gap:6px;"><span class="tag-swatch" style="background:${t.color}"></span>${escapeHtml(t.name)}</span>`;
-      const btn = document.createElement('button'); btn.className='danger'; btn.textContent='✕';
+      const btn = document.createElement('button'); btn.className='danger'; btn.innerHTML=icon('cerrar'); btn.title='Eliminar'; btn.setAttribute('aria-label','Eliminar');
       btn.onclick = () => {
         tags = tags.filter(x=>x.id!==t.id);
         desks.forEach(d => d.tags = d.tags.filter(x=>x!==t.id));
@@ -896,7 +929,7 @@
     students.forEach(s => {
       const li = document.createElement('li');
       const span = document.createElement('span'); span.textContent = fullName(s);
-      const btn = document.createElement('button'); btn.className='danger'; btn.textContent='✕';
+      const btn = document.createElement('button'); btn.className='danger'; btn.innerHTML=icon('cerrar'); btn.title='Eliminar'; btn.setAttribute('aria-label','Eliminar');
       btn.onclick = () => removeStudent(s.id);
       li.appendChild(span); li.appendChild(btn);
       list.appendChild(li);
@@ -960,10 +993,10 @@
     const list = $('ruleList'); list.innerHTML='';
     rules.forEach(r => {
       let label='';
-      if(r.type==='fixed') label = `📌 ${nameOf(r.studentId)} — sitio fijo (${deskLabel(r.deskId)})`;
-      if(r.type==='tag') label = `🏷️ ${nameOf(r.studentId)} — siempre en mesa "${tagNameOf(r.tagId)}"`;
-      if(r.type==='together') label = `🤝 ${nameOf(r.studentA)} y ${nameOf(r.studentB)} — siempre juntos`;
-      if(r.type==='apart') label = `🚫 ${nameOf(r.studentA)} y ${nameOf(r.studentB)} — nunca juntos`;
+      if(r.type==='fixed') label = `${icon('chincheta')}${escapeHtml(nameOf(r.studentId))} — sitio fijo (${deskLabel(r.deskId)})`;
+      if(r.type==='tag') label = `${icon('etiqueta')}${escapeHtml(nameOf(r.studentId))} — siempre en mesa "${escapeHtml(tagNameOf(r.tagId))}"`;
+      if(r.type==='together') label = `${icon('juntar')}${escapeHtml(nameOf(r.studentA))} y ${escapeHtml(nameOf(r.studentB))} — siempre juntos`;
+      if(r.type==='apart') label = `${icon('separar')}${escapeHtml(nameOf(r.studentA))} y ${escapeHtml(nameOf(r.studentB))} — nunca juntos`;
       const div = document.createElement('div'); div.className='rule-item'; div.innerHTML = `<div>${label}</div>`;
       const btn = document.createElement('button'); btn.className='danger'; btn.textContent='Quitar'; btn.style.marginTop='6px';
       btn.onclick = () => { rules = rules.filter(x=>x.id!==r.id); renderRules(); };
@@ -1773,7 +1806,7 @@
     applyState(buildSampleState());
     $('groupsGrid').innerHTML = '';
     shuffle();
-    setImportExportStatus('Clase de ejemplo cargada: 22 alumnos ficticios, 24 mesas (primera fila con etiqueta "Visión") y 5 reglas. Explora las pestañas o pulsa "❓ Ayuda".', false);
+    setImportExportStatus('Clase de ejemplo cargada: 22 alumnos ficticios, 24 mesas (primera fila con etiqueta "Visión") y 5 reglas. Explora las pestañas o pulsa "Ayuda".', false);
   }
   $('sampleBtn').onclick = loadSample;
 
