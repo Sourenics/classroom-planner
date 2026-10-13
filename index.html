@@ -33,6 +33,7 @@
     color-scheme: dark;
   }
   *{ box-sizing:border-box; }
+  [hidden]{ display:none !important; }
   html{ -webkit-text-size-adjust:100%; }
   body{
     margin:0;
@@ -151,8 +152,25 @@
   .hint{ font-size:0.78rem; color: var(--faint); margin: 8px 0 0; line-height:1.45; }
   .hint + .row, .hint + .toggle-row, .hint + button{ margin-top: 12px; }
 
-  .desk-editor{ background: var(--ochre-soft); border:1px solid rgba(232,171,92,0.35); border-radius: var(--radius-sm); padding:10px 12px; }
-  .desk-editor .tag-toggle{ display:flex; align-items:center; gap:8px; padding:4px 0; font-size:0.86rem; cursor:pointer; }
+  .desk-pop{ display:flex; flex-wrap:wrap; align-items:flex-start; gap:10px 22px; margin: -2px 0 14px; padding: 12px 14px; border-radius: 12px;
+    background: linear-gradient(180deg, rgba(232,171,92,0.13), rgba(232,171,92,0.06)); border:1px solid rgba(232,171,92,0.38); font-size:0.86rem; animation: popIn .15s ease both; }
+  .desk-pop[hidden]{ display:none; }
+  .desk-pop .pop-head{ min-width: 130px; }
+  .desk-pop .pop-title{ font-family: var(--font-display); font-weight:600; font-size:1.05rem; color: var(--ochre); line-height:1.2; }
+  .desk-pop .pop-sub{ display:block; font-family: var(--font-ui); font-size:0.9rem; font-weight:600; color: var(--chalk); margin-top:2px; }
+  .desk-pop .pop-body{ flex: 1 1 260px; min-width: 0; }
+  .desk-pop .pop-body .hint{ margin: 0 0 8px; }
+  .desk-pop .pop-close{ order: 9; margin-left:auto; flex-shrink:0; width:30px; height:30px; padding:0; border-radius:50%; background: var(--surface-2); border:1px solid var(--line); color: var(--muted); }
+  .desk-pop .pop-close:hover{ background: var(--surface-3); color: var(--chalk); filter:none; }
+  .desk-pop .pop-actions{ display:flex; flex-wrap:wrap; gap:6px; }
+  .desk-pop .pop-actions button{ padding:6px 10px; font-size:0.8rem; }
+  .desk-pop .pop-actions button.on{ background: var(--ochre-soft); border-color: rgba(232,171,92,0.6); color: var(--ochre); }
+  .desk-pop .pop-section{ flex: 0 1 auto; padding-left: 18px; border-left: 1px solid var(--line); }
+  .desk-pop .pop-label{ font-size:0.7rem; letter-spacing:1px; text-transform:uppercase; color: var(--faint); font-weight:700; margin-bottom:4px; }
+  .desk-pop select{ max-width: 320px; }
+  .desk-pop .danger{ margin-top:6px; }
+  @media (max-width: 700px){ .desk-pop .pop-section{ padding-left:0; border-left:none; padding-top:8px; border-top:1px solid var(--line); flex-basis:100%; } }
+  .desk-pop .tag-toggle{ display:flex; align-items:center; gap:8px; padding:4px 0; font-size:0.86rem; cursor:pointer; }
 
   .toggle-row{ display:flex; align-items:flex-start; gap:10px; font-size:0.84rem; color: var(--muted); margin:12px 0; cursor:pointer; line-height:1.4; }
   .toggle-row input{ margin-top:1px; flex-shrink:0; appearance:none; -webkit-appearance:none; width:34px; height:20px; border-radius:999px; background: rgba(244,241,230,0.18); position:relative; transition: background .2s; }
@@ -211,6 +229,11 @@
   .freecanvas.locked .fdesk{ cursor:pointer; }
   .fdesk .dots{ position:absolute; top:5px; left:5px; display:flex; gap:3px; }
   .fdesk .dot{ width:7px; height:7px; border-radius:50%; box-shadow: 0 0 0 1.5px rgba(0,0,0,0.3); }
+  .fdesk .num{ position:absolute; bottom:3px; right:5px; font-size:0.6rem; font-weight:700; opacity:0.55; text-shadow:none; letter-spacing:0.3px; }
+  .fdesk:focus-visible{ outline: 2px solid var(--ochre); outline-offset: 2px; }
+  .fdesk.drop-target{ box-shadow: 0 0 0 3px var(--teal), 0 0 18px rgba(127,209,201,0.45); }
+  .fdesk.drag-source{ opacity:0.55; }
+  .drag-ghost{ position:fixed; z-index:2000; pointer-events:none; transform: translate(-50%, -60%) rotate(-3deg); padding:8px 12px; border-radius:8px; background: linear-gradient(155deg, #b07c4e, #8b5e3c); color:#fff8ec; font-weight:700; font-size:0.85rem; border:1.5px solid #d2a571; box-shadow: 0 14px 28px rgba(0,0,0,0.45); white-space:nowrap; }
   .fdesk .clearx{ position:absolute; top:-7px; right:-7px; width:20px; height:20px; line-height:1; padding:0; border-radius:50%; background: #c0574a; color:#fff; font-size:12px; border:2px solid var(--bg);
     display:grid; place-items:center; opacity:0; transform: scale(0.7); transition: opacity .15s, transform .15s; box-shadow: 0 2px 6px rgba(0,0,0,0.35); }
   .fdesk:hover .clearx, .fdesk.swap-select .clearx, .fdesk .clearx:focus-visible{ opacity:1; transform: scale(1); }
@@ -386,14 +409,14 @@
         <button class="block secondary" id="addSingleBtn"><svg class="icon" aria-hidden="true"><use href="#i-mas"/></svg>Mesa</button>
         <button class="block secondary" id="addPairBtn"><svg class="icon" aria-hidden="true"><use href="#i-mas"/></svg>Pareja de mesas</button>
         <button class="block secondary" id="addQuadBtn"><svg class="icon" aria-hidden="true"><use href="#i-mas"/></svg>Grupo de 4</button>
-        <p class="hint">Arrastra cualquier mesa a la posición que quieras. Haz clic (sin arrastrar) en una mesa vacía para etiquetarla. Para mover o intercambiar alumnado, haz clic en una mesa ocupada y luego en la mesa destino.</p>
+        <p class="hint">Arrastra las mesas a su posición. Haz clic en una mesa para ver sus opciones (etiquetas, desactivarla, eliminarla, sentar a alguien…).</p>
       </section>
 
       <section>
         <h2>Bloquear diseño</h2>
         <label class="toggle-row">
           <input type="checkbox" id="layoutLocked">
-          <span>Bloquear el diseño del aula (evita mover, añadir o eliminar mesas por error). Con el diseño bloqueado sigues pudiendo mover alumnos entre mesas haciendo clic.</span>
+          <span>Bloquear el diseño del aula (evita mover, añadir o eliminar mesas por error). Con el diseño bloqueado puedes arrastrar a un alumno a otra mesa sin mover las mesas.</span>
         </label>
       </section>
 
@@ -405,11 +428,6 @@
           <button id="addTagBtn" title="Añadir etiqueta" aria-label="Añadir etiqueta"><svg class="icon" aria-hidden="true"><use href="#i-mas"/></svg></button>
         </div>
         <ul class="tag-list" id="tagList"></ul>
-      </section>
-
-      <section id="deskEditorSection" style="display:none;">
-        <h2>Mesa seleccionada</h2>
-        <div class="desk-editor" id="deskEditor"></div>
       </section>
     </div>
 
@@ -538,12 +556,13 @@
   <div class="stage">
     <div id="stageAula" class="stage-card">
       <div class="toolbar">
-        <span class="status" id="stageHint">Arrastra las mesas para colocarlas (si el diseño no está bloqueado). Para mover a un alumno: clic en su mesa y luego en la mesa destino. La ✕ vacía la mesa.</span>
+        <span class="status" id="stageHint"></span>
         <div class="toolbar-actions">
           <button class="secondary" id="undoBtn" title="Deshacer (Ctrl+Z)" disabled><svg class="icon" aria-hidden="true"><use href="#i-deshacer"/></svg>Deshacer</button>
           <button class="secondary" id="redoBtn" title="Rehacer (Ctrl+Y)" disabled aria-label="Rehacer"><svg class="icon" aria-hidden="true"><use href="#i-rehacer"/></svg></button>
         </div>
       </div>
+      <div class="desk-pop" id="deskPop" role="region" aria-label="Opciones de la mesa seleccionada" hidden></div>
       <div class="canvas-scroll">
         <div class="room">
           <div class="board">Pizarra</div>
@@ -743,7 +762,6 @@
     $('addPairBtn').disabled = layoutLocked;
     $('addQuadBtn').disabled = layoutLocked;
     $('canvas').classList.toggle('locked', layoutLocked);
-    if(layoutLocked){ selectedDeskId = null; }
     renderCanvas(); renderDeskEditor();
   });
 
@@ -818,7 +836,7 @@
   // Funciona siempre, incluso con el diseño del aula bloqueado.
   function trySwap(deskId){
     if(selectedSwapId === null){ selectedSwapId = deskId; }
-    else if(selectedSwapId === deskId){ selectedSwapId = null; }
+    else if(selectedSwapId === deskId){ selectedSwapId = null; selectedDeskId = null; }
     else {
       const a = seatAssignment[selectedSwapId], b = seatAssignment[deskId];
       const sa = students.find(x=>x.id===a), sb = students.find(x=>x.id===b);
@@ -827,52 +845,92 @@
       if(b) seatAssignment[selectedSwapId]=b; else delete seatAssignment[selectedSwapId];
       selectedSwapId = null;
       if(sa) toast(sb ? `${displayName(sa)} y ${displayName(sb)} intercambiados` : `${displayName(sa)} movido a ${deskLabel(deskId)}`, { undo: true });
+      selectedDeskId = null;
     }
-    renderCanvas();
+    renderCanvas(); renderDeskEditor();
   }
 
+  // Clic en una mesa: abre su ficha. Si ya hay un alumno elegido para mover, la mesa clicada es el destino.
+  function onDeskClick(d){
+    if(selectedSwapId !== null && selectedSwapId !== d.id){ trySwap(d.id); return; }
+    if(selectedDeskId === d.id){ deselectDesk(); return; }
+    selectedDeskId = d.id;
+    selectedSwapId = seatAssignment[d.id] ? d.id : null;
+    renderCanvas(); renderDeskEditor();
+  }
+  function deselectDesk(){
+    if(selectedDeskId === null && selectedSwapId === null) return;
+    selectedDeskId = null; selectedSwapId = null;
+    renderCanvas(); renderDeskEditor();
+  }
+  // Mueve (o intercambia) el alumno de la mesa "from" a la mesa "to".
+  function moveStudent(fromId, toId){
+    selectedSwapId = fromId;
+    trySwap(toId);
+  }
+
+  // Arrastre de una mesa:
+  // - diseño desbloqueado: mueve la mesa;
+  // - diseño bloqueado y mesa ocupada: arrastra al alumno hasta otra mesa (mover o intercambiar), sin tocar las mesas.
   function attachDrag(el, d){
-    let startX, startY, origX, origY, moved, pointerId, snapBefore;
+    let startX, startY, origX, origY, moved, mode, ghost, dropEl;
+    const deskAt = (x, y) => { const t = document.elementFromPoint(x, y); return t ? t.closest('.fdesk') : null; };
+    const teacherFlip = () => (typeof viewMode !== 'undefined' && viewMode === 'teacher') ? -1 : 1;
     el.addEventListener('pointerdown', (e) => {
+      if(e.button !== 0) return;
       e.preventDefault();
       startX = e.clientX; startY = e.clientY;
-      origX = d.x; origY = d.y; moved = false; snapBefore = null;
-      pointerId = e.pointerId;
-      el.setPointerCapture(pointerId);
-      if(!layoutLocked) el.classList.add('dragging');
+      origX = d.x; origY = d.y; moved = false; ghost = null; dropEl = null;
+      mode = !layoutLocked ? 'desk' : (seatAssignment[d.id] ? 'student' : 'none');
+      el.setPointerCapture(e.pointerId);
     });
     el.addEventListener('pointermove', (e) => {
       if(startX === undefined) return;
-      if(layoutLocked) return; // diseño bloqueado: nunca reposicionar, siempre se tratará como clic
       const dx = e.clientX - startX, dy = e.clientY - startY;
-      if(!moved && (Math.abs(dx) > 3 || Math.abs(dy) > 3)){ moved = true; pushUndo('mover mesa', snapshot()); }
-      if(moved){
-        let nx = origX + dx, ny = origY + dy;
+      if(!moved && (Math.abs(dx) > 4 || Math.abs(dy) > 4)){
+        if(mode === 'none') return;
+        moved = true;
+        if(mode === 'desk'){ pushUndo('mover mesa', snapshot()); el.classList.add('dragging'); }
+        if(mode === 'student'){
+          const st = students.find(x => x.id === seatAssignment[d.id]);
+          ghost = document.createElement('div'); ghost.className = 'drag-ghost'; ghost.textContent = st ? displayName(st) : '';
+          document.body.appendChild(ghost); el.classList.add('drag-source');
+          $('deskPop').hidden = true;
+        }
+      }
+      if(!moved) return;
+      if(mode === 'desk'){
+        const f = teacherFlip();
+        let nx = origX + dx*f, ny = origY + dy*f;
         nx = Math.max(0, Math.min(canvasW - DESK_SIZE, nx));
         ny = Math.max(0, Math.min(canvasH - DESK_SIZE, ny));
         d.x = nx; d.y = ny;
         el.style.left = nx+'px'; el.style.top = ny+'px';
+      } else if(mode === 'student'){
+        ghost.style.left = e.clientX + 'px'; ghost.style.top = e.clientY + 'px';
+        const over = deskAt(e.clientX, e.clientY);
+        const target = (over && over !== el && desks.some(x => String(x.id) === over.dataset.id && x.active)) ? over : null;
+        if(dropEl && dropEl !== target) dropEl.classList.remove('drop-target');
+        dropEl = target; if(dropEl) dropEl.classList.add('drop-target');
       }
     });
-    el.addEventListener('pointerup', (e) => {
-      el.classList.remove('dragging');
+    const finish = (e, cancelled) => {
       if(startX === undefined) return;
       startX = undefined;
-      if(!moved){
-        // treat as click
-        if(selectedSwapId !== null){
-          // ya hay una mesa origen marcada: cualquier mesa destino (vacía u ocupada) completa el movimiento
-          trySwap(d.id);
-        } else if(seatAssignment[d.id]){
-          // mesa ocupada: la marca como origen para mover/intercambiar su alumno
-          trySwap(d.id);
-        } else if(!layoutLocked){
-          // mesa vacía y sin movimiento en curso: abre el editor de la mesa (solo si el diseño no está bloqueado)
-          selectDesk(d.id);
-        }
-      } else {
-        renderCanvas();
+      el.classList.remove('dragging', 'drag-source');
+      if(ghost){ ghost.remove(); ghost = null; }
+      if(!moved){ if(!cancelled) onDeskClick(d); return; }
+      if(mode === 'student' && dropEl && !cancelled){
+        const toId = Number(dropEl.dataset.id);
+        moveStudent(d.id, toId);
+        return;
       }
+      renderCanvas(); renderDeskEditor();
+    };
+    el.addEventListener('pointerup', e => finish(e, false));
+    el.addEventListener('pointercancel', e => finish(e, true));
+    el.addEventListener('keydown', (e) => {
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); onDeskClick(d); }
     });
   }
 
@@ -884,45 +942,123 @@
       const el = document.createElement('div');
       el.className = 'fdesk' + (sid?' filled':'') + (selectedDeskId===d.id?' selected':'') + (selectedSwapId===d.id?' swap-select':'') + (!d.active?' inactive':'');
       el.style.left = d.x+'px'; el.style.top = d.y+'px';
+      el.dataset.id = d.id;
+      el.tabIndex = 0;
+      el.setAttribute('role', 'button');
+      const st0 = sid ? students.find(x=>x.id===sid) : null;
+      el.setAttribute('aria-label', `${deskLabel(d.id)}${st0 ? ', ' + fullName(st0) : ', vacía'}`);
       const dots = document.createElement('div'); dots.className='dots';
       (d.tags||[]).forEach(tid => {
         const t = tags.find(x=>x.id===tid);
         if(t){ const dot=document.createElement('span'); dot.className='dot'; dot.style.background=t.color; dots.appendChild(dot); }
       });
       el.appendChild(dots);
-      const label = document.createElement('span');
+      const label = document.createElement('span'); label.className = 'name';
       if(sid){ const s = students.find(x=>x.id===sid); label.textContent = s? displayName(s) : ''; }
       el.appendChild(label);
+      const num = document.createElement('span'); num.className = 'num'; num.textContent = desks.indexOf(d) + 1;
+      el.appendChild(num);
       if(sid){
         const clearBtn = document.createElement('button');
         clearBtn.className = 'clearx'; clearBtn.innerHTML = icon('cerrar'); clearBtn.title='Vaciar esta mesa'; clearBtn.setAttribute('aria-label','Vaciar esta mesa');
         clearBtn.addEventListener('pointerdown', e => e.stopPropagation());
-        clearBtn.onclick = (e) => { e.stopPropagation(); pushUndo('vaciar mesa'); delete seatAssignment[d.id]; if(selectedSwapId===d.id) selectedSwapId=null; renderCanvas(); };
+        clearBtn.onclick = (e) => { e.stopPropagation(); clearDesk(d.id); };
         el.appendChild(clearBtn);
       }
       attachDrag(el, d);
       canvas.appendChild(el);
     });
+    renderStageHint();
   }
 
-  function selectDesk(id){ selectedDeskId = id; renderCanvas(); renderDeskEditor(); }
+  function renderStageHint(){
+    const hint = $('stageHint'); if(!hint) return;
+    const src = selectedSwapId !== null ? students.find(x => x.id === seatAssignment[selectedSwapId]) : null;
+    if(src) hint.textContent = `Moviendo a ${displayName(src)}: haz clic en otra mesa${layoutLocked ? ' o arrástralo' : ''} (si está ocupada, se intercambian). Esc para cancelar.`;
+    else if(layoutLocked) hint.textContent = 'Diseño bloqueado: arrastra a un alumno a otra mesa para moverlo o intercambiarlo. Clic en una mesa para ver sus opciones.';
+    else hint.textContent = 'Arrastra las mesas para colocarlas. Clic en una mesa para ver sus opciones (mover alumnos, etiquetas, eliminar…).';
+  }
 
+  function clearDesk(deskId){
+    if(!seatAssignment[deskId]) return;
+    pushUndo('vaciar mesa');
+    delete seatAssignment[deskId];
+    if(selectedSwapId === deskId) selectedSwapId = null;
+    renderCanvas(); renderDeskEditor();
+  }
+
+  // Sienta a un alumno en una mesa (sacándolo de la que tuviera). Si la mesa estaba ocupada, ese alumno se queda sin sitio.
+  function seatStudentAt(studentId, deskId){
+    pushUndo('sentar alumno');
+    for(const k in seatAssignment) if(seatAssignment[k] === studentId) delete seatAssignment[k];
+    seatAssignment[deskId] = studentId;
+    selectedSwapId = deskId;
+    renderCanvas(); renderDeskEditor();
+  }
+
+  function selectDesk(id){ selectedDeskId = id; selectedSwapId = seatAssignment[id] ? id : null; renderCanvas(); renderDeskEditor(); }
+
+  // Ficha flotante de la mesa seleccionada
   function renderDeskEditor(){
-    const section = $('deskEditorSection');
-    const editor = $('deskEditor');
-    if(!selectedDeskId){ section.style.display='none'; return; }
-    const d = desks.find(x=>x.id===selectedDeskId);
-    if(!d){ section.style.display='none'; return; }
-    section.style.display='block';
-    editor.innerHTML = '';
+    const pop = $('deskPop');
+    const d = selectedDeskId !== null ? desks.find(x=>x.id===selectedDeskId) : null;
+    if(!d){ pop.hidden = true; pop.innerHTML = ''; return; }
+    const sid = seatAssignment[d.id];
+    const st = sid ? students.find(x=>x.id===sid) : null;
+    pop.innerHTML = '';
+
+    const head = document.createElement('div'); head.className = 'pop-head';
+    head.innerHTML = `<div class="pop-title">${escapeHtml(deskLabel(d.id))}<span class="pop-sub">${st ? escapeHtml(fullName(st)) : (d.active ? 'Vacía' : 'Desactivada')}</span></div>`;
+    const close = document.createElement('button'); close.className = 'pop-close'; close.innerHTML = icon('cerrar'); close.title = 'Cerrar (Esc)'; close.setAttribute('aria-label','Cerrar');
+    close.onclick = deselectDesk;
+    pop.appendChild(head); pop.appendChild(close);
+    const body = document.createElement('div'); body.className = 'pop-body'; pop.appendChild(body);
+
+    if(st){
+      const actions = document.createElement('div'); actions.className = 'pop-actions';
+      const clearB = document.createElement('button'); clearB.className = 'secondary'; clearB.innerHTML = icon('cerrar') + 'Vaciar mesa';
+      clearB.onclick = () => clearDesk(d.id);
+      const fixed = rules.find(r => r.type === 'fixed' && r.studentId === st.id && r.deskId === d.id);
+      const fixB = document.createElement('button'); fixB.className = 'secondary' + (fixed ? ' on' : '');
+      fixB.innerHTML = icon('chincheta') + (fixed ? 'Sitio fijo ✓' : 'Fijar aquí');
+      fixB.title = fixed ? 'Quitar la regla de sitio fijo' : `Crear la regla: ${fullName(st)} siempre en ${deskLabel(d.id)}`;
+      fixB.onclick = () => {
+        if(fixed){ rules = rules.filter(r => r.id !== fixed.id); toast('Sitio fijo quitado'); }
+        else {
+          const res = addRule({ type: 'fixed', studentId: st.id, deskId: d.id });
+          toast(res.ok ? `${displayName(st)} tendrá siempre ${deskLabel(d.id)}` : res.msg);
+        }
+        renderRules(); renderDeskEditor();
+      };
+      actions.appendChild(clearB); actions.appendChild(fixB);
+      body.appendChild(actions);
+    } else if(d.active){
+      const lbl = document.createElement('div'); lbl.className = 'pop-label'; lbl.textContent = 'Sentar aquí a';
+      const sel = document.createElement('select');
+      const seatOf = {}; for(const k in seatAssignment) seatOf[seatAssignment[k]] = Number(k);
+      const sorted = students.slice().sort((a,b) => (seatOf[a.id]?1:0) - (seatOf[b.id]?1:0) || fullName(a).localeCompare(fullName(b), 'es'));
+      sel.innerHTML = '<option value="">— Elige alumno —</option>' + sorted.map(x =>
+        `<option value="${x.id}">${escapeHtml(fullName(x))}${seatOf[x.id] ? ' (ahora en ' + escapeHtml(deskLabel(seatOf[x.id])) + ')' : ' (sin sitio)'}</option>`).join('');
+      sel.onchange = () => { if(sel.value) seatStudentAt(Number(sel.value), d.id); };
+      if(!students.length){ sel.disabled = true; sel.innerHTML = '<option>Añade alumnado primero</option>'; }
+      body.appendChild(lbl); body.appendChild(sel);
+    } else {
+      const hint = document.createElement('p'); hint.className = 'hint'; hint.style.marginTop = '0';
+      hint.textContent = 'Mesa desactivada: al barajar no se sentará a nadie aquí.';
+      body.appendChild(hint);
+    }
+
+    const sec = document.createElement('div'); sec.className = 'pop-section';
+    sec.innerHTML = '<div class="pop-label">Opciones de la mesa</div>';
     const activeLabel = document.createElement('label');
     activeLabel.className = 'tag-toggle';
-    activeLabel.innerHTML = `<input type="checkbox" id="deskActiveToggle" ${d.active?'checked':''}> Permitir alumnos aquí`;
-    editor.appendChild(activeLabel);
-    activeLabel.querySelector('input').onchange = (e) => { pushUndo(e.target.checked ? 'activar mesa' : 'desactivar mesa'); d.active = e.target.checked; if(!d.active){ delete seatAssignment[d.id]; } renderCanvas(); };
-
-    const tagsTitle = document.createElement('p'); tagsTitle.className='hint'; tagsTitle.style.marginTop='10px'; tagsTitle.textContent = tags.length? 'Etiquetas:' : 'Crea etiquetas arriba para poder asignarlas.';
-    editor.appendChild(tagsTitle);
+    activeLabel.innerHTML = `<input type="checkbox" ${d.active?'checked':''}> Permitir alumnos aquí`;
+    activeLabel.querySelector('input').onchange = (e) => { pushUndo(e.target.checked ? 'activar mesa' : 'desactivar mesa'); d.active = e.target.checked; if(!d.active){ delete seatAssignment[d.id]; if(selectedSwapId===d.id) selectedSwapId=null; } renderCanvas(); renderDeskEditor(); };
+    sec.appendChild(activeLabel);
+    if(!tags.length){
+      const p = document.createElement('p'); p.className = 'hint'; p.style.marginTop = '4px'; p.textContent = 'Crea etiquetas en "Diseñar aula" para poder asignarlas.';
+      sec.appendChild(p);
+    }
     tags.forEach(t => {
       const checked = d.tags.includes(t.id);
       const label = document.createElement('label');
@@ -932,23 +1068,33 @@
         pushUndo('cambiar etiquetas de mesa');
         if(e.target.checked){ if(!d.tags.includes(t.id)) d.tags.push(t.id); }
         else { d.tags = d.tags.filter(x=>x!==t.id); }
-        renderCanvas();
+        renderCanvas(); renderDeskEditor();
       };
-      editor.appendChild(label);
+      sec.appendChild(label);
     });
-    const removeBtn = document.createElement('button');
-    removeBtn.className='danger'; removeBtn.textContent='Eliminar mesa'; removeBtn.style.marginTop='10px';
-    removeBtn.onclick = () => {
-      pushUndo('eliminar mesa');
-      desks = desks.filter(x=>x.id!==d.id);
-      rules = rules.filter(r => !(r.type==='fixed' && r.deskId===d.id));
-      delete seatAssignment[d.id];
-      selectedDeskId = null;
-      renderCanvas(); renderDeskEditor(); renderRuleFields(); renderRules();
-    };
-    editor.appendChild(document.createElement('br'));
-    editor.appendChild(removeBtn);
+    if(layoutLocked){
+      const p = document.createElement('p'); p.className = 'hint'; p.textContent = 'Desbloquea el diseño para eliminar la mesa.';
+      sec.appendChild(p);
+    } else {
+      const removeBtn = document.createElement('button');
+      removeBtn.className='danger'; removeBtn.textContent='Eliminar mesa'; removeBtn.style.marginTop='10px';
+      removeBtn.onclick = () => {
+        pushUndo('eliminar mesa');
+        desks = desks.filter(x=>x.id!==d.id);
+        rules = rules.filter(r => !(r.type==='fixed' && r.deskId===d.id));
+        delete seatAssignment[d.id];
+        selectedDeskId = null; selectedSwapId = null;
+        renderCanvas(); renderDeskEditor(); renderRuleFields(); renderRules();
+      };
+      sec.appendChild(removeBtn);
+    }
+    pop.appendChild(sec);
+    pop.hidden = false;
   }
+
+  document.addEventListener('keydown', (e) => { if(e.key === 'Escape' && (selectedDeskId !== null || selectedSwapId !== null) && $('helpModal').style.display === 'none') deselectDesk(); });
+  // Clic en el suelo del aula (fuera de las mesas) cierra la ficha
+  $('canvas').addEventListener('pointerdown', (e) => { if(e.target === $('canvas')) deselectDesk(); });
 
   // ---------- Tags ----------
   $('addTagBtn').onclick = () => {
@@ -1039,7 +1185,7 @@
   // ---------- Rules ----------
   function nameOf(id){ const s=students.find(x=>x.id===id); return s? fullName(s) : '?'; }
   function tagNameOf(id){ const t=tags.find(x=>x.id===id); return t? t.name : '?'; }
-  function deskLabel(id){ const idx = desks.findIndex(x=>x.id===id); return idx>=0? `Mesa #${idx+1}` : '?'; }
+  function deskLabel(id){ const idx = desks.findIndex(x=>x.id===id); return idx>=0? `Mesa ${idx+1}` : '?'; }
   function studentOptions(){ return students.map(s=>`<option value="${s.id}">${escapeHtml(fullName(s))}</option>`).join(''); }
 
   function renderRuleFields(){
@@ -1048,9 +1194,21 @@
     $('rf_together_a').innerHTML = opts; $('rf_together_b').innerHTML = opts;
     $('rf_tag_student').innerHTML = opts; $('rf_fixed_student').innerHTML = opts;
     $('rf_tag_tag').innerHTML = tags.map(t=>`<option value="${t.id}">${escapeHtml(t.name)}</option>`).join('');
-    $('rf_fixed_desk').innerHTML = desks.map((d,i)=>`<option value="${d.id}">Mesa #${i+1}</option>`).join('');
+    $('rf_fixed_desk').innerHTML = desks.map((d,i)=>`<option value="${d.id}">Mesa ${i+1}</option>`).join('');
   }
   renderRuleFields();
+
+  // Añade una regla. Devuelve { ok, msg }.
+  function addRule(rule){
+    if(rule.type === 'fixed'){
+      const other = rules.find(r => r.type === 'fixed' && r.deskId === rule.deskId && r.studentId !== rule.studentId);
+      if(other) return { ok:false, msg:`${deskLabel(rule.deskId)} ya es el sitio fijo de ${nameOf(other.studentId)}.` };
+      rules = rules.filter(r => !(r.type === 'fixed' && r.studentId === rule.studentId));
+    }
+    rules.push({ id: nextRuleId++, ...rule });
+    renderRules();
+    return { ok:true };
+  }
 
   $('addApartBtn').onclick = () => {
     if(students.length===0){ setStatus('Añade primero al alumnado.', true); return; }
