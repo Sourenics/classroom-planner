@@ -209,7 +209,7 @@
   .toolbar-actions button{ padding:6px 11px; }
   .toast{ position:fixed; left:50%; bottom:24px; transform:translateX(-50%); z-index:1300; display:flex; align-items:center; gap:14px; max-width: calc(100vw - 32px);
     background: var(--bg-deep); color: var(--chalk); border:1px solid var(--line-strong); border-radius: 12px; padding:10px 12px 10px 16px; box-shadow: 0 12px 30px rgba(0,0,0,0.4); font-size:0.88rem; animation: toastIn .2s ease; }
-  .toast[hidden]{ display:none; }
+  .toast.error{ border-color: rgba(227,130,111,0.7); box-shadow: 0 12px 30px rgba(0,0,0,0.4), inset 4px 0 0 var(--danger); }
   .toast-action{ background:transparent; color: var(--ochre); border:1px solid rgba(232,171,92,0.45); padding:5px 10px; font-size:0.82rem; }
   .toast-action:hover{ background: var(--ochre-soft); filter:none; }
   @keyframes toastIn{ from{ opacity:0; transform: translate(-50%, 8px); } to{ opacity:1; transform: translate(-50%, 0); } }
@@ -217,6 +217,10 @@
   .toolbar .status::before{ content:'i'; flex-shrink:0; width:18px; height:18px; border-radius:50%; display:grid; place-items:center; font-size:0.7rem; font-weight:700; font-style:italic; font-family: var(--font-display); color: var(--bg); background: var(--faint); margin-top:1px; }
   .status{ font-size:0.82rem; color: var(--muted); }
   .status.error{ color: var(--danger); }
+  .shuffle-diag{ display:flex; flex-direction:column; gap:6px; margin-top:8px; }
+  .shuffle-diag:empty{ display:none; }
+  .diag-item{ display:flex; align-items:center; justify-content:space-between; gap:10px; padding:7px 10px; border-radius: var(--radius-sm); background: rgba(0,0,0,0.15); border:1px solid rgba(227,130,111,0.35); font-size:0.82rem; }
+  .diag-item button{ flex-shrink:0; }
   .panel .status:not(:empty){ padding: 8px 10px; border-radius: var(--radius-sm); background: rgba(0,0,0,0.15); border:1px solid var(--line); }
   .panel .status.error:not(:empty){ background: var(--danger-soft); border-color: rgba(227,130,111,0.35); }
 
@@ -514,6 +518,7 @@
         <h2>Generar plano</h2>
         <button id="shuffleBtn" class="block big"><svg class="icon" aria-hidden="true"><use href="#i-barajar"/></svg>Barajar asientos</button>
         <div class="status" id="statusMsg" style="margin-top:10px;"></div>
+        <div class="shuffle-diag" id="shuffleDiag"></div>
         <p class="hint">Prueba combinaciones aleatorias hasta encontrar una que cumpla todas las reglas activas. Si no lo consigue, te lo indicará.</p>
       </section>
     </div>
@@ -846,9 +851,10 @@
     const el = $('toast');
     $('toastMsg').textContent = msg;
     $('toastUndo').hidden = !(opts && opts.undo);
+    el.classList.toggle('error', !!(opts && opts.error));
     el.hidden = false;
     clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => { el.hidden = true; }, (opts && opts.undo) ? 6000 : 2500);
+    toastTimer = setTimeout(() => { el.hidden = true; }, (opts && (opts.undo || opts.error)) ? 6000 : 2800);
   }
   $('toastUndo').onclick = () => { $('toast').hidden = true; undo(); };
 
@@ -1047,7 +1053,7 @@
         if(fixed){ rules = rules.filter(r => r.id !== fixed.id); toast('Sitio fijo quitado'); }
         else {
           const res = addRule({ type: 'fixed', studentId: st.id, deskId: d.id });
-          toast(res.ok ? `${displayName(st)} tendrá siempre ${deskLabel(d.id)}` : res.msg);
+          toast(res.ok ? (res.msg === 'Regla añadida.' ? `${displayName(st)} tendrá siempre ${deskLabel(d.id)}` : res.msg) : res.msg, { error: !res.ok });
         }
         renderRules(); renderDeskEditor();
       };
@@ -1267,52 +1273,106 @@
   }
   renderRuleFields();
 
-  // Añade una regla. Devuelve { ok, msg }.
+  // ---------- Validación de reglas ----------
+  function ruleText(r){
+    if(r.type==='fixed') return `${nameOf(r.studentId)} — sitio fijo (${deskLabel(r.deskId)})`;
+    if(r.type==='tag') return `${nameOf(r.studentId)} — siempre en mesa "${tagNameOf(r.tagId)}"`;
+    if(r.type==='together') return `${nameOf(r.studentA)} y ${nameOf(r.studentB)} — siempre juntos`;
+    if(r.type==='apart') return `${nameOf(r.studentA)} y ${nameOf(r.studentB)} — nunca juntos`;
+    return '?';
+  }
+  const samePair = (r, a, b) => (r.studentA===a && r.studentB===b) || (r.studentA===b && r.studentB===a);
+  const fixedDeskOf = sid => { const r = rules.find(x => x.type==='fixed' && x.studentId===sid); return r ? r.deskId : null; };
+  const deskById = id => desks.find(d => d.id === id);
+
+  // Comprueba si una regla nueva es repetida o choca con las existentes. Devuelve un texto con el problema o null.
+  function ruleConflict(rule){
+    if(rule.type==='apart' || rule.type==='together'){
+      const a = rule.studentA, b = rule.studentB;
+      if(a === b) return 'Elige dos alumnos distintos.';
+      if(rules.some(r => r.type===rule.type && samePair(r, a, b))) return 'Esa regla ya existe.';
+      const opposite = rules.find(r => (r.type==='apart'||r.type==='together') && r.type!==rule.type && samePair(r, a, b));
+      if(opposite) return `Contradice la regla «${ruleText(opposite)}».`;
+      const fa = fixedDeskOf(a), fb = fixedDeskOf(b);
+      if(fa && fb){
+        const adj = isAdjacent(fa, fb);
+        if(rule.type==='apart' && adj) return `${nameOf(a)} y ${nameOf(b)} tienen sitio fijo en mesas contiguas (${deskLabel(fa)} y ${deskLabel(fb)}).`;
+        if(rule.type==='together' && !adj) return `${nameOf(a)} y ${nameOf(b)} tienen sitio fijo en mesas que no están juntas (${deskLabel(fa)} y ${deskLabel(fb)}).`;
+      }
+      return null;
+    }
+    if(rule.type==='tag'){
+      const sid = rule.studentId, tag = tags.find(t => t.id===rule.tagId);
+      if(!tag) return 'Esa etiqueta ya no existe.';
+      if(rules.some(r => r.type==='tag' && r.studentId===sid && r.tagId===rule.tagId)) return 'Esa regla ya existe.';
+      const fd = fixedDeskOf(sid);
+      if(fd && !deskById(fd).tags.includes(tag.id)) return `${nameOf(sid)} tiene sitio fijo en ${deskLabel(fd)}, que no tiene la etiqueta "${tag.name}".`;
+      const tagged = desks.filter(d => d.active && d.tags.includes(tag.id)).length;
+      if(!tagged) return `Ninguna mesa activa tiene la etiqueta "${tag.name}". Asígnala antes a alguna mesa.`;
+      const needing = new Set(rules.filter(r => r.type==='tag' && r.tagId===tag.id).map(r => r.studentId)).size;
+      if(needing + 1 > tagged) return `Solo hay ${tagged} mesa(s) con la etiqueta "${tag.name}" y ya ${needing === 1 ? 'hay 1 alumno que la necesita' : `hay ${needing} alumnos que la necesitan`}.`;
+      return null;
+    }
+    if(rule.type==='fixed'){
+      const sid = rule.studentId, d = deskById(rule.deskId);
+      if(!d) return 'Esa mesa ya no existe.';
+      if(!d.active) return `${deskLabel(d.id)} está desactivada (no admite alumnos).`;
+      const other = rules.find(r => r.type==='fixed' && r.deskId===d.id && r.studentId!==sid);
+      if(other) return `${deskLabel(d.id)} ya es el sitio fijo de ${nameOf(other.studentId)}.`;
+      if(rules.some(r => r.type==='fixed' && r.studentId===sid && r.deskId===d.id)) return 'Esa regla ya existe.';
+      const missingTag = rules.find(r => r.type==='tag' && r.studentId===sid && !d.tags.includes(r.tagId));
+      if(missingTag) return `${nameOf(sid)} debe ir en una mesa con la etiqueta "${tagNameOf(missingTag.tagId)}" y ${deskLabel(d.id)} no la tiene.`;
+      for(const r of rules){
+        if(r.type!=='apart' && r.type!=='together') continue;
+        if(r.studentA!==sid && r.studentB!==sid) continue;
+        const partner = r.studentA===sid ? r.studentB : r.studentA, pd = fixedDeskOf(partner);
+        if(!pd) continue;
+        if(r.type==='apart' && isAdjacent(d.id, pd)) return `Choca con «${ruleText(r)}»: ${nameOf(partner)} tiene sitio fijo al lado (${deskLabel(pd)}).`;
+        if(r.type==='together' && !isAdjacent(d.id, pd)) return `Choca con «${ruleText(r)}»: ${nameOf(partner)} tiene sitio fijo en ${deskLabel(pd)}, que no está al lado.`;
+      }
+      return null;
+    }
+    return 'Regla desconocida.';
+  }
+
+  // Añade una regla si no hay conflicto. Devuelve { ok, msg }.
   function addRule(rule){
+    const problem = ruleConflict(rule);
+    if(problem) return { ok:false, msg: problem };
+    let msg = 'Regla añadida.';
     if(rule.type === 'fixed'){
-      const other = rules.find(r => r.type === 'fixed' && r.deskId === rule.deskId && r.studentId !== rule.studentId);
-      if(other) return { ok:false, msg:`${deskLabel(rule.deskId)} ya es el sitio fijo de ${nameOf(other.studentId)}.` };
-      rules = rules.filter(r => !(r.type === 'fixed' && r.studentId === rule.studentId));
+      const prev = rules.find(r => r.type === 'fixed' && r.studentId === rule.studentId);
+      if(prev){ msg = `Sitio fijo de ${nameOf(rule.studentId)} cambiado de ${deskLabel(prev.deskId)} a ${deskLabel(rule.deskId)}.`; rules = rules.filter(r => r !== prev); }
     }
     rules.push({ id: nextRuleId++, ...rule });
     renderRules();
-    return { ok:true };
+    return { ok:true, msg };
+  }
+  function addRuleFromForm(rule){
+    if(students.length===0){ toast('Añade primero al alumnado.', { error:true }); return; }
+    const res = addRule(rule);
+    toast(res.msg, { error: !res.ok });
   }
 
-  $('addApartBtn').onclick = () => {
-    if(students.length===0){ setStatus('Añade primero al alumnado.', true); return; }
-    const a=parseInt($('rf_apart_a').value), b=parseInt($('rf_apart_b').value);
-    if(a===b){ setStatus('Elige dos alumnos distintos.', true); return; }
-    rules.push({ id:nextRuleId++, type:'apart', studentA:a, studentB:b }); renderRules();
-  };
-  $('addTogetherBtn').onclick = () => {
-    if(students.length===0){ setStatus('Añade primero al alumnado.', true); return; }
-    const a=parseInt($('rf_together_a').value), b=parseInt($('rf_together_b').value);
-    if(a===b){ setStatus('Elige dos alumnos distintos.', true); return; }
-    rules.push({ id:nextRuleId++, type:'together', studentA:a, studentB:b }); renderRules();
-  };
+  $('addApartBtn').onclick = () => addRuleFromForm({ type:'apart', studentA:parseInt($('rf_apart_a').value), studentB:parseInt($('rf_apart_b').value) });
+  $('addTogetherBtn').onclick = () => addRuleFromForm({ type:'together', studentA:parseInt($('rf_together_a').value), studentB:parseInt($('rf_together_b').value) });
   $('addTagRuleBtn').onclick = () => {
-    if(students.length===0){ setStatus('Añade primero al alumnado.', true); return; }
-    if(tags.length===0){ setStatus('Crea al menos una etiqueta en "Diseñar aula".', true); return; }
-    rules.push({ id:nextRuleId++, type:'tag', studentId:parseInt($('rf_tag_student').value), tagId:parseInt($('rf_tag_tag').value) }); renderRules();
+    if(tags.length===0){ toast('Crea al menos una etiqueta en "Diseñar aula".', { error:true }); return; }
+    addRuleFromForm({ type:'tag', studentId:parseInt($('rf_tag_student').value), tagId:parseInt($('rf_tag_tag').value) });
   };
   $('addFixedBtn').onclick = () => {
-    if(students.length===0){ setStatus('Añade primero al alumnado.', true); return; }
-    if(desks.length===0){ setStatus('Coloca al menos una mesa en el aula.', true); return; }
-    rules.push({ id:nextRuleId++, type:'fixed', studentId:parseInt($('rf_fixed_student').value), deskId:parseInt($('rf_fixed_desk').value) }); renderRules();
+    if(desks.length===0){ toast('Coloca al menos una mesa en el aula.', { error:true }); return; }
+    addRuleFromForm({ type:'fixed', studentId:parseInt($('rf_fixed_student').value), deskId:parseInt($('rf_fixed_desk').value) });
   };
 
   function renderRules(){
     const list = $('ruleList'); list.innerHTML='';
     rules.forEach(r => {
       let label='';
-      if(r.type==='fixed') label = `${icon('chincheta')}${escapeHtml(nameOf(r.studentId))} — sitio fijo (${deskLabel(r.deskId)})`;
-      if(r.type==='tag') label = `${icon('etiqueta')}${escapeHtml(nameOf(r.studentId))} — siempre en mesa "${escapeHtml(tagNameOf(r.tagId))}"`;
-      if(r.type==='together') label = `${icon('juntar')}${escapeHtml(nameOf(r.studentA))} y ${escapeHtml(nameOf(r.studentB))} — siempre juntos`;
-      if(r.type==='apart') label = `${icon('separar')}${escapeHtml(nameOf(r.studentA))} y ${escapeHtml(nameOf(r.studentB))} — nunca juntos`;
+      label = icon({ fixed:'chincheta', tag:'etiqueta', together:'juntar', apart:'separar' }[r.type]) + `<span>${escapeHtml(ruleText(r))}</span>`;
       const div = document.createElement('div'); div.className='rule-item'; div.innerHTML = `<div>${label}</div>`;
       const btn = document.createElement('button'); btn.className='danger'; btn.textContent='Quitar'; btn.style.marginTop='6px';
-      btn.onclick = () => { rules = rules.filter(x=>x.id!==r.id); renderRules(); };
+      btn.onclick = () => { rules = rules.filter(x=>x.id!==r.id); renderRules(); renderDeskEditor(); };
       div.appendChild(btn); list.appendChild(div);
     });
   }
@@ -1347,18 +1407,10 @@
     return rules.filter(r => (r.type==='apart'||r.type==='together') ? (here.has(r.studentA) && here.has(r.studentB)) : here.has(r.studentId));
   }
 
-  function shuffle(){
-    const activeDesks = desks.filter(d=>d.active);
-    const present = presentStudents();
-    const absentN = students.length - present.length;
-    if(students.length===0){ setStatus('Añade alumnado antes de barajar.', true); return; }
-    if(present.length===0){ setStatus('Están todos marcados como ausentes.', true); return; }
-    if(activeDesks.length===0){ setStatus('Diseña el aula colocando al menos una mesa activa.', true); return; }
-    if(present.length > activeDesks.length){ setStatus(`Hay ${present.length} alumnos presentes pero solo ${activeDesks.length} mesas activas.`, true); return; }
-
+  // Restricciones de un conjunto de reglas, listas para buscar un plano
+  function buildConstraints(ruleList){
     const fixedMap={}, tagRulesMap={}, togetherGraph={}, apartPairs=[];
-    const activeRules = rulesForPresent();
-    activeRules.forEach(r => {
+    ruleList.forEach(r => {
       if(r.type==='fixed') fixedMap[r.studentId]=r.deskId;
       if(r.type==='tag'){ (tagRulesMap[r.studentId]=tagRulesMap[r.studentId]||[]).push(r.tagId); }
       if(r.type==='together'){
@@ -1367,9 +1419,15 @@
       }
       if(r.type==='apart') apartPairs.push([r.studentA, r.studentB]);
     });
+    return { fixedMap, tagRulesMap, togetherGraph, apartPairs };
+  }
 
+  // Busca al azar un plano que cumpla las reglas. Devuelve { assignment: {alumno: mesa}, attempt } o null.
+  // Los grupos de "mantener juntos" se colocan en mesas contiguas; los más restringidos (sitio fijo, etiqueta) primero.
+  function findAssignment(pool, ruleList, maxAttempts){
+    const { fixedMap, tagRulesMap, togetherGraph, apartPairs } = buildConstraints(ruleList);
     const visited=new Set(); const components=[];
-    present.forEach(s => {
+    pool.forEach(s => {
       if(visited.has(s.id)) return;
       const comp=[]; const queue=[s.id]; visited.add(s.id);
       while(queue.length){
@@ -1378,14 +1436,11 @@
       }
       components.push(comp);
     });
-
     function tightness(sid){ if(fixedMap[sid]!==undefined) return 0; if(tagRulesMap[sid]&&tagRulesMap[sid].length) return 1; return 2; }
 
-    const MAX_ATTEMPTS = 500;
-    for(let attempt=0; attempt<MAX_ATTEMPTS; attempt++){
+    for(let attempt=0; attempt<maxAttempts; attempt++){
       const compsOrdered = shuffleArray(components.slice()).sort((a,b)=>Math.min(...a.map(tightness))-Math.min(...b.map(tightness)));
       const assignment={}; const usedDesks=new Set(); let ok=true;
-
       for(const comp of compsOrdered){
         const compSet = new Set(comp);
         const ordered = comp.slice().sort((a,b)=>tightness(a)-tightness(b));
@@ -1397,7 +1452,6 @@
           shuffleArray(neigh).forEach(n=>{ if(!seen.has(n)){ seen.add(n); bfsOrder.push(n); q.push(n); } });
         }
         comp.forEach(m=>{ if(!seen.has(m)){ bfsOrder.push(m); seen.add(m); } });
-
         const placedInComp=[];
         for(const member of bfsOrder){
           let candidates = candidateDesksFor(member, fixedMap, tagRulesMap).filter(d=>!usedDesks.has(d.id));
@@ -1412,17 +1466,92 @@
         }
         if(!ok) break;
       }
-
-      if(ok){
-        pushUndo('barajar');
-        seatAssignment={};
-        for(const sid in assignment) seatAssignment[assignment[sid]]=parseInt(sid);
-        renderCanvas();
-        setStatus(`Plano generado con ${present.length} alumnos${absentN ? ` (faltan ${absentN})` : ''}. Reglas aplicadas: ${activeRules.length}.`, false);
-        return;
-      }
+      if(ok) return { assignment, attempt };
     }
-    setStatus('No se encontró una combinación que cumpla todas las reglas. Prueba a relajar alguna.', true);
+    return null;
+  }
+
+  // Problemas evidentes que se pueden explicar sin buscar (mesa fija desactivada, faltan mesas con una etiqueta…)
+  function structuralProblems(pool, ruleList){
+    const problems = [];
+    const activeDesks = desks.filter(d => d.active);
+    const fixedByDesk = {};
+    ruleList.filter(r => r.type==='fixed').forEach(r => {
+      const d = deskById(r.deskId);
+      if(!d || !d.active) problems.push({ rule:r, text:`«${ruleText(r)}»: la mesa está desactivada.` });
+      if(fixedByDesk[r.deskId]) problems.push({ rule:r, text:`«${ruleText(r)}»: esa mesa ya es el sitio fijo de ${nameOf(fixedByDesk[r.deskId])}.` });
+      fixedByDesk[r.deskId] = r.studentId;
+    });
+    tags.forEach(t => {
+      const need = [...new Set(ruleList.filter(r => r.type==='tag' && r.tagId===t.id).map(r => r.studentId))];
+      const have = activeDesks.filter(d => d.tags.includes(t.id)).length;
+      if(need.length > have){
+        const r = ruleList.find(x => x.type==='tag' && x.tagId===t.id);
+        problems.push({ rule:r, text:`Hay ${need.length} alumnos que necesitan una mesa "${t.name}" y solo ${have} mesa(s) activa(s) con esa etiqueta.` });
+      }
+    });
+    return problems;
+  }
+
+  // Si no hay plano posible, prueba a quitar cada regla para ver cuáles lo impiden
+  function diagnoseRules(pool, ruleList){
+    const culprits = [];
+    for(const r of ruleList){
+      const rest = ruleList.filter(x => x !== r);
+      if(findAssignment(pool, rest, 150)) culprits.push(r);
+    }
+    return culprits;
+  }
+
+  function renderShuffleDiag(items){
+    const box = $('shuffleDiag'); box.innerHTML = '';
+    items.forEach(({ rule, text }) => {
+      const row = document.createElement('div'); row.className = 'diag-item';
+      const span = document.createElement('span'); span.textContent = text;
+      row.appendChild(span);
+      if(rule){
+        const b = document.createElement('button'); b.className = 'danger'; b.textContent = 'Quitar regla';
+        b.onclick = () => { rules = rules.filter(x => x.id !== rule.id); renderRules(); renderDeskEditor(); renderShuffleDiag([]); setStatus('Regla quitada. Vuelve a barajar.', false); };
+        row.appendChild(b);
+      }
+      box.appendChild(row);
+    });
+  }
+
+  function shuffle(){
+    renderShuffleDiag([]);
+    const activeDesks = desks.filter(d=>d.active);
+    const present = presentStudents();
+    const absentN = students.length - present.length;
+    if(students.length===0){ setStatus('Añade alumnado antes de barajar.', true); return; }
+    if(present.length===0){ setStatus('Están todos marcados como ausentes.', true); return; }
+    if(activeDesks.length===0){ setStatus('Diseña el aula colocando al menos una mesa activa.', true); return; }
+    if(present.length > activeDesks.length){ setStatus(`Hay ${present.length} alumnos presentes pero solo ${activeDesks.length} mesas activas.`, true); return; }
+
+    const activeRules = rulesForPresent();
+    const problems = structuralProblems(present, activeRules);
+    if(problems.length){
+      setStatus('No se puede barajar así:', true);
+      renderShuffleDiag(problems);
+      return;
+    }
+    const found = findAssignment(present, activeRules, 500);
+    if(found){
+      pushUndo('barajar');
+      seatAssignment={};
+      for(const sid in found.assignment) seatAssignment[found.assignment[sid]]=parseInt(sid);
+      selectedDeskId = null; selectedSwapId = null;
+      renderCanvas(); renderDeskEditor();
+      setStatus(`Plano generado con ${present.length} alumnos${absentN ? ` (faltan ${absentN})` : ''}. Reglas aplicadas: ${activeRules.length}.`, false);
+      return;
+    }
+    const culprits = diagnoseRules(present, activeRules);
+    if(culprits.length){
+      setStatus(culprits.length === 1 ? 'No hay ningún plano que cumpla todas las reglas. Lo impide esta regla:' : 'No hay ningún plano que cumpla todas las reglas. Quitando cualquiera de estas se podría:', true);
+      renderShuffleDiag(culprits.slice(0, 6).map(r => ({ rule:r, text: ruleText(r) })));
+    } else {
+      setStatus('No hay ningún plano que cumpla todas las reglas a la vez. Ninguna regla por sí sola es la culpable: el conjunto es demasiado estricto para esta distribución de mesas. Prueba a quitar alguna de "juntos" o "separados" (recuerda que se miden por mesas pegadas).', true);
+    }
   }
   $('shuffleBtn').onclick = shuffle;
 
