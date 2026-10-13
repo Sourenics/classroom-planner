@@ -8,23 +8,40 @@
   :root{
     --bg: #17302a;
     --bg-deep: #10231e;
-    --surface: rgba(244,241,230,0.035);
-    --surface-2: rgba(244,241,230,0.065);
-    --surface-3: rgba(244,241,230,0.10);
+    --surface: rgba(244,241,230,0.04);
+    --surface-2: rgba(244,241,230,0.07);
+    --surface-3: rgba(244,241,230,0.11);
     --chalk: #f4f1e6;
-    --muted: rgba(244,241,230,0.66);
-    --faint: rgba(244,241,230,0.42);
-    --line: rgba(244,241,230,0.11);
-    --line-strong: rgba(244,241,230,0.2);
+    --text-soft: rgba(244,241,230,0.86);
+    --muted: rgba(244,241,230,0.74);
+    --faint: rgba(244,241,230,0.52);
+    --line: rgba(244,241,230,0.12);
+    --line-strong: rgba(244,241,230,0.22);
+    --line-hover: rgba(244,241,230,0.32);
+    --zebra: rgba(244,241,230,0.03);
+    --field-bg: rgba(0,0,0,0.18);
+    --field-bg-focus: rgba(0,0,0,0.24);
+    --inset-bg: rgba(0,0,0,0.15);
+    --toggle-off: rgba(244,241,230,0.2);
+    --floor: rgba(0,0,0,0.13);
+    --floor-dot: rgba(244,241,230,0.12);
+    --tabs-bg: rgba(16,35,30,0.84);
+    --pop-bg: linear-gradient(180deg, #1f3d36, #10231e);
+    --scroll-thumb: rgba(244,241,230,0.14);
+    --card-bg: #1c3731;   /* tarjetas opacas: la decoración de fondo no se transparenta */
     --wood: #8b5e3c;
     --wood-dark: #6b4529;
     --wood-light: #c99a63;
     --ochre: #e8ab5c;
+    --ochre-ink: #f0b866;
+    /* Colores vivos para iconos, grupos y ruleta: pastel saturado, cómodo de ver y proyectar */
+    --c-amber: #f4b860; --c-teal: #6fd3c7; --c-coral: #f08a7e; --c-sky: #86c5f2; --c-lilac: #b9a6f3; --c-mint: #93d9a3; --c-sun: #f3d26b; --c-pink: #f2a7c3;
     --ochre-soft: rgba(232,171,92,0.14);
     --teal: #7fd1c9;
     --danger: #e3826f;
     --danger-soft: rgba(227,130,111,0.12);
     --ok: #9fd3a8;
+    --decor: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22600%22 height=%22600%22 viewBox=%220 0 600 600%22%3E%3Cg fill=%22none%22 stroke=%22%23f4f1e6%22 stroke-opacity=%220.07%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22M70 38l9 19 21 3-15 14 4 21-19-10-19 10 4-21-15-14 21-3z%22/%3E%3Cpath d=%22M210 92l70-34-22 68-17-20-31-14z M241 106l39-48%22/%3E%3Cpath d=%22M200 120c-14 6-26 4-36-4%22 stroke-dasharray=%223 6%22/%3E%3Cpath d=%22M420 140l58-58 14 14-58 58-20 6z M466 94l14 14 M420 140l14 14%22/%3E%3Cpath d=%22M96 262c-18-14-44-4-44 24 0 26 18 46 32 46 6 0 9-3 12-3s6 3 12 3c14 0 32-20 32-46 0-28-26-38-44-24z M96 262c0-10 4-18 12-22 M100 250c8-10 20-10 26-4-8 8-18 9-26 4z%22/%3E%3Cpath d=%22M470 236a30 30 0 0 0-18 54c4 3 6 8 6 13v6h24v-6c0-5 2-10 6-13a30 30 0 0 0-18-54z M460 324h20 M463 334h14 M456 214l-6-10 M470 208v-12 M484 214l6-10%22/%3E%3Cpath d=%22M48 470l120-58 14 30-120 58z M70 470l-6-12 M88 461l-4-8 M106 452l-6-12 M124 444l-4-8 M142 435l-6-12%22/%3E%3Cpath d=%22M250 420c22-10 44-10 60 4 16-14 38-14 60-4v72c-22-10-44-10-60 4-16-14-38-14-60-4z M310 424v72%22/%3E%3Cpath d=%22M372 180v-52l38-8v50 M372 180a10 8 0 1 1-1-1 M410 170a10 8 0 1 1-1-1 M372 140l38-8%22/%3E%3Ccircle cx=%22190%22 cy=%22548%22 r=%2228%22/%3E%3Cpath d=%22M162 548h56 M190 520c-14 16-14 40 0 56 M190 520c14 16 14 40 0 56%22/%3E%3Cpath d=%22M560 40v14 M553 47h14%22/%3E%3Cpath d=%22M330 300v10 M325 305h10%22/%3E%3Cpath d=%22M40 180v10 M35 185h10%22/%3E%3Cpath d=%22M540 560v12 M534 566h12%22/%3E%3Cpath d=%22M400 560c0-8 12-8 12 0s-20 12-20-2 26-18 28 2%22/%3E%3C/g%3E%3Ctext x=%22250%22 y=%22250%22 font-family=%22Georgia, serif%22 font-size=%2230%22 fill=%22%23f4f1e6%22 fill-opacity=%220.07%22 stroke=%22none%22%3E1%2B2=3%3C/text%3E%3Ctext x=%22300%22 y=%2258%22 font-family=%22Georgia, serif%22 font-size=%2228%22 font-style=%22italic%22 fill=%22%23f4f1e6%22 fill-opacity=%220.07%22 stroke=%22none%22%3EA b C%3C/text%3E%3Ctext x=%22480%22 y=%22470%22 font-family=%22Georgia, serif%22 font-size=%2240%22 fill=%22%23f4f1e6%22 fill-opacity=%220.07%22 stroke=%22none%22%3E%CF%80%3C/text%3E%3Ctext x=%2240%22 y=%22380%22 font-family=%22Georgia, serif%22 font-size=%2224%22 fill=%22%23f4f1e6%22 fill-opacity=%220.07%22 stroke=%22none%22%3Ex%C2%B2%3C/text%3E%3C/svg%3E");
     --radius: 10px;
     --radius-sm: 7px;
     --shadow: 0 1px 2px rgba(0,0,0,0.25), 0 8px 24px rgba(0,0,0,0.18);
@@ -32,12 +49,35 @@
     --font-display: 'Iowan Old Style', 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, serif;
     color-scheme: dark;
   }
+  /* Tema claro: papel cálido y tinta oscura. Pensado para proyectar en aulas con mucha luz. */
+  :root[data-theme="light"]{
+    --bg: #f3ecdd; --bg-deep: #fffaf1;
+    --surface: rgba(255,255,255,0.62); --surface-2: rgba(255,255,255,0.85); --surface-3: #ffffff;
+    --chalk: #24332d; --text-soft: rgba(36,51,45,0.88); --muted: rgba(36,51,45,0.74); --faint: rgba(36,51,45,0.55);
+    --line: rgba(36,51,45,0.13); --line-strong: rgba(36,51,45,0.22); --line-hover: rgba(36,51,45,0.36);
+    --zebra: rgba(36,51,45,0.035); --field-bg: #ffffff; --field-bg-focus: #ffffff; --inset-bg: rgba(36,51,45,0.05);
+    --toggle-off: rgba(36,51,45,0.22); --floor: #e9dfca; --floor-dot: rgba(36,51,45,0.16);
+    --tabs-bg: rgba(255,250,241,0.88); --pop-bg: linear-gradient(180deg, #fffdf8, #fbf3e4); --scroll-thumb: rgba(36,51,45,0.2); --card-bg: #fcf9f2;
+    --ochre: #eea548; --ochre-ink: #a85d0c; --ochre-soft: rgba(238,165,72,0.18);
+    --teal: #1f9488; --danger: #c24a37; --danger-soft: rgba(194,74,55,0.1); --ok: #2f9a55;
+    --c-amber: #d98a16; --c-teal: #158a7e; --c-coral: #d4543f; --c-sky: #2a7fc4; --c-lilac: #7a5fd6; --c-mint: #2f9a55; --c-sun: #b98a00; --c-pink: #c64f86;
+    --decor: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22600%22 height=%22600%22 viewBox=%220 0 600 600%22%3E%3Cg fill=%22none%22 stroke=%22%232b3a33%22 stroke-opacity=%220.08%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22M70 38l9 19 21 3-15 14 4 21-19-10-19 10 4-21-15-14 21-3z%22/%3E%3Cpath d=%22M210 92l70-34-22 68-17-20-31-14z M241 106l39-48%22/%3E%3Cpath d=%22M200 120c-14 6-26 4-36-4%22 stroke-dasharray=%223 6%22/%3E%3Cpath d=%22M420 140l58-58 14 14-58 58-20 6z M466 94l14 14 M420 140l14 14%22/%3E%3Cpath d=%22M96 262c-18-14-44-4-44 24 0 26 18 46 32 46 6 0 9-3 12-3s6 3 12 3c14 0 32-20 32-46 0-28-26-38-44-24z M96 262c0-10 4-18 12-22 M100 250c8-10 20-10 26-4-8 8-18 9-26 4z%22/%3E%3Cpath d=%22M470 236a30 30 0 0 0-18 54c4 3 6 8 6 13v6h24v-6c0-5 2-10 6-13a30 30 0 0 0-18-54z M460 324h20 M463 334h14 M456 214l-6-10 M470 208v-12 M484 214l6-10%22/%3E%3Cpath d=%22M48 470l120-58 14 30-120 58z M70 470l-6-12 M88 461l-4-8 M106 452l-6-12 M124 444l-4-8 M142 435l-6-12%22/%3E%3Cpath d=%22M250 420c22-10 44-10 60 4 16-14 38-14 60-4v72c-22-10-44-10-60 4-16-14-38-14-60-4z M310 424v72%22/%3E%3Cpath d=%22M372 180v-52l38-8v50 M372 180a10 8 0 1 1-1-1 M410 170a10 8 0 1 1-1-1 M372 140l38-8%22/%3E%3Ccircle cx=%22190%22 cy=%22548%22 r=%2228%22/%3E%3Cpath d=%22M162 548h56 M190 520c-14 16-14 40 0 56 M190 520c14 16 14 40 0 56%22/%3E%3Cpath d=%22M560 40v14 M553 47h14%22/%3E%3Cpath d=%22M330 300v10 M325 305h10%22/%3E%3Cpath d=%22M40 180v10 M35 185h10%22/%3E%3Cpath d=%22M540 560v12 M534 566h12%22/%3E%3Cpath d=%22M400 560c0-8 12-8 12 0s-20 12-20-2 26-18 28 2%22/%3E%3C/g%3E%3Ctext x=%22250%22 y=%22250%22 font-family=%22Georgia, serif%22 font-size=%2230%22 fill=%22%232b3a33%22 fill-opacity=%220.08%22 stroke=%22none%22%3E1%2B2=3%3C/text%3E%3Ctext x=%22300%22 y=%2258%22 font-family=%22Georgia, serif%22 font-size=%2228%22 font-style=%22italic%22 fill=%22%232b3a33%22 fill-opacity=%220.08%22 stroke=%22none%22%3EA b C%3C/text%3E%3Ctext x=%22480%22 y=%22470%22 font-family=%22Georgia, serif%22 font-size=%2240%22 fill=%22%232b3a33%22 fill-opacity=%220.08%22 stroke=%22none%22%3E%CF%80%3C/text%3E%3Ctext x=%2240%22 y=%22380%22 font-family=%22Georgia, serif%22 font-size=%2224%22 fill=%22%232b3a33%22 fill-opacity=%220.08%22 stroke=%22none%22%3Ex%C2%B2%3C/text%3E%3C/svg%3E");
+    color-scheme: light;
+  }
+  :root[data-theme="light"] body{ background-image: var(--decor), radial-gradient(1200px 600px at 0% -10%, rgba(255,255,255,0.7), transparent 60%); }
+  :root[data-theme="light"] .panel section, :root[data-theme="light"] .stage-card, :root[data-theme="light"] .group-card{ box-shadow: 0 1px 2px rgba(60,40,10,0.06), 0 6px 18px rgba(60,40,10,0.06); }
+  :root[data-theme="light"] .toast{ box-shadow: 0 12px 30px rgba(60,40,10,0.2); }
+  :root[data-theme="light"] select{ background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M2.5 4.5 6 8l3.5-3.5' fill='none' stroke='%2324332d' stroke-opacity='.6' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); }
+  :root[data-theme="light"] .fdesk:not(.filled):not(.inactive){ background-color: rgba(255,255,255,0.55); }
+  :root[data-theme="light"] .modal-overlay{ background: rgba(40,30,15,0.35); }
   *{ box-sizing:border-box; }
+  [hidden]{ display:none !important; }
   html{ -webkit-text-size-adjust:100%; }
   body{
     margin:0;
     background-color: var(--bg);
     background-image:
+      var(--decor),
       radial-gradient(1200px 600px at 0% -10%, rgba(255,255,255,0.05), transparent 60%),
       radial-gradient(900px 500px at 100% 110%, rgba(0,0,0,0.25), transparent 60%),
       repeating-linear-gradient(0deg, rgba(255,255,255,0.012) 0px, rgba(255,255,255,0.012) 1px, transparent 1px, transparent 3px);
@@ -50,8 +90,8 @@
   }
   ::selection{ background: rgba(232,171,92,0.35); }
   *::-webkit-scrollbar{ width:10px; height:10px; }
-  *::-webkit-scrollbar-thumb{ background: rgba(244,241,230,0.14); border-radius:10px; border:2px solid transparent; background-clip: padding-box; }
-  *::-webkit-scrollbar-thumb:hover{ background-color: rgba(244,241,230,0.24); }
+  *::-webkit-scrollbar-thumb{ background: var(--scroll-thumb); border-radius:10px; border:2px solid transparent; background-clip: padding-box; }
+  *::-webkit-scrollbar-thumb:hover{ background-color: var(--line-hover); }
   *::-webkit-scrollbar-track{ background: transparent; }
 
   /* ---------- Header ---------- */
@@ -63,16 +103,28 @@
   .app-header h1{ margin:0; font-family: var(--font-display); font-size: 1.65rem; font-weight: 600; letter-spacing: 0.2px; line-height:1.1; }
   .app-header p{ margin: 4px 0 0; font-size: 0.86rem; color: var(--muted); max-width: 62ch; }
   .header-actions{ display:flex; gap:10px; flex-wrap:wrap; }
-  .btn-group{ display:flex; background: var(--surface); border:1px solid var(--line); border-radius: var(--radius); padding:3px; gap:2px; }
+  .btn-group{ display:flex; background: var(--card-bg); border:1px solid var(--line); border-radius: var(--radius); padding:3px; gap:2px; }
   .btn-group button{ background:transparent; border:none; color: var(--chalk); font-weight:500; padding:7px 11px; border-radius: 7px; }
   .btn-group button:hover{ background: var(--surface-3); filter:none; }
-  .header-status{ padding: 0 28px; }
+  .header-status{ padding: 0 28px; display:flex; flex-wrap:wrap; align-items:center; gap:8px 12px; margin-bottom:12px; }
+  .header-status:has(.save-state:empty):has(.status:empty){ display:none; }
+  .save-state{ display:block; font-size:0.8rem; color: var(--muted); line-height:1.5; }
+  .save-state > *{ vertical-align: middle; }
+  .save-state .link{ margin-left:10px; }
+  .save-state:empty{ display:none; }
+  .save-state .dot{ display:inline-block; width:8px; height:8px; border-radius:50%; background: var(--faint); margin-right:8px; }
+  .save-state.ok .dot{ background: var(--ok); box-shadow: 0 0 0 3px rgba(159,211,168,0.18); }
+  .save-state.warn .dot{ background: var(--ochre); box-shadow: 0 0 0 3px rgba(232,171,92,0.2); }
+  .save-state strong{ color: var(--chalk); font-weight:600; }
+  .save-state .link{ background:none; border:none; padding:0; color: var(--ochre-ink); font-weight:600; font-size:0.8rem; text-decoration: underline; text-underline-offset: 2px; text-decoration-color: rgba(232,171,92,0.45); }
+  .save-state .link:hover{ filter:none; text-decoration-color: var(--ochre); }
+  .header-status .status .link{ margin-left:8px; background:none; border:none; padding:0; color: var(--ochre-ink); font-weight:600; font-size:inherit; text-decoration: underline; }
   .header-status .status:empty{ display:none; }
-  .header-status .status{ display:inline-block; margin: 0 0 12px; padding:6px 12px; border-radius:999px; background: var(--surface-2); border:1px solid var(--line); }
+  .header-status .status{ display:inline-block; margin: 0; padding:6px 12px; border-radius:14px; background: var(--surface-2); border:1px solid var(--line); color: var(--text-soft); }
   .header-status .status.error{ background: var(--danger-soft); border-color: rgba(227,130,111,0.35); }
 
   /* ---------- Tabs ---------- */
-  .tabs-bar{ position:sticky; top:0; z-index:50; padding: 10px 28px; background: rgba(16,35,30,0.82); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+  .tabs-bar{ position:sticky; top:0; z-index:50; padding: 10px 28px; background: var(--tabs-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
   .tabs{ display:flex; gap:4px; overflow-x:auto; scrollbar-width:none; }
   @media (max-width: 900px){ .tabs{ -webkit-mask-image: linear-gradient(90deg, #000 85%, transparent); mask-image: linear-gradient(90deg, #000 85%, transparent); padding-right: 24px; } }
   .tabs::-webkit-scrollbar{ display:none; }
@@ -82,21 +134,28 @@
     padding: 7px 14px; border-radius: 999px; cursor:pointer; font-size: 0.86rem; font-weight:500; font-family: inherit;
     transition: background .15s, color .15s, border-color .15s;
   }
-  .tabs button .icon{ width:1.25rem; height:1.25rem; opacity:.85; }
-  .tabs button.active .icon{ opacity:1; }
+  .tabs button .icon{ width:1.25rem; height:1.25rem; }
+  .tab-btn[data-tab="aula"] .icon{ color: var(--c-amber); }
+  .tab-btn[data-tab="alumnado"] .icon{ color: var(--c-sky); }
+  .tab-btn[data-tab="reglas"] .icon{ color: var(--c-lilac); }
+  .tab-btn[data-tab="barajar"] .icon{ color: var(--c-coral); }
+  .tab-btn[data-tab="grupos"] .icon{ color: var(--c-mint); }
+  .tab-btn[data-tab="picker"] .icon{ color: var(--c-sun); }
+  .tab-btn[data-tab="timer"] .icon{ color: var(--c-teal); }
+  .tabs button.active .icon{ color: inherit; }
   .tabs button:hover{ color: var(--chalk); background: var(--surface-2); filter:none; }
   .tabs button.active{ color: #2a1d10; background: var(--ochre); font-weight:600; box-shadow: 0 2px 10px rgba(232,171,92,0.28); }
 
   /* ---------- Layout ---------- */
   .layout{ display:grid; grid-template-columns: 350px minmax(0,1fr); align-items:start; }
   .panel{ padding: 22px 22px 40px 28px; position:sticky; top:58px; max-height: calc(100vh - 58px); overflow-y:auto; }
-  .panel section{ margin-bottom: 14px; background: var(--surface); border:1px solid var(--line); border-radius: var(--radius); padding: 14px 16px 16px; }
-  .panel h2{ font-family: var(--font-display); font-weight:600; font-size: 1.02rem; margin: 0 0 10px; color: var(--ochre); letter-spacing:0.2px; }
+  .panel section{ margin-bottom: 14px; background: var(--card-bg); border:1px solid var(--line); border-radius: var(--radius); padding: 14px 16px 16px; }
+  .panel h2{ font-family: var(--font-display); font-weight:600; font-size: 1.02rem; margin: 0 0 10px; color: var(--ochre-ink); letter-spacing:0.2px; }
   .row{ display:flex; gap:8px; margin-bottom:8px; align-items:center; }
   .row label, label.field{ display:flex; flex-direction:column; gap:5px; font-size:0.76rem; color: var(--muted); font-weight:500; }
 
   input[type=text], input[type=number], select, textarea{
-    background: rgba(0,0,0,0.18); border: 1px solid var(--line-strong); color: var(--chalk);
+    background: var(--field-bg); border: 1px solid var(--line-strong); color: var(--chalk);
     padding: 8px 10px; border-radius: var(--radius-sm); font-size: 0.88rem; font-family: inherit; width:100%;
     transition: border-color .15s, box-shadow .15s, background .15s;
   }
@@ -105,17 +164,20 @@
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M2.5 4.5 6 8l3.5-3.5' fill='none' stroke='%23f4f1e6' stroke-opacity='.6' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
     background-repeat:no-repeat; background-position: right 10px center; }
   select option{ background: var(--bg-deep); color: var(--chalk); }
-  input[type=text]:hover, input[type=number]:hover, select:hover, textarea:hover{ border-color: rgba(244,241,230,0.3); }
-  input[type=text]:focus, input[type=number]:focus, select:focus, textarea:focus{ outline:none; border-color: var(--ochre); box-shadow: 0 0 0 3px rgba(232,171,92,0.2); background: rgba(0,0,0,0.24); }
-  input[type=color]{ flex-shrink:0; width: 40px; height: 36px; padding:3px; border-radius: var(--radius-sm); border:1px solid var(--line-strong); background: rgba(0,0,0,0.18); cursor:pointer; }
+  input[type=text]:hover, input[type=number]:hover, select:hover, textarea:hover{ border-color: var(--line-hover); }
+  input[type=text]:focus, input[type=number]:focus, select:focus, textarea:focus{ outline:none; border-color: var(--ochre); box-shadow: 0 0 0 3px rgba(232,171,92,0.25); background: var(--field-bg-focus); }
+  input[type=color]{ flex-shrink:0; width: 40px; height: 36px; padding:3px; border-radius: var(--radius-sm); border:1px solid var(--line-strong); background: var(--field-bg); cursor:pointer; }
   input[type=color]::-webkit-color-swatch-wrapper{ padding:0; }
   input[type=color]::-webkit-color-swatch{ border:none; border-radius:4px; }
   input::placeholder, textarea::placeholder{ color: var(--faint); }
   .icon{ width:1.2em; height:1.2em; flex-shrink:0; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; overflow:visible; }
   button .icon{ margin:-2px 0; }
-  .btn-group button .icon, button.secondary .icon, .rule-item .icon{ color: var(--ochre); }
+  .btn-group button .icon, button.secondary .icon{ color: var(--ochre-ink); }
+  #helpBtn .icon{ color: var(--c-sky); } #sampleBtn .icon{ color: var(--c-sun); } #themeBtn .icon{ color: var(--c-lilac); }
+  #exportPngBtn .icon{ color: var(--c-teal); } #exportPdfBtn .icon{ color: var(--c-coral); } #saveBtn .icon{ color: var(--c-mint); } #importBtn .icon{ color: var(--c-amber); }
   .panel h2{ display:flex; align-items:center; gap:8px; }
-  .panel h2 .icon, .rule-item .icon{ width:28px; height:28px; padding:5px; border-radius:8px; background: var(--ochre-soft); color: var(--ochre); stroke-width:1.9; }
+  .panel h2 .icon, .rule-item .icon{ --ic: var(--ochre-ink); width:28px; height:28px; padding:5px; border-radius:8px; color: var(--ic); background: color-mix(in srgb, var(--ic) 16%, transparent); stroke-width:1.9; }
+  .ic-coral{ --ic: var(--c-coral) !important; } .ic-mint{ --ic: var(--c-mint) !important; } .ic-lilac{ --ic: var(--c-lilac) !important; } .ic-sky{ --ic: var(--c-sky) !important; } .ic-teal{ --ic: var(--c-teal) !important; } .ic-sun{ --ic: var(--c-sun) !important; }
   .panel h2 .icon{ margin-left:-2px; }
   input[type=checkbox]{ accent-color: var(--ochre); width:16px; height:16px; cursor:pointer; }
 
@@ -125,7 +187,7 @@
   button:active{ transform: translateY(1px); }
   button:focus-visible, .tabs button:focus-visible{ outline: 2px solid var(--ochre); outline-offset: 2px; }
   button.secondary{ background: var(--surface-2); color: var(--chalk); border-color: var(--line-strong); font-weight:500; }
-  button.secondary:hover{ background: var(--surface-3); border-color: rgba(244,241,230,0.3); filter:none; }
+  button.secondary:hover{ background: var(--surface-3); border-color: var(--line-hover); filter:none; }
   button.danger{ background:transparent; color: var(--danger); border:1px solid rgba(227,130,111,0.4); font-weight:500; padding:4px 7px; font-size:0.76rem; border-radius:6px; }
   button.danger:hover{ background: var(--danger-soft); border-color: var(--danger); filter:none; }
   button:disabled{ opacity:0.4; cursor:not-allowed; transform:none; }
@@ -136,27 +198,56 @@
   .student-list{ list-style:none; padding:0; margin:10px 0 0; max-height:320px; overflow-y:auto; }
   .student-list:empty{ display:none; }
   .student-list li{ display:flex; justify-content:space-between; align-items:center; gap:8px; padding:6px 8px; border-radius:6px; font-size:0.88rem; }
-  .student-list li:nth-child(odd){ background: rgba(244,241,230,0.03); }
+  .student-list li:nth-child(odd){ background: var(--zebra); }
   .student-list li:hover{ background: var(--surface-2); }
 
+  .tab-badge{ min-width:18px; height:18px; padding:0 5px; border-radius:999px; background: var(--danger); color:#fff; font-size:0.7rem; font-weight:700; display:inline-grid; place-items:center; margin-left:2px; }
+  .absent-summary{ display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap; font-size:0.84rem; color: var(--muted); margin-top:10px; }
+  .absent-summary:empty{ display:none; }
+  .absent-summary strong{ color: var(--chalk); }
+  .absent-summary button{ padding:4px 10px; font-size:0.78rem; }
+  .student-list li .row-actions{ display:flex; gap:6px; align-items:center; flex-shrink:0; }
+  .absent-btn{ background:transparent; color: var(--muted); border:1px solid var(--line-strong); font-weight:500; padding:3px 9px; font-size:0.74rem; border-radius:999px; }
+  .absent-btn:hover{ color: var(--chalk); border-color: var(--faint); filter:none; }
+  .absent-btn.on{ background: var(--danger-soft); color: var(--danger); border-color: rgba(227,130,111,0.55); font-weight:600; }
+  .student-list li.is-absent > span{ color: var(--faint); text-decoration: line-through; text-decoration-color: rgba(227,130,111,0.7); }
+  .fdesk.absent .name{ opacity:0.55; text-decoration: line-through; text-decoration-color: rgba(255,255,255,0.6); }
+  .fdesk.absent::after{ content:'falta'; position:absolute; bottom:3px; left:5px; font-size:0.56rem; font-weight:700; text-transform:uppercase; letter-spacing:0.6px; color:#fff; background: rgba(192,87,74,0.9); padding:1px 4px; border-radius:4px; text-shadow:none; }
   .tag-swatch{ width:10px; height:10px; border-radius:50%; display:inline-block; flex-shrink:0; box-shadow: 0 0 0 2px rgba(0,0,0,0.2); }
   .tag-list{ list-style:none; padding:0; margin:8px 0 0; }
-  .tag-list li{ display:flex; justify-content:space-between; align-items:center; padding:6px 8px; font-size:0.88rem; border-radius:6px; background: rgba(244,241,230,0.03); margin-bottom:4px; }
+  .tag-list li{ display:flex; justify-content:space-between; align-items:center; padding:6px 8px; font-size:0.88rem; border-radius:6px; background: var(--zebra); margin-bottom:4px; }
 
   .rule-item > div{ display:flex; align-items:center; gap:8px; }
-  .rule-item{ display:flex; justify-content:space-between; align-items:center; gap:10px; background: rgba(0,0,0,0.14); border:1px solid var(--line); border-radius: var(--radius-sm); padding:8px 10px; margin-bottom:6px; font-size:0.85rem; }
+  .rule-item{ display:flex; justify-content:space-between; align-items:center; gap:10px; background: var(--inset-bg); border:1px solid var(--line); border-radius: var(--radius-sm); padding:8px 10px; margin-bottom:6px; font-size:0.85rem; }
   .rule-item button.danger{ margin-top:0 !important; flex-shrink:0; }
   #ruleList:empty::before{ content:'Todavía no hay reglas.'; display:block; font-size:0.8rem; color: var(--faint); }
   .rule-card h2{ margin-bottom:4px; }
   .hint{ font-size:0.78rem; color: var(--faint); margin: 8px 0 0; line-height:1.45; }
   .hint + .row, .hint + .toggle-row, .hint + button{ margin-top: 12px; }
 
-  .desk-editor{ background: var(--ochre-soft); border:1px solid rgba(232,171,92,0.35); border-radius: var(--radius-sm); padding:10px 12px; }
-  .desk-editor .tag-toggle{ display:flex; align-items:center; gap:8px; padding:4px 0; font-size:0.86rem; cursor:pointer; }
+  .desk-pop{ display:flex; flex-wrap:wrap; align-items:flex-start; gap:10px 22px; margin: -2px 0 14px; padding: 12px 14px; border-radius: 12px;
+    background: linear-gradient(180deg, rgba(232,171,92,0.13), rgba(232,171,92,0.06)); border:1px solid rgba(232,171,92,0.38); font-size:0.86rem; animation: popIn .15s ease both; }
+  .desk-pop[hidden]{ display:none; }
+  .desk-pop .pop-head{ min-width: 130px; }
+  .desk-pop .pop-title{ font-family: var(--font-display); font-weight:600; font-size:1.05rem; color: var(--ochre-ink); line-height:1.2; }
+  .desk-pop .pop-sub{ display:block; font-family: var(--font-ui); font-size:0.9rem; font-weight:600; color: var(--chalk); margin-top:2px; }
+  .desk-pop .pop-body{ flex: 1 1 260px; min-width: 0; }
+  .desk-pop .pop-body .hint{ margin: 0 0 8px; }
+  .desk-pop .pop-close{ order: 9; margin-left:auto; flex-shrink:0; width:30px; height:30px; padding:0; border-radius:50%; background: var(--surface-2); border:1px solid var(--line); color: var(--muted); }
+  .desk-pop .pop-close:hover{ background: var(--surface-3); color: var(--chalk); filter:none; }
+  .desk-pop .pop-actions{ display:flex; flex-wrap:wrap; gap:6px; }
+  .desk-pop .pop-actions button{ padding:6px 10px; font-size:0.8rem; }
+  .desk-pop .pop-actions button.on{ background: var(--ochre-soft); border-color: rgba(232,171,92,0.6); color: var(--ochre-ink); }
+  .desk-pop .pop-section{ flex: 0 1 auto; padding-left: 18px; border-left: 1px solid var(--line); }
+  .desk-pop .pop-label{ font-size:0.7rem; letter-spacing:1px; text-transform:uppercase; color: var(--faint); font-weight:700; margin-bottom:4px; }
+  .desk-pop select{ max-width: 320px; }
+  .desk-pop .danger{ margin-top:6px; }
+  @media (max-width: 700px){ .desk-pop .pop-section{ padding-left:0; border-left:none; padding-top:8px; border-top:1px solid var(--line); flex-basis:100%; } }
+  .desk-pop .tag-toggle{ display:flex; align-items:center; gap:8px; padding:4px 0; font-size:0.86rem; cursor:pointer; }
 
   .toggle-row{ display:flex; align-items:flex-start; gap:10px; font-size:0.84rem; color: var(--muted); margin:12px 0; cursor:pointer; line-height:1.4; }
-  .toggle-row input{ margin-top:1px; flex-shrink:0; appearance:none; -webkit-appearance:none; width:34px; height:20px; border-radius:999px; background: rgba(244,241,230,0.18); position:relative; transition: background .2s; }
-  .toggle-row input::after{ content:''; position:absolute; top:2px; left:2px; width:16px; height:16px; border-radius:50%; background: var(--chalk); box-shadow: 0 1px 3px rgba(0,0,0,0.35); transition: transform .2s; }
+  .toggle-row input{ margin-top:1px; flex-shrink:0; appearance:none; -webkit-appearance:none; width:34px; height:20px; border-radius:999px; background: var(--toggle-off); position:relative; transition: background .2s; }
+  .toggle-row input::after{ content:''; position:absolute; top:2px; left:2px; width:16px; height:16px; border-radius:50%; background: #ffffff; box-shadow: 0 1px 3px rgba(0,0,0,0.35); transition: transform .2s; }
   .toggle-row input:checked{ background: var(--ochre); }
   .toggle-row input:checked::after{ transform: translateX(14px); }
   .toggle-row input:focus-visible{ outline: 2px solid var(--ochre); outline-offset: 2px; }
@@ -164,7 +255,7 @@
 
   /* ---------- Stage ---------- */
   .stage{ padding: 22px 28px 40px 10px; min-width:0; }
-  .stage-card{ background: var(--surface); border:1px solid var(--line); border-radius: 14px; padding: 22px; }
+  .stage-card{ background: var(--card-bg); border:1px solid var(--line); border-radius: 14px; padding: 22px; }
   .room{ display:flex; flex-direction:column; align-items:center; width:max-content; margin: 0 auto; }
   .board{
     width: min(72%, 560px); min-width: 200px; margin-bottom: 18px; padding: 10px 0 9px; text-align:center;
@@ -173,18 +264,50 @@
     box-shadow: inset 0 0 18px rgba(0,0,0,0.35), 0 6px 14px rgba(0,0,0,0.3);
     font-family: var(--font-display); font-size:0.78rem; letter-spacing: 4px; text-transform: uppercase;
   }
-  .toolbar{ display:flex; gap:10px; align-items:center; margin-bottom:14px; flex-wrap:wrap; }
+  .toolbar{ display:flex; gap:10px 16px; align-items:center; justify-content:space-between; margin-bottom:14px; flex-wrap:wrap; }
+  .toolbar > .status{ flex: 1 1 320px; }
+  .toolbar-actions{ display:flex; gap:6px; flex-wrap:wrap; align-items:center; }
+  .toolbar-actions button{ padding:6px 11px; }
+  .segmented{ display:inline-flex; align-items:center; gap:2px; padding:3px; border-radius: 9px; background: var(--surface); border:1px solid var(--line); margin-right:4px; }
+  .segmented .seg-label{ font-size:0.72rem; color: var(--faint); padding: 0 6px 0 6px; font-weight:600; letter-spacing:0.5px; text-transform:uppercase; }
+  .toolbar-actions .segmented button{ background:transparent; color: var(--muted); border:none; padding:5px 10px; border-radius:6px; font-weight:500; }
+  .toolbar-actions .segmented button:hover{ color: var(--chalk); background: var(--surface-2); filter:none; }
+  .toolbar-actions .segmented button.active{ background: var(--ochre); color:#2a1d10; font-weight:600; }
+  /* Vista del profesor: el aula gira 180° (pizarra abajo) y cada mesa vuelve a girar para que el texto se lea derecho */
+  .room.teacher-view{ flex-direction: column-reverse; }
+  .room.teacher-view .board{ margin: 18px 0 0; border-bottom-width:6px; border-top-width:9px; }
+  .room.teacher-view .freecanvas{ rotate: 180deg; }
+  .room.teacher-view .fdesk{ rotate: 180deg; }
+
+  .toast{ position:fixed; left:50%; bottom:24px; transform:translateX(-50%); z-index:1300; display:flex; align-items:center; gap:14px; max-width: calc(100vw - 32px);
+    background: var(--bg-deep); color: var(--chalk); border:1px solid var(--line-strong); border-radius: 12px; padding:10px 12px 10px 16px; box-shadow: 0 12px 30px rgba(0,0,0,0.4); font-size:0.88rem; animation: toastIn .2s ease; }
+  .toast.error{ border-color: rgba(227,130,111,0.7); box-shadow: 0 12px 30px rgba(0,0,0,0.4), inset 4px 0 0 var(--danger); }
+  .toast-action{ background:transparent; color: var(--ochre-ink); border:1px solid rgba(232,171,92,0.45); padding:5px 10px; font-size:0.82rem; }
+  .toast-action:hover{ background: var(--ochre-soft); filter:none; }
+  @keyframes toastIn{ from{ opacity:0; transform: translate(-50%, 8px); } to{ opacity:1; transform: translate(-50%, 0); } }
   .toolbar .status{ display:flex; gap:8px; align-items:flex-start; }
   .toolbar .status::before{ content:'i'; flex-shrink:0; width:18px; height:18px; border-radius:50%; display:grid; place-items:center; font-size:0.7rem; font-weight:700; font-style:italic; font-family: var(--font-display); color: var(--bg); background: var(--faint); margin-top:1px; }
   .status{ font-size:0.82rem; color: var(--muted); }
   .status.error{ color: var(--danger); }
-  .panel .status:not(:empty){ padding: 8px 10px; border-radius: var(--radius-sm); background: rgba(0,0,0,0.15); border:1px solid var(--line); }
+  .history-list{ list-style:none; margin:10px 0 0; padding:0; display:flex; flex-direction:column; gap:6px; }
+  .history-list:empty::before{ content:'Aún no hay planos guardados.'; font-size:0.8rem; color: var(--faint); }
+  .history-list li{ display:flex; align-items:center; gap:8px; padding:7px 8px 7px 10px; border-radius: var(--radius-sm); background: var(--inset-bg); border:1px solid var(--line); font-size:0.84rem; }
+  .history-list li.current{ border-color: rgba(232,171,92,0.55); background: var(--ochre-soft); }
+  .history-list .h-main{ flex:1; min-width:0; }
+  .history-list .h-date{ font-weight:600; }
+  .history-list .h-meta{ display:block; font-size:0.74rem; color: var(--faint); }
+  .history-list button{ padding:4px 8px; font-size:0.76rem; flex-shrink:0; }
+  .shuffle-diag{ display:flex; flex-direction:column; gap:6px; margin-top:8px; }
+  .shuffle-diag:empty{ display:none; }
+  .diag-item{ display:flex; align-items:center; justify-content:space-between; gap:10px; padding:7px 10px; border-radius: var(--radius-sm); background: var(--inset-bg); border:1px solid rgba(227,130,111,0.35); font-size:0.82rem; }
+  .diag-item button{ flex-shrink:0; }
+  .panel .status:not(:empty){ padding: 8px 10px; border-radius: var(--radius-sm); background: var(--inset-bg); border:1px solid var(--line); }
   .panel .status.error:not(:empty){ background: var(--danger-soft); border-color: rgba(227,130,111,0.35); }
 
   .canvas-scroll{ max-width:100%; overflow:auto; border-radius: 12px; }
   .freecanvas{ position:relative; flex-shrink:0; border:1px solid var(--line); border-radius: 12px; overflow:hidden;
-    background-color: rgba(0,0,0,0.12);
-    background-image: radial-gradient(rgba(244,241,230,0.11) 1px, transparent 1.2px); background-size: 16px 16px;
+    background-color: var(--floor);
+    background-image: radial-gradient(var(--floor-dot) 1px, transparent 1.2px); background-size: 16px 16px;
     box-shadow: inset 0 2px 12px rgba(0,0,0,0.25); }
   .fdesk{ position:absolute; width:68px; height:68px; border-radius:8px;
     background: rgba(139,94,60,0.18); border:1.5px solid rgba(201,154,99,0.5);
@@ -197,11 +320,16 @@
   .fdesk.selected{ box-shadow: 0 0 0 3px var(--ochre), 0 6px 16px rgba(0,0,0,0.35); z-index:5; }
   .fdesk.swap-select{ box-shadow: 0 0 0 3px var(--teal), 0 0 18px rgba(127,209,201,0.45); z-index:5; animation: swapPulse 1.2s ease-in-out infinite; }
   @keyframes swapPulse{ 50%{ box-shadow: 0 0 0 5px rgba(127,209,201,0.55), 0 0 22px rgba(127,209,201,0.3); } }
-  .fdesk.inactive{ opacity: 0.45; background: repeating-linear-gradient(45deg, rgba(244,241,230,0.06) 0 6px, transparent 6px 12px); border-style: dashed; border-color: var(--faint); }
+  .fdesk.inactive{ opacity: 0.45; background: repeating-linear-gradient(45deg, var(--surface-3) 0 6px, transparent 6px 12px); border-style: dashed; border-color: var(--faint); }
   .fdesk.dragging{ cursor:grabbing; opacity:0.92; z-index:10; box-shadow: 0 12px 26px rgba(0,0,0,0.45); transform: scale(1.04); }
   .freecanvas.locked .fdesk{ cursor:pointer; }
   .fdesk .dots{ position:absolute; top:5px; left:5px; display:flex; gap:3px; }
   .fdesk .dot{ width:7px; height:7px; border-radius:50%; box-shadow: 0 0 0 1.5px rgba(0,0,0,0.3); }
+  .fdesk .num{ position:absolute; bottom:3px; right:5px; font-size:0.6rem; font-weight:700; opacity:0.55; text-shadow:none; letter-spacing:0.3px; }
+  .fdesk:focus-visible{ outline: 2px solid var(--ochre); outline-offset: 2px; }
+  .fdesk.drop-target{ box-shadow: 0 0 0 3px var(--teal), 0 0 18px rgba(127,209,201,0.45); }
+  .fdesk.drag-source{ opacity:0.55; }
+  .drag-ghost{ position:fixed; z-index:2000; pointer-events:none; transform: translate(-50%, -60%) rotate(-3deg); padding:8px 12px; border-radius:8px; background: linear-gradient(155deg, #b07c4e, #8b5e3c); color:#fff8ec; font-weight:700; font-size:0.85rem; border:1.5px solid #d2a571; box-shadow: 0 14px 28px rgba(0,0,0,0.45); white-space:nowrap; }
   .fdesk .clearx{ position:absolute; top:-7px; right:-7px; width:20px; height:20px; line-height:1; padding:0; border-radius:50%; background: #c0574a; color:#fff; font-size:12px; border:2px solid var(--bg);
     display:grid; place-items:center; opacity:0; transform: scale(0.7); transition: opacity .15s, transform .15s; box-shadow: 0 2px 6px rgba(0,0,0,0.35); }
   .fdesk:hover .clearx, .fdesk.swap-select .clearx, .fdesk .clearx:focus-visible{ opacity:1; transform: scale(1); }
@@ -210,13 +338,14 @@
   .groups-grid{ display:grid; grid-template-columns: repeat(auto-fill, minmax(190px,1fr)); gap:14px; }
   .groups-grid:empty::before{ content:'Elige un tamaño de grupo y pulsa "Generar grupos".'; grid-column: 1/-1; display:block; padding: 40px 20px; text-align:center; color: var(--faint); border:1.5px dashed var(--line-strong); border-radius: 12px; }
   .group-card{ position:relative; border:1px solid var(--line); border-radius: var(--radius); padding:14px 16px 12px; background: var(--surface-2); overflow:hidden; animation: popIn .25s ease both; }
-  .group-card::before{ content:''; position:absolute; inset:0 0 auto 0; height:3px; background: var(--ochre); }
-  .group-card:nth-child(4n+2)::before{ background: var(--teal); }
-  .group-card:nth-child(4n+3)::before{ background: var(--wood-light); }
-  .group-card:nth-child(4n+4)::before{ background: var(--danger); }
-  .group-card h3{ margin:0 0 8px; font-size:0.74rem; color: var(--faint); font-weight:700; letter-spacing:1.2px; }
+  .group-card{ --gc: var(--c-amber); background: linear-gradient(180deg, color-mix(in srgb, var(--gc) 13%, var(--card-bg)), var(--card-bg) 70%); }
+  .group-card::before{ content:''; position:absolute; inset:0 0 auto 0; height:4px; background: var(--gc); }
+  .group-card h3{ color: var(--gc) !important; }
+  .group-card:nth-child(8n+2){ --gc: var(--c-teal); } .group-card:nth-child(8n+3){ --gc: var(--c-coral); } .group-card:nth-child(8n+4){ --gc: var(--c-sky); }
+  .group-card:nth-child(8n+5){ --gc: var(--c-lilac); } .group-card:nth-child(8n+6){ --gc: var(--c-mint); } .group-card:nth-child(8n+7){ --gc: var(--c-sun); } .group-card:nth-child(8n+8){ --gc: var(--c-pink); }
+  .group-card h3{ margin:0 0 8px; font-size:0.76rem; font-weight:800; letter-spacing:1.2px; }
   .group-card ul{ list-style:none; margin:0; padding:0; }
-  .group-card li{ padding:4px 0; font-size:0.92rem; border-bottom: 1px solid rgba(244,241,230,0.05); }
+  .group-card li{ padding:4px 0; font-size:0.92rem; border-bottom: 1px solid var(--line); }
   .group-card li:last-child{ border-bottom:none; }
   @keyframes popIn{ from{ opacity:0; transform: translateY(6px) scale(0.98); } to{ opacity:1; transform:none; } }
 
@@ -226,18 +355,18 @@
   #pickerWheel{ display:block; max-width:100%; height:auto; border-radius:50%; transition: transform 4s cubic-bezier(0.17,0.67,0.16,0.99); }
 
   .modal-overlay{ position:fixed; inset:0; background:rgba(6,14,12,0.6); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); display:flex; align-items:center; justify-content:center; z-index:1200; padding:16px; animation: fadeIn .2s ease; }
-  .modal-box{ background: linear-gradient(180deg, #1c3932, var(--bg-deep)); border:1px solid var(--line-strong); border-radius:16px; padding:30px 38px; text-align:center; min-width:280px; box-shadow: 0 24px 60px rgba(0,0,0,0.5); animation: popIn .25s ease both; }
+  .modal-box{ background: var(--pop-bg); border:1px solid var(--line-strong); border-radius:16px; padding:30px 38px; text-align:center; min-width:280px; box-shadow: 0 24px 60px rgba(0,0,0,0.5); animation: popIn .25s ease both; }
   @keyframes fadeIn{ from{ opacity:0; } to{ opacity:1; } }
   .modal-box .picked-label{ font-size:0.74rem; letter-spacing:3px; color: var(--faint); text-transform:uppercase; font-weight:600; }
-  .modal-box .picked-name{ font-size:2.4rem; margin:8px 0 22px; color: var(--ochre); font-family: var(--font-display); font-weight:600; line-height:1.15; }
+  .modal-box .picked-name{ font-size:2.4rem; margin:8px 0 22px; color: var(--ochre-ink); font-family: var(--font-display); font-weight:600; line-height:1.15; }
   .modal-actions{ display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
   .help-box{ text-align:left; max-width:680px; width:100%; max-height:86vh; overflow-y:auto; padding:28px 32px; position:relative; }
-  .help-box h2{ margin:0 0 6px; font-family: var(--font-display); color: var(--ochre); font-size:1.6rem; font-weight:600; }
+  .help-box h2{ margin:0 0 6px; font-family: var(--font-display); color: var(--ochre-ink); font-size:1.6rem; font-weight:600; }
   .help-box h3{ margin:20px 0 6px; font-size:0.98rem; color: var(--chalk); font-weight:650; }
-  .help-box p, .help-box li{ font-size:0.9rem; line-height:1.55; color: rgba(244,241,230,0.85); }
+  .help-box p, .help-box li{ font-size:0.9rem; line-height:1.55; color: var(--text-soft); }
   .help-box ul{ margin:4px 0; padding-left:20px; }
   .help-box li{ margin-bottom:4px; }
-  .help-box li::marker{ color: var(--ochre); }
+  .help-box li::marker{ color: var(--ochre-ink); }
   .help-box strong{ color: var(--chalk); }
   .help-box .help-close{ position:absolute; top:12px; right:12px; width:34px; height:34px; display:grid; place-items:center; background: var(--surface-2); border:1px solid var(--line); border-radius:50%; color: var(--muted); font-size:0.95rem; cursor:pointer; padding:0; }
   .help-box .help-close:hover{ background: var(--surface-3); color: var(--chalk); filter:none; }
@@ -248,7 +377,7 @@
   .timer-display{ font-family: var(--font-display); font-variant-numeric: tabular-nums; font-size: clamp(4rem, 12vw, 9rem); font-weight:600; letter-spacing:2px; color: var(--chalk); line-height:1; transition: color 0.3s ease; text-shadow: 0 4px 24px rgba(0,0,0,0.3); }
   .timer-display.timer-done{ color: var(--danger); animation: timerFlash 1s ease-in-out infinite; }
   @keyframes timerFlash{ 0%,100%{ opacity:1; } 50%{ opacity:0.35; } }
-  .timer-progress{ width: min(520px, 100%); height:8px; border-radius:999px; background: rgba(0,0,0,0.25); overflow:hidden; }
+  .timer-progress{ width: min(520px, 100%); height:8px; border-radius:999px; background: var(--inset-bg); overflow:hidden; }
   .timer-progress > div{ height:100%; width:100%; border-radius:inherit; background: linear-gradient(90deg, var(--ochre), var(--wood-light)); transition: width 1s linear; }
   .timer-presets{ display:flex; gap:8px; flex-wrap:wrap; justify-content:center; }
   .timer-presets button{ border-radius:999px; padding:7px 14px; }
@@ -280,6 +409,7 @@
 </style>
 </head>
 <body>
+<script>try{ if(localStorage.getItem('planoAsientos.theme') === 'light') document.documentElement.dataset.theme = 'light'; }catch(e){}</script>
 <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
   <symbol id="i-aula" viewBox="0 0 24 24"><path d="M4 4.5h16" stroke-width="2.4"/><rect x="3.5" y="10" width="7.5" height="6" rx="1.5" fill="currentColor" fill-opacity=".28"/><rect x="13" y="10" width="7.5" height="6" rx="1.5" fill="currentColor" fill-opacity=".28"/><path d="M7.25 16v3.5M16.75 16v3.5"/></symbol>
   <symbol id="i-alumnado" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2" fill="currentColor" fill-opacity=".28"/><path d="M3.5 19.5c.6-3.3 2.8-5.2 5.5-5.2s4.9 1.9 5.5 5.2"/><path d="M15.2 5.3a3 3 0 1 1 .9 5.7"/><path d="M16.6 14.4c2.3.4 3.7 2.1 4.2 5"/></symbol>
@@ -302,6 +432,12 @@
   <symbol id="i-pausa" viewBox="0 0 24 24"><rect x="6.8" y="5.5" width="3.6" height="13" rx="1.2" fill="currentColor" stroke="none"/><rect x="13.6" y="5.5" width="3.6" height="13" rx="1.2" fill="currentColor" stroke="none"/></symbol>
   <symbol id="i-reiniciar" viewBox="0 0 24 24"><path d="M4.6 12a7.4 7.4 0 1 0 2.2-5.3L4.6 9"/><path d="M4.6 4.5V9h4.5"/></symbol>
   <symbol id="i-cerrar" viewBox="0 0 24 24"><path d="m6.5 6.5 11 11M17.5 6.5l-11 11"/></symbol>
+  <symbol id="i-deshacer" viewBox="0 0 24 24"><path d="M9 14.5 4.5 10 9 5.5"/><path d="M4.8 10H14a5.5 5.5 0 0 1 0 11h-3"/></symbol>
+  <symbol id="i-rehacer" viewBox="0 0 24 24"><path d="m15 14.5 4.5-4.5L15 5.5"/><path d="M19.2 10H10a5.5 5.5 0 0 0 0 11h3"/></symbol>
+  <symbol id="i-falta" viewBox="0 0 24 24"><circle cx="10" cy="8" r="3.2" fill="currentColor" fill-opacity=".28"/><path d="M4 19.5c.6-3.3 2.9-5.2 6-5.2 1.2 0 2.3.3 3.2.8"/><path d="m16 15 4.5 4.5M20.5 15 16 19.5"/></symbol>
+  <symbol id="i-historial" viewBox="0 0 24 24"><path d="M4.5 12a7.5 7.5 0 1 0 2.2-5.3L4.5 9"/><path d="M4.5 4.5V9H9"/><path d="M12 8v4.3l2.8 1.8"/></symbol>
+  <symbol id="i-guardar" viewBox="0 0 24 24"><path d="M5.5 4h10.2L19.5 7.8V18.5a1.5 1.5 0 0 1-1.5 1.5H6a1.5 1.5 0 0 1-1.5-1.5V5.5A1.5 1.5 0 0 1 6 4z" fill="currentColor" fill-opacity=".28"/><path d="M8 4v4.5h7V4M8 20v-6h8v6"/></symbol>
+  <symbol id="i-tema" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.4" fill="currentColor" fill-opacity=".28"/><path d="M12 3.6a8.4 8.4 0 0 1 0 16.8z" fill="currentColor" stroke="none"/></symbol>
   <symbol id="i-mas" viewBox="0 0 24 24"><path d="M12 5.5v13M5.5 12h13"/></symbol>
 </svg>
 
@@ -325,24 +461,28 @@
     <div class="btn-group">
       <button id="helpBtn"><svg class="icon" aria-hidden="true"><use href="#i-ayuda"/></svg>Ayuda</button>
       <button id="sampleBtn"><svg class="icon" aria-hidden="true"><use href="#i-ejemplo"/></svg>Ejemplo</button>
+      <button id="themeBtn" title="Cambiar entre tema oscuro (pizarra) y claro (recomendado para proyectar con mucha luz)"><svg class="icon" aria-hidden="true"><use href="#i-tema"/></svg><span id="themeLabel">Claro</span></button>
     </div>
     <div class="btn-group">
       <button id="exportPngBtn" title="Descargar el plano como imagen"><svg class="icon" aria-hidden="true"><use href="#i-imagen"/></svg>PNG</button>
       <button id="exportPdfBtn" title="Descargar el plano como PDF imprimible"><svg class="icon" aria-hidden="true"><use href="#i-pdf"/></svg>PDF</button>
     </div>
     <div class="btn-group">
-      <button id="exportBtn" title="Guardar toda la sesión en un archivo .json"><svg class="icon" aria-hidden="true"><use href="#i-descargar"/></svg>Exportar sesión</button>
-      <button id="importBtn" title="Abrir un archivo .json guardado antes"><svg class="icon" aria-hidden="true"><use href="#i-subir"/></svg>Importar</button>
+      <button id="saveBtn" title="Descargar una copia de seguridad (.json) con toda la clase, para guardarla donde quieras"><svg class="icon" aria-hidden="true"><use href="#i-guardar"/></svg>Guardar copia</button>
+      <button id="importBtn" title="Cargar una copia de seguridad (.json) guardada antes"><svg class="icon" aria-hidden="true"><use href="#i-subir"/></svg>Restaurar copia</button>
     </div>
     <input type="file" id="importFile" accept="application/json" style="display:none;">
   </div>
 </header>
-<div class="header-status"><div class="status" id="importExportStatus" role="status"></div></div>
+<div class="header-status">
+  <div class="save-state" id="saveState" aria-live="polite"></div>
+  <div class="status" id="importExportStatus" role="status"></div>
+</div>
 
 <nav class="tabs-bar">
   <div class="tabs" role="tablist">
     <button class="tab-btn active" data-tab="aula"><svg class="icon" aria-hidden="true"><use href="#i-aula"/></svg>Diseñar aula</button>
-    <button class="tab-btn" data-tab="alumnado"><svg class="icon" aria-hidden="true"><use href="#i-alumnado"/></svg>Alumnado</button>
+    <button class="tab-btn" data-tab="alumnado"><svg class="icon" aria-hidden="true"><use href="#i-alumnado"/></svg>Alumnado<span class="tab-badge" id="absentBadge" title="Faltan hoy" hidden></span></button>
     <button class="tab-btn" data-tab="reglas"><svg class="icon" aria-hidden="true"><use href="#i-reglas"/></svg>Reglas</button>
     <button class="tab-btn" data-tab="barajar"><svg class="icon" aria-hidden="true"><use href="#i-barajar"/></svg>Barajar</button>
     <button class="tab-btn" data-tab="grupos"><svg class="icon" aria-hidden="true"><use href="#i-grupos"/></svg>Grupos</button>
@@ -375,14 +515,14 @@
         <button class="block secondary" id="addSingleBtn"><svg class="icon" aria-hidden="true"><use href="#i-mas"/></svg>Mesa</button>
         <button class="block secondary" id="addPairBtn"><svg class="icon" aria-hidden="true"><use href="#i-mas"/></svg>Pareja de mesas</button>
         <button class="block secondary" id="addQuadBtn"><svg class="icon" aria-hidden="true"><use href="#i-mas"/></svg>Grupo de 4</button>
-        <p class="hint">Arrastra cualquier mesa a la posición que quieras. Haz clic (sin arrastrar) en una mesa vacía para etiquetarla. Para mover o intercambiar alumnado, haz clic en una mesa ocupada y luego en la mesa destino.</p>
+        <p class="hint">Arrastra las mesas a su posición. Haz clic en una mesa para ver sus opciones (etiquetas, desactivarla, eliminarla, sentar a alguien…).</p>
       </section>
 
       <section>
         <h2>Bloquear diseño</h2>
         <label class="toggle-row">
           <input type="checkbox" id="layoutLocked">
-          <span>Bloquear el diseño del aula (evita mover, añadir o eliminar mesas por error). Con el diseño bloqueado sigues pudiendo mover alumnos entre mesas haciendo clic.</span>
+          <span>Bloquear el diseño del aula (evita mover, añadir o eliminar mesas por error). Con el diseño bloqueado puedes arrastrar a un alumno a otra mesa sin mover las mesas.</span>
         </label>
       </section>
 
@@ -395,14 +535,15 @@
         </div>
         <ul class="tag-list" id="tagList"></ul>
       </section>
-
-      <section id="deskEditorSection" style="display:none;">
-        <h2>Mesa seleccionada</h2>
-        <div class="desk-editor" id="deskEditor"></div>
-      </section>
     </div>
 
     <div class="tab-panel" data-tab="alumnado" style="display:none;">
+      <section>
+        <h2><svg class="icon ic-coral" aria-hidden="true"><use href="#i-falta"/></svg>Faltan hoy</h2>
+        <p class="hint" style="margin-top:-4px;">Marca a quien no ha venido con el botón <strong>Falta</strong> de la lista. Al barajar, en la ruleta y en los grupos se les salta. Las ausencias se borran solas al día siguiente.</p>
+        <div class="absent-summary" id="absentSummary"></div>
+        <ul class="student-list" id="studentList"></ul>
+      </section>
       <section>
         <h2>Añadir alumnado</h2>
         <div class="row">
@@ -419,13 +560,12 @@
           <input type="checkbox" id="showLastNames">
           <span>Mostrar el apellido completo en las mesas, la ruleta, los grupos y las exportaciones. Si está desmarcado, solo se añade la inicial del apellido cuando dos alumnos comparten nombre (p.ej. "Jaume P" y "Jaume B").</span>
         </label>
-        <ul class="student-list" id="studentList"></ul>
       </section>
     </div>
 
     <div class="tab-panel" data-tab="reglas" style="display:none;">
       <section class="rule-card">
-        <h2><svg class="icon" aria-hidden="true"><use href="#i-separar"/></svg>Mantener separados</h2>
+        <h2><svg class="icon ic-coral" aria-hidden="true"><use href="#i-separar"/></svg>Mantener separados</h2>
         <p class="hint" style="margin-top:-4px;">Dos alumnos que nunca deben acabar en mesas contiguas.</p>
         <div class="row"><select id="rf_apart_a"></select></div>
         <div class="row"><select id="rf_apart_b"></select></div>
@@ -433,7 +573,7 @@
       </section>
 
       <section class="rule-card">
-        <h2><svg class="icon" aria-hidden="true"><use href="#i-juntar"/></svg>Mantener juntos</h2>
+        <h2><svg class="icon ic-mint" aria-hidden="true"><use href="#i-juntar"/></svg>Mantener juntos</h2>
         <p class="hint" style="margin-top:-4px;">Dos alumnos que siempre deben acabar en mesas contiguas.</p>
         <div class="row"><select id="rf_together_a"></select></div>
         <div class="row"><select id="rf_together_b"></select></div>
@@ -441,7 +581,7 @@
       </section>
 
       <section class="rule-card">
-        <h2><svg class="icon" aria-hidden="true"><use href="#i-etiqueta"/></svg>Etiqueta de mesa</h2>
+        <h2><svg class="icon ic-lilac" aria-hidden="true"><use href="#i-etiqueta"/></svg>Etiqueta de mesa</h2>
         <p class="hint" style="margin-top:-4px;">Restringe a un alumno a mesas con una etiqueta concreta (pestaña "Diseñar aula").</p>
         <div class="row"><select id="rf_tag_student"></select></div>
         <div class="row"><select id="rf_tag_tag"></select></div>
@@ -449,7 +589,7 @@
       </section>
 
       <section class="rule-card">
-        <h2><svg class="icon" aria-hidden="true"><use href="#i-chincheta"/></svg>Sitio fijo</h2>
+        <h2><svg class="icon ic-sky" aria-hidden="true"><use href="#i-chincheta"/></svg>Sitio fijo</h2>
         <p class="hint" style="margin-top:-4px;">Un alumno que siempre debe sentarse en la misma mesa exacta.</p>
         <div class="row"><select id="rf_fixed_student"></select></div>
         <div class="row"><select id="rf_fixed_desk"></select></div>
@@ -465,9 +605,26 @@
     <div class="tab-panel" data-tab="barajar" style="display:none;">
       <section>
         <h2>Generar plano</h2>
+        <label class="field" style="margin-bottom:12px;">Rotación: no repetir compañero de mesa de…
+          <select id="avoidRepeats">
+            <option value="0">No tenerlo en cuenta</option>
+            <option value="1">el último plano guardado</option>
+            <option value="2">los 2 últimos planos</option>
+            <option value="3" selected>los 3 últimos planos</option>
+            <option value="5">los 5 últimos planos</option>
+            <option value="99">todos los planos guardados</option>
+          </select>
+        </label>
         <button id="shuffleBtn" class="block big"><svg class="icon" aria-hidden="true"><use href="#i-barajar"/></svg>Barajar asientos</button>
         <div class="status" id="statusMsg" style="margin-top:10px;"></div>
-        <p class="hint">Prueba combinaciones aleatorias hasta encontrar una que cumpla todas las reglas activas. Si no lo consigue, te lo indicará.</p>
+        <div class="shuffle-diag" id="shuffleDiag"></div>
+        <p class="hint">Cumple siempre las reglas activas y, entre los planos posibles, elige el que menos compañeros repite respecto a los planos guardados.</p>
+      </section>
+      <section>
+        <h2><svg class="icon ic-teal" aria-hidden="true"><use href="#i-historial"/></svg>Historial de planos</h2>
+        <p class="hint" style="margin-top:-4px;">Guarda el plano que vayáis a usar; así la rotación sabe quién se ha sentado con quién. Al exportar el plano a PNG o PDF también se guarda.</p>
+        <button id="savePlanBtn" class="block"><svg class="icon" aria-hidden="true"><use href="#i-guardar"/></svg>Guardar plano en el historial</button>
+        <ul class="history-list" id="planHistoryList"></ul>
       </section>
     </div>
 
@@ -490,13 +647,13 @@
     <div class="tab-panel" data-tab="picker" style="display:none;">
       <section>
         <h2>Ruleta</h2>
-        <p class="hint" style="margin-top:-4px;">Gira la ruleta para elegir a un alumno al azar, de entre todos los que haya en la clase.</p>
+        <p class="hint" style="margin-top:-4px;">Gira la ruleta para elegir a un alumno al azar entre los presentes (no salen quienes faltan hoy).</p>
         <label class="toggle-row">
           <input type="checkbox" id="pickerAutoRemove" checked>
           <span>Eliminar automáticamente al alumno elegido, para que no pueda volver a salir</span>
         </label>
         <button id="spinBtn" class="block big"><svg class="icon" aria-hidden="true"><use href="#i-ruleta"/></svg>Girar</button>
-        <button id="resetWheelBtn" class="secondary block">Restablecer con todo el alumnado</button>
+        <button id="resetWheelBtn" class="secondary block">Volver a llenar la ruleta</button>
         <div class="status" id="pickerStatus" style="margin-top:6px;"></div>
         <div class="row" style="justify-content:space-between; margin-top:18px;">
           <h2 style="margin:0;">Historial (orden de salida)</h2>
@@ -526,7 +683,19 @@
 
   <div class="stage">
     <div id="stageAula" class="stage-card">
-      <div class="toolbar"><span class="status">Arrastra las mesas para colocarlas (si el diseño no está bloqueado). Para mover a un alumno: clic en su mesa y luego en la mesa destino. La ✕ vacía la mesa.</span></div>
+      <div class="toolbar">
+        <span class="status" id="stageHint"></span>
+        <div class="toolbar-actions">
+          <div class="segmented" role="group" aria-label="Vista del plano">
+            <span class="seg-label">Vista</span>
+            <button id="viewStudentsBtn" class="active" aria-pressed="true" title="Pizarra arriba: el aula vista desde el alumnado">Alumnado</button>
+            <button id="viewTeacherBtn" aria-pressed="false" title="Pizarra abajo: el aula vista desde la mesa del profesor">Profesor</button>
+          </div>
+          <button class="secondary" id="undoBtn" title="Deshacer (Ctrl+Z)" disabled><svg class="icon" aria-hidden="true"><use href="#i-deshacer"/></svg>Deshacer</button>
+          <button class="secondary" id="redoBtn" title="Rehacer (Ctrl+Y)" disabled aria-label="Rehacer"><svg class="icon" aria-hidden="true"><use href="#i-rehacer"/></svg></button>
+        </div>
+      </div>
+      <div class="desk-pop" id="deskPop" role="region" aria-label="Opciones de la mesa seleccionada" hidden></div>
       <div class="canvas-scroll">
         <div class="room">
           <div class="board">Pizarra</div>
@@ -566,6 +735,8 @@
   </div>
 </div>
 
+<div id="toast" class="toast" role="status" aria-live="polite" hidden><span id="toastMsg"></span><button class="toast-action" id="toastUndo">Deshacer</button></div>
+
 <div id="pickerModal" class="modal-overlay" style="display:none;">
   <div class="modal-box">
     <div class="picked-label">Elegido</div>
@@ -581,49 +752,54 @@
   <div class="modal-box help-box">
     <button class="help-close" id="helpCloseX" title="Cerrar" aria-label="Cerrar"><svg class="icon" aria-hidden="true"><use href="#i-cerrar"/></svg></button>
     <h2 id="helpTitle">Cómo funciona</h2>
-    <p>Todo funciona en local, sin conexión. Si quieres probarlo antes de meter a tu clase, pulsa <strong>Ejemplo</strong>: carga un aula con mesas, 22 alumnos ficticios y algunas reglas ya puestas.</p>
+    <p>Todo funciona en local, sin conexión. Si quieres probarlo antes de meter a tu clase, pulsa <strong>Ejemplo</strong>: carga un aula con mesas, 22 alumnos ficticios y algunas reglas ya puestas (tu clase se aparta y puedes volver a ella).</p>
 
     <h3>1. Diseñar aula</h3>
     <ul>
-      <li>Añade mesas sueltas, por parejas o en grupos de 4 y <strong>arrástralas</strong> para copiar la distribución real de tu aula.</li>
-      <li>Haz clic en una mesa vacía para darle <strong>etiquetas</strong> (p.ej. "Visión" para la primera fila), desactivarla o eliminarla.</li>
+      <li>Añade mesas sueltas, por parejas o en grupos de 4 y <strong>arrástralas</strong> para copiar la distribución real de tu aula. Cada mesa lleva su número.</li>
+      <li>Haz clic en una mesa para ver sus opciones: <strong>etiquetas</strong> (p.ej. "Visión" para la primera fila), permitir o no alumnos, eliminarla…</li>
       <li>Cuando el aula esté lista, activa <strong>Bloquear diseño</strong> para no mover mesas sin querer.</li>
+      <li>Con <strong>Vista: Profesor</strong> ves el aula con la pizarra abajo, como desde tu mesa. El PNG y el PDF salen en la vista elegida.</li>
     </ul>
 
     <h3>2. Alumnado</h3>
     <ul>
       <li>Añade alumnos uno a uno o pega una lista (un alumno por línea; usa una coma para el apellido: <em>Jaume, Puig</em>).</li>
-      <li>Por defecto solo se ve el nombre en las mesas. Si dos alumnos se llaman igual, se añade la inicial del apellido (<em>Jaume P</em> / <em>Jaume B</em>). Puedes mostrar el apellido completo con el interruptor.</li>
+      <li><strong>Faltan hoy</strong>: marca con <strong>Falta</strong> a quien no ha venido. Al barajar, en la ruleta y en los grupos se le salta. Las ausencias se borran solas al día siguiente.</li>
+      <li>Por defecto solo se ve el nombre en las mesas. Si dos alumnos se llaman igual, se añade la inicial del apellido (<em>Jaume P</em> / <em>Jaume B</em>).</li>
     </ul>
 
     <h3>3. Reglas</h3>
     <ul>
-      <li><strong>Mantener separados</strong>: dos alumnos nunca se sientan juntos.</li>
-      <li><strong>Mantener juntos</strong>: dos alumnos siempre se sientan al lado.</li>
-      <li><strong>Etiqueta de mesa</strong>: un alumno siempre se sienta en una mesa con esa etiqueta.</li>
-      <li><strong>Sitio fijo</strong>: un alumno siempre en la misma mesa.</li>
+      <li><strong>Mantener separados</strong>: dos alumnos nunca en mesas pegadas. <strong>Mantener juntos</strong>: siempre en mesas pegadas.</li>
+      <li><strong>Etiqueta de mesa</strong>: un alumno siempre en una mesa con esa etiqueta. <strong>Sitio fijo</strong>: siempre en la misma mesa (también desde la mesa: <em>Fijar aquí</em>).</li>
+      <li>Si una regla se repite o choca con otra, la app te avisa y no la añade.</li>
     </ul>
 
     <h3>4. Barajar y ajustar</h3>
     <ul>
-      <li><strong>Barajar asientos</strong> reparte a todo el alumnado al azar respetando las reglas.</li>
-      <li>Para retocar sin volver a barajar: haz clic en una mesa ocupada y luego en otra mesa. Si está vacía, el alumno se mueve; si está ocupada, se intercambian.</li>
-      <li>La <strong>✕</strong> de cada mesa la vacía.</li>
+      <li><strong>Barajar asientos</strong> reparte al alumnado presente respetando las reglas. Si no es posible, te dice qué regla lo impide.</li>
+      <li><strong>Rotación</strong>: guarda en el <strong>Historial</strong> el plano que vayáis a usar (al exportarlo a PNG o PDF se guarda solo). La próxima vez, al barajar se evitará repetir compañero de mesa de los últimos planos.</li>
+      <li>Para retocar sin volver a barajar: con el diseño bloqueado, <strong>arrastra a un alumno</strong> a otra mesa (si está ocupada, se intercambian); o haz clic en su mesa y luego en la mesa destino. Las mesas no se mueven.</li>
+      <li>¿Te has equivocado? <strong>Deshacer</strong> (Ctrl+Z) recupera el plano anterior.</li>
     </ul>
 
     <h3>Otras herramientas</h3>
     <ul>
       <li><strong>Grupos</strong>: divide la clase en grupos aleatorios del tamaño que elijas (opcionalmente respetando las reglas de juntar/separar).</li>
-      <li><strong>Picker</strong>: ruleta para elegir un alumno al azar, con opción de quitarlo de la ruleta y ver el historial.</li>
+      <li><strong>Ruleta</strong>: elige un alumno al azar, con opción de quitarlo de la ruleta y ver el orden de salida.</li>
       <li><strong>Temporizador</strong>: cuenta atrás grande, visible desde toda el aula, con aviso sonoro.</li>
+      <li><strong>Claro / Oscuro</strong> (arriba): el tema claro se ve mejor al proyectar en aulas con mucha luz.</li>
     </ul>
 
     <h3>Guardar y compartir</h3>
     <ul>
-      <li><strong>Exportar sesión</strong> descarga un archivo con todo (aula, alumnado, reglas y plano). Con <strong>Importar sesión</strong> lo recuperas.</li>
-      <li><strong>Plano a PNG / PDF</strong> genera una versión imprimible para dejarla en el aula al resto del profesorado.</li>
+      <li>La app <strong>se guarda sola en este navegador</strong>: si cierras la pestaña, al volver lo encontrarás todo.</li>
+      <li>Aun así, el navegador puede borrar esos datos (al limpiar el historial, en otro equipo…). Pulsa <strong>Guardar copia</strong> de vez en cuando: descarga un archivo con toda la clase que puedes guardar donde quieras (un pendrive, tu nube…). Arriba verás cuándo hiciste la última copia.</li>
+      <li>Si se pierde la información, o quieres usar la clase en otro equipo, pulsa <strong>Restaurar copia</strong> y elige ese archivo.</li>
+      <li><strong>PNG / PDF</strong> genera una versión imprimible del plano (en la vista elegida: alumnado o profesor) para dejarla al resto del profesorado.</li>
     </ul>
-    <p class="help-note">La app no guarda los cambios automáticamente: exporta la sesión antes de cerrar la pestaña.</p>
+    <p class="help-note">Tus datos no salen de tu equipo: no se envían a ningún servidor. Solo se guardan en este navegador y en las copias que tú descargues.</p>
 
     <div class="modal-actions">
       <button id="helpCloseBtn">Entendido</button>
@@ -645,12 +821,33 @@
   let selectedSwapId = null;
   let layoutLocked = false;
   let nextDeskId=1, nextTagId=1, nextStudentId=1, nextRuleId=1;
+  let absentDate = '';  // día (AAAA-MM-DD) al que corresponden las ausencias marcadas
+  let viewMode = 'students'; // 'students' (pizarra arriba) o 'teacher' (vista desde la mesa del profesor)
+  let planHistory = []; // planos guardados, el más reciente primero: {id, savedAt, seats:{mesa:alumno}, pairs:[[a,b]]}
+  let nextPlanId = 1;
+  const HISTORY_LIMIT = 30;
   const DESK_SIZE = 68;
   const ADJ_THRESHOLD = 82; // px between desk centers to count as "adjacent"
 
   const $ = id => document.getElementById(id);
   const icon = name => `<svg class="icon" aria-hidden="true"><use href="#i-${name}"/></svg>`;
+  function todayStr(){ const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
+  function presentStudents(){ return students.filter(s => !s.absent); }
   function escapeHtml(str){ return String(str).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+
+  // ---------- Tema (oscuro "pizarra" / claro para proyectar) ----------
+  const THEME_KEY = 'planoAsientos.theme';
+  function applyTheme(theme){
+    if(theme === 'light') document.documentElement.dataset.theme = 'light';
+    else delete document.documentElement.dataset.theme;
+    $('themeLabel').textContent = theme === 'light' ? 'Oscuro' : 'Claro';
+  }
+  $('themeBtn').onclick = () => {
+    const next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+    try{ localStorage.setItem(THEME_KEY, next); }catch(e){}
+    applyTheme(next);
+  };
+  applyTheme(document.documentElement.dataset.theme === 'light' ? 'light' : 'dark');
 
   // ---------- Tabs ----------
   const stageForTab = { grupos: 'stageGroups', picker: 'stagePicker', timer: 'stageTimer' };
@@ -694,12 +891,14 @@
 
   $('addSingleBtn').onclick = () => {
     if(layoutLocked) return;
+    pushUndo('añadir mesa');
     const p = nextCascadePos();
     addDeskAt(p.x, p.y);
     renderCanvas();
   };
   $('addPairBtn').onclick = () => {
     if(layoutLocked) return;
+    pushUndo('añadir pareja de mesas');
     const p = nextCascadePos();
     addDeskAt(p.x, p.y);
     addDeskAt(p.x + DESK_SIZE, p.y);
@@ -707,6 +906,7 @@
   };
   $('addQuadBtn').onclick = () => {
     if(layoutLocked) return;
+    pushUndo('añadir grupo de 4');
     const p = nextCascadePos();
     addDeskAt(p.x, p.y);
     addDeskAt(p.x + DESK_SIZE, p.y);
@@ -721,7 +921,6 @@
     $('addPairBtn').disabled = layoutLocked;
     $('addQuadBtn').disabled = layoutLocked;
     $('canvas').classList.toggle('locked', layoutLocked);
-    if(layoutLocked){ selectedDeskId = null; }
     renderCanvas(); renderDeskEditor();
   });
 
@@ -732,63 +931,166 @@
     return Math.sqrt(dx*dx + dy*dy) <= ADJ_THRESHOLD;
   }
 
+  // ---------- Deshacer / rehacer ----------
+  // Guarda una foto del plano (asientos + mesas) antes de cada cambio. No incluye alumnado ni reglas,
+  // para que deshacer un barajado nunca borre, por ejemplo, una regla creada después.
+  let undoStack = [], redoStack = [];
+  const UNDO_LIMIT = 50;
+  function snapshot(){ return { seats: { ...seatAssignment }, desks: desks.map(d => ({ ...d, tags: d.tags.slice() })) }; }
+  function pushUndo(label, snap){
+    undoStack.push({ label, snap: snap || snapshot() });
+    if(undoStack.length > UNDO_LIMIT) undoStack.shift();
+    redoStack = [];
+    updateUndoButtons();
+  }
+  function restoreSnapshot(snap){
+    desks = snap.desks.map(d => ({ ...d, tags: d.tags.filter(tid => tags.some(t => t.id === tid)) }));
+    const deskIds = new Set(desks.map(d => d.id));
+    seatAssignment = sanitizeSeats(snap.seats, deskIds, new Set(students.map(st => st.id)));
+    rules = rules.filter(r => r.type !== 'fixed' || deskIds.has(r.deskId));
+    selectedDeskId = null; selectedSwapId = null;
+    renderCanvas(); renderDeskEditor(); renderRuleFields(); renderRules();
+  }
+  function undo(){
+    const entry = undoStack.pop(); if(!entry) return;
+    redoStack.push({ label: entry.label, snap: snapshot() });
+    restoreSnapshot(entry.snap); updateUndoButtons();
+    toast(`Deshecho: ${entry.label}`);
+  }
+  function redo(){
+    const entry = redoStack.pop(); if(!entry) return;
+    undoStack.push({ label: entry.label, snap: snapshot() });
+    restoreSnapshot(entry.snap); updateUndoButtons();
+    toast(`Rehecho: ${entry.label}`);
+  }
+  function updateUndoButtons(){
+    const u = undoStack[undoStack.length-1], r = redoStack[redoStack.length-1];
+    $('undoBtn').disabled = !u; $('undoBtn').title = u ? `Deshacer: ${u.label} (Ctrl+Z)` : 'Nada que deshacer';
+    $('redoBtn').disabled = !r; $('redoBtn').title = r ? `Rehacer: ${r.label} (Ctrl+Y)` : 'Nada que rehacer';
+  }
+  $('undoBtn').onclick = undo;
+  $('redoBtn').onclick = redo;
+  document.addEventListener('keydown', (e) => {
+    const t = e.target, typing = t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.tagName === 'SELECT' || t.isContentEditable);
+    if(typing || !(e.ctrlKey || e.metaKey) || e.altKey) return;
+    const k = e.key.toLowerCase();
+    if(k === 'z' && !e.shiftKey){ e.preventDefault(); undo(); }
+    else if(k === 'y' || (k === 'z' && e.shiftKey)){ e.preventDefault(); redo(); }
+  });
+
+  // Aviso breve en la parte inferior, con acceso directo a "Deshacer"
+  let toastTimer = null;
+  function toast(msg, opts){
+    const el = $('toast');
+    $('toastMsg').textContent = msg;
+    $('toastUndo').hidden = !(opts && opts.undo);
+    el.classList.toggle('error', !!(opts && opts.error));
+    el.hidden = false;
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => { el.hidden = true; }, (opts && (opts.undo || opts.error)) ? 6000 : 2800);
+  }
+  $('toastUndo').onclick = () => { $('toast').hidden = true; undo(); };
+
   // Mueve/intercambia alumnado entre mesas. Primer clic en una mesa ocupada marca el origen;
   // un segundo clic en cualquier otra mesa (vacía u ocupada) completa el movimiento/intercambio.
   // Funciona siempre, incluso con el diseño del aula bloqueado.
   function trySwap(deskId){
     if(selectedSwapId === null){ selectedSwapId = deskId; }
-    else if(selectedSwapId === deskId){ selectedSwapId = null; }
+    else if(selectedSwapId === deskId){ selectedSwapId = null; selectedDeskId = null; }
     else {
       const a = seatAssignment[selectedSwapId], b = seatAssignment[deskId];
+      const sa = students.find(x=>x.id===a), sb = students.find(x=>x.id===b);
+      pushUndo(b ? 'intercambiar alumnos' : 'mover alumno');
       if(a) seatAssignment[deskId]=a; else delete seatAssignment[deskId];
       if(b) seatAssignment[selectedSwapId]=b; else delete seatAssignment[selectedSwapId];
       selectedSwapId = null;
+      if(sa) toast(sb ? `${displayName(sa)} y ${displayName(sb)} intercambiados` : `${displayName(sa)} movido a ${deskLabel(deskId)}`, { undo: true });
+      selectedDeskId = null;
     }
-    renderCanvas();
+    renderCanvas(); renderDeskEditor();
   }
 
+  // Clic en una mesa: abre su ficha. Si ya hay un alumno elegido para mover, la mesa clicada es el destino.
+  function onDeskClick(d){
+    if(selectedSwapId !== null && selectedSwapId !== d.id){ trySwap(d.id); return; }
+    if(selectedDeskId === d.id){ deselectDesk(); return; }
+    selectedDeskId = d.id;
+    selectedSwapId = seatAssignment[d.id] ? d.id : null;
+    renderCanvas(); renderDeskEditor();
+  }
+  function deselectDesk(){
+    if(selectedDeskId === null && selectedSwapId === null) return;
+    selectedDeskId = null; selectedSwapId = null;
+    renderCanvas(); renderDeskEditor();
+  }
+  // Mueve (o intercambia) el alumno de la mesa "from" a la mesa "to".
+  function moveStudent(fromId, toId){
+    selectedSwapId = fromId;
+    trySwap(toId);
+  }
+
+  // Arrastre de una mesa:
+  // - diseño desbloqueado: mueve la mesa;
+  // - diseño bloqueado y mesa ocupada: arrastra al alumno hasta otra mesa (mover o intercambiar), sin tocar las mesas.
   function attachDrag(el, d){
-    let startX, startY, origX, origY, moved, pointerId;
+    let startX, startY, origX, origY, moved, mode, ghost, dropEl;
+    const deskAt = (x, y) => { const t = document.elementFromPoint(x, y); return t ? t.closest('.fdesk') : null; };
+    const teacherFlip = () => viewMode === 'teacher' ? -1 : 1;
     el.addEventListener('pointerdown', (e) => {
+      if(e.button !== 0) return;
       e.preventDefault();
       startX = e.clientX; startY = e.clientY;
-      origX = d.x; origY = d.y; moved = false;
-      pointerId = e.pointerId;
-      el.setPointerCapture(pointerId);
-      if(!layoutLocked) el.classList.add('dragging');
+      origX = d.x; origY = d.y; moved = false; ghost = null; dropEl = null;
+      mode = !layoutLocked ? 'desk' : (seatAssignment[d.id] ? 'student' : 'none');
+      el.setPointerCapture(e.pointerId);
     });
     el.addEventListener('pointermove', (e) => {
       if(startX === undefined) return;
-      if(layoutLocked) return; // diseño bloqueado: nunca reposicionar, siempre se tratará como clic
       const dx = e.clientX - startX, dy = e.clientY - startY;
-      if(Math.abs(dx) > 3 || Math.abs(dy) > 3) moved = true;
-      if(moved){
-        let nx = origX + dx, ny = origY + dy;
+      if(!moved && (Math.abs(dx) > 4 || Math.abs(dy) > 4)){
+        if(mode === 'none') return;
+        moved = true;
+        if(mode === 'desk'){ pushUndo('mover mesa', snapshot()); el.classList.add('dragging'); }
+        if(mode === 'student'){
+          const st = students.find(x => x.id === seatAssignment[d.id]);
+          ghost = document.createElement('div'); ghost.className = 'drag-ghost'; ghost.textContent = st ? displayName(st) : '';
+          document.body.appendChild(ghost); el.classList.add('drag-source');
+          $('deskPop').hidden = true;
+        }
+      }
+      if(!moved) return;
+      if(mode === 'desk'){
+        const f = teacherFlip();
+        let nx = origX + dx*f, ny = origY + dy*f;
         nx = Math.max(0, Math.min(canvasW - DESK_SIZE, nx));
         ny = Math.max(0, Math.min(canvasH - DESK_SIZE, ny));
         d.x = nx; d.y = ny;
         el.style.left = nx+'px'; el.style.top = ny+'px';
+      } else if(mode === 'student'){
+        ghost.style.left = e.clientX + 'px'; ghost.style.top = e.clientY + 'px';
+        const over = deskAt(e.clientX, e.clientY);
+        const target = (over && over !== el && desks.some(x => String(x.id) === over.dataset.id && x.active)) ? over : null;
+        if(dropEl && dropEl !== target) dropEl.classList.remove('drop-target');
+        dropEl = target; if(dropEl) dropEl.classList.add('drop-target');
       }
     });
-    el.addEventListener('pointerup', (e) => {
-      el.classList.remove('dragging');
+    const finish = (e, cancelled) => {
       if(startX === undefined) return;
       startX = undefined;
-      if(!moved){
-        // treat as click
-        if(selectedSwapId !== null){
-          // ya hay una mesa origen marcada: cualquier mesa destino (vacía u ocupada) completa el movimiento
-          trySwap(d.id);
-        } else if(seatAssignment[d.id]){
-          // mesa ocupada: la marca como origen para mover/intercambiar su alumno
-          trySwap(d.id);
-        } else if(!layoutLocked){
-          // mesa vacía y sin movimiento en curso: abre el editor de la mesa (solo si el diseño no está bloqueado)
-          selectDesk(d.id);
-        }
-      } else {
-        renderCanvas();
+      el.classList.remove('dragging', 'drag-source');
+      if(ghost){ ghost.remove(); ghost = null; }
+      if(!moved){ if(!cancelled) onDeskClick(d); return; }
+      if(mode === 'student' && dropEl && !cancelled){
+        const toId = Number(dropEl.dataset.id);
+        moveStudent(d.id, toId);
+        return;
       }
+      renderCanvas(); renderDeskEditor();
+    };
+    el.addEventListener('pointerup', e => finish(e, false));
+    el.addEventListener('pointercancel', e => finish(e, true));
+    el.addEventListener('keydown', (e) => {
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); onDeskClick(d); }
     });
   }
 
@@ -798,71 +1100,177 @@
     desks.forEach(d => {
       const sid = seatAssignment[d.id];
       const el = document.createElement('div');
-      el.className = 'fdesk' + (sid?' filled':'') + (selectedDeskId===d.id?' selected':'') + (selectedSwapId===d.id?' swap-select':'') + (!d.active?' inactive':'');
+      el.className = 'fdesk' + (sid?' filled':'') + (selectedDeskId===d.id?' selected':'') + (selectedSwapId===d.id?' swap-select':'') + (!d.active?' inactive':'') + (sid && students.some(x=>x.id===sid && x.absent) ? ' absent' : '');
       el.style.left = d.x+'px'; el.style.top = d.y+'px';
+      el.dataset.id = d.id;
+      el.tabIndex = 0;
+      el.setAttribute('role', 'button');
+      const st0 = sid ? students.find(x=>x.id===sid) : null;
+      el.setAttribute('aria-label', `${deskLabel(d.id)}${st0 ? ', ' + fullName(st0) : ', vacía'}`);
       const dots = document.createElement('div'); dots.className='dots';
       (d.tags||[]).forEach(tid => {
         const t = tags.find(x=>x.id===tid);
         if(t){ const dot=document.createElement('span'); dot.className='dot'; dot.style.background=t.color; dots.appendChild(dot); }
       });
       el.appendChild(dots);
-      const label = document.createElement('span');
+      const label = document.createElement('span'); label.className = 'name';
       if(sid){ const s = students.find(x=>x.id===sid); label.textContent = s? displayName(s) : ''; }
       el.appendChild(label);
+      const num = document.createElement('span'); num.className = 'num'; num.textContent = desks.indexOf(d) + 1;
+      el.appendChild(num);
       if(sid){
         const clearBtn = document.createElement('button');
         clearBtn.className = 'clearx'; clearBtn.innerHTML = icon('cerrar'); clearBtn.title='Vaciar esta mesa'; clearBtn.setAttribute('aria-label','Vaciar esta mesa');
         clearBtn.addEventListener('pointerdown', e => e.stopPropagation());
-        clearBtn.onclick = (e) => { e.stopPropagation(); delete seatAssignment[d.id]; if(selectedSwapId===d.id) selectedSwapId=null; renderCanvas(); };
+        clearBtn.onclick = (e) => { e.stopPropagation(); clearDesk(d.id); };
         el.appendChild(clearBtn);
       }
       attachDrag(el, d);
       canvas.appendChild(el);
     });
+    renderStageHint();
+    renderPlanHistory();
   }
 
-  function selectDesk(id){ selectedDeskId = id; renderCanvas(); renderDeskEditor(); }
+  function setViewMode(mode){
+    viewMode = mode === 'teacher' ? 'teacher' : 'students';
+    document.querySelector('.room').classList.toggle('teacher-view', viewMode === 'teacher');
+    $('viewStudentsBtn').classList.toggle('active', viewMode === 'students');
+    $('viewTeacherBtn').classList.toggle('active', viewMode === 'teacher');
+    $('viewStudentsBtn').setAttribute('aria-pressed', viewMode === 'students');
+    $('viewTeacherBtn').setAttribute('aria-pressed', viewMode === 'teacher');
+  }
+  $('viewStudentsBtn').onclick = () => setViewMode('students');
+  $('viewTeacherBtn').onclick = () => setViewMode('teacher');
 
+  function renderStageHint(){
+    const hint = $('stageHint'); if(!hint) return;
+    const src = selectedSwapId !== null ? students.find(x => x.id === seatAssignment[selectedSwapId]) : null;
+    if(src) hint.textContent = `Moviendo a ${displayName(src)}: haz clic en otra mesa${layoutLocked ? ' o arrástralo' : ''} (si está ocupada, se intercambian). Esc para cancelar.`;
+    else if(layoutLocked) hint.textContent = 'Diseño bloqueado: arrastra a un alumno a otra mesa para moverlo o intercambiarlo. Clic en una mesa para ver sus opciones.';
+    else hint.textContent = 'Arrastra las mesas para colocarlas. Clic en una mesa para ver sus opciones (mover alumnos, etiquetas, eliminar…).';
+  }
+
+  function clearDesk(deskId){
+    if(!seatAssignment[deskId]) return;
+    pushUndo('vaciar mesa');
+    delete seatAssignment[deskId];
+    if(selectedSwapId === deskId) selectedSwapId = null;
+    renderCanvas(); renderDeskEditor();
+  }
+
+  // Sienta a un alumno en una mesa (sacándolo de la que tuviera). Si la mesa estaba ocupada, ese alumno se queda sin sitio.
+  function seatStudentAt(studentId, deskId){
+    pushUndo('sentar alumno');
+    for(const k in seatAssignment) if(seatAssignment[k] === studentId) delete seatAssignment[k];
+    seatAssignment[deskId] = studentId;
+    selectedSwapId = deskId;
+    renderCanvas(); renderDeskEditor();
+  }
+
+  function selectDesk(id){ selectedDeskId = id; selectedSwapId = seatAssignment[id] ? id : null; renderCanvas(); renderDeskEditor(); }
+
+  // Ficha flotante de la mesa seleccionada
   function renderDeskEditor(){
-    const section = $('deskEditorSection');
-    const editor = $('deskEditor');
-    if(!selectedDeskId){ section.style.display='none'; return; }
-    const d = desks.find(x=>x.id===selectedDeskId);
-    if(!d){ section.style.display='none'; return; }
-    section.style.display='block';
-    editor.innerHTML = '';
+    const pop = $('deskPop');
+    const d = selectedDeskId !== null ? desks.find(x=>x.id===selectedDeskId) : null;
+    if(!d){ pop.hidden = true; pop.innerHTML = ''; return; }
+    const sid = seatAssignment[d.id];
+    const st = sid ? students.find(x=>x.id===sid) : null;
+    pop.innerHTML = '';
+
+    const head = document.createElement('div'); head.className = 'pop-head';
+    head.innerHTML = `<div class="pop-title">${escapeHtml(deskLabel(d.id))}<span class="pop-sub">${st ? escapeHtml(fullName(st)) + (st.absent ? ' · falta hoy' : '') : (d.active ? 'Vacía' : 'Desactivada')}</span></div>`;
+    const close = document.createElement('button'); close.className = 'pop-close'; close.innerHTML = icon('cerrar'); close.title = 'Cerrar (Esc)'; close.setAttribute('aria-label','Cerrar');
+    close.onclick = deselectDesk;
+    pop.appendChild(head); pop.appendChild(close);
+    const body = document.createElement('div'); body.className = 'pop-body'; pop.appendChild(body);
+
+    if(st){
+      const actions = document.createElement('div'); actions.className = 'pop-actions';
+      const clearB = document.createElement('button'); clearB.className = 'secondary'; clearB.innerHTML = icon('cerrar') + 'Vaciar mesa';
+      clearB.onclick = () => clearDesk(d.id);
+      const fixed = rules.find(r => r.type === 'fixed' && r.studentId === st.id && r.deskId === d.id);
+      const fixB = document.createElement('button'); fixB.className = 'secondary' + (fixed ? ' on' : '');
+      fixB.innerHTML = icon('chincheta') + (fixed ? 'Sitio fijo ✓' : 'Fijar aquí');
+      fixB.title = fixed ? 'Quitar la regla de sitio fijo' : `Crear la regla: ${fullName(st)} siempre en ${deskLabel(d.id)}`;
+      fixB.onclick = () => {
+        if(fixed){ rules = rules.filter(r => r.id !== fixed.id); toast('Sitio fijo quitado'); }
+        else {
+          const res = addRule({ type: 'fixed', studentId: st.id, deskId: d.id });
+          toast(res.ok ? (res.msg === 'Regla añadida.' ? `${displayName(st)} tendrá siempre ${deskLabel(d.id)}` : res.msg) : res.msg, { error: !res.ok });
+        }
+        renderRules(); renderDeskEditor();
+      };
+      const abB = document.createElement('button'); abB.className = 'secondary' + (st.absent ? ' on' : '');
+      abB.innerHTML = icon('falta') + (st.absent ? 'Falta hoy ✓' : 'Falta hoy');
+      abB.title = st.absent ? 'Marcar como presente' : 'Marcar que hoy no ha venido (conserva su sitio)';
+      abB.onclick = () => setAbsent(st.id, !st.absent);
+      actions.appendChild(clearB); actions.appendChild(fixB); actions.appendChild(abB);
+      body.appendChild(actions);
+    } else if(d.active){
+      const lbl = document.createElement('div'); lbl.className = 'pop-label'; lbl.textContent = 'Sentar aquí a';
+      const sel = document.createElement('select');
+      const seatOf = {}; for(const k in seatAssignment) seatOf[seatAssignment[k]] = Number(k);
+      const sorted = students.slice().sort((a,b) => (seatOf[a.id]?1:0) - (seatOf[b.id]?1:0) || fullName(a).localeCompare(fullName(b), 'es'));
+      sel.innerHTML = '<option value="">— Elige alumno —</option>' + sorted.map(x =>
+        `<option value="${x.id}">${escapeHtml(fullName(x))}${seatOf[x.id] ? ' (ahora en ' + escapeHtml(deskLabel(seatOf[x.id])) + ')' : ' (sin sitio)'}${x.absent ? ' · falta hoy' : ''}</option>`).join('');
+      sel.onchange = () => { if(sel.value) seatStudentAt(Number(sel.value), d.id); };
+      if(!students.length){ sel.disabled = true; sel.innerHTML = '<option>Añade alumnado primero</option>'; }
+      body.appendChild(lbl); body.appendChild(sel);
+    } else {
+      const hint = document.createElement('p'); hint.className = 'hint'; hint.style.marginTop = '0';
+      hint.textContent = 'Mesa desactivada: al barajar no se sentará a nadie aquí.';
+      body.appendChild(hint);
+    }
+
+    const sec = document.createElement('div'); sec.className = 'pop-section';
+    sec.innerHTML = '<div class="pop-label">Opciones de la mesa</div>';
     const activeLabel = document.createElement('label');
     activeLabel.className = 'tag-toggle';
-    activeLabel.innerHTML = `<input type="checkbox" id="deskActiveToggle" ${d.active?'checked':''}> Permitir alumnos aquí`;
-    editor.appendChild(activeLabel);
-    activeLabel.querySelector('input').onchange = (e) => { d.active = e.target.checked; if(!d.active){ delete seatAssignment[d.id]; } renderCanvas(); };
-
-    const tagsTitle = document.createElement('p'); tagsTitle.className='hint'; tagsTitle.style.marginTop='10px'; tagsTitle.textContent = tags.length? 'Etiquetas:' : 'Crea etiquetas arriba para poder asignarlas.';
-    editor.appendChild(tagsTitle);
+    activeLabel.innerHTML = `<input type="checkbox" ${d.active?'checked':''}> Permitir alumnos aquí`;
+    activeLabel.querySelector('input').onchange = (e) => { pushUndo(e.target.checked ? 'activar mesa' : 'desactivar mesa'); d.active = e.target.checked; if(!d.active){ delete seatAssignment[d.id]; if(selectedSwapId===d.id) selectedSwapId=null; } renderCanvas(); renderDeskEditor(); };
+    sec.appendChild(activeLabel);
+    if(!tags.length){
+      const p = document.createElement('p'); p.className = 'hint'; p.style.marginTop = '4px'; p.textContent = 'Crea etiquetas en "Diseñar aula" para poder asignarlas.';
+      sec.appendChild(p);
+    }
     tags.forEach(t => {
       const checked = d.tags.includes(t.id);
       const label = document.createElement('label');
       label.className = 'tag-toggle';
-      label.innerHTML = `<input type="checkbox" ${checked?'checked':''}> <span class="tag-swatch" style="background:${t.color}"></span> ${escapeHtml(t.name)}`;
+      label.innerHTML = `<input type="checkbox" ${checked?'checked':''}> <span class="tag-swatch" style="background:${escapeHtml(t.color)}"></span> ${escapeHtml(t.name)}`;
       label.querySelector('input').onchange = (e) => {
+        pushUndo('cambiar etiquetas de mesa');
         if(e.target.checked){ if(!d.tags.includes(t.id)) d.tags.push(t.id); }
         else { d.tags = d.tags.filter(x=>x!==t.id); }
-        renderCanvas();
+        renderCanvas(); renderDeskEditor();
       };
-      editor.appendChild(label);
+      sec.appendChild(label);
     });
-    const removeBtn = document.createElement('button');
-    removeBtn.className='danger'; removeBtn.textContent='Eliminar mesa'; removeBtn.style.marginTop='10px';
-    removeBtn.onclick = () => {
-      desks = desks.filter(x=>x.id!==d.id);
-      rules = rules.filter(r => !(r.type==='fixed' && r.deskId===d.id));
-      delete seatAssignment[d.id];
-      selectedDeskId = null;
-      renderCanvas(); renderDeskEditor(); renderRuleFields(); renderRules();
-    };
-    editor.appendChild(document.createElement('br'));
-    editor.appendChild(removeBtn);
+    if(layoutLocked){
+      const p = document.createElement('p'); p.className = 'hint'; p.textContent = 'Desbloquea el diseño para eliminar la mesa.';
+      sec.appendChild(p);
+    } else {
+      const removeBtn = document.createElement('button');
+      removeBtn.className='danger'; removeBtn.textContent='Eliminar mesa'; removeBtn.style.marginTop='10px';
+      removeBtn.onclick = () => {
+        pushUndo('eliminar mesa');
+        desks = desks.filter(x=>x.id!==d.id);
+        rules = rules.filter(r => !(r.type==='fixed' && r.deskId===d.id));
+        delete seatAssignment[d.id];
+        selectedDeskId = null; selectedSwapId = null;
+        renderCanvas(); renderDeskEditor(); renderRuleFields(); renderRules();
+      };
+      sec.appendChild(removeBtn);
+    }
+    pop.appendChild(sec);
+    pop.hidden = false;
   }
+
+  document.addEventListener('keydown', (e) => { if(e.key === 'Escape' && (selectedDeskId !== null || selectedSwapId !== null) && $('helpModal').style.display === 'none') deselectDesk(); });
+  // Clic en el suelo del aula (fuera de las mesas) cierra la ficha
+  $('canvas').addEventListener('pointerdown', (e) => { if(e.target === $('canvas')) deselectDesk(); });
 
   // ---------- Tags ----------
   $('addTagBtn').onclick = () => {
@@ -876,7 +1284,7 @@
     const list = $('tagList'); list.innerHTML = '';
     tags.forEach(t => {
       const li = document.createElement('li');
-      li.innerHTML = `<span style="display:inline-flex; align-items:center; gap:6px;"><span class="tag-swatch" style="background:${t.color}"></span>${escapeHtml(t.name)}</span>`;
+      li.innerHTML = `<span style="display:inline-flex; align-items:center; gap:6px;"><span class="tag-swatch" style="background:${escapeHtml(t.color)}"></span>${escapeHtml(t.name)}</span>`;
       const btn = document.createElement('button'); btn.className='danger'; btn.innerHTML=icon('cerrar'); btn.title='Eliminar'; btn.setAttribute('aria-label','Eliminar');
       btn.onclick = () => {
         tags = tags.filter(x=>x.id!==t.id);
@@ -904,7 +1312,8 @@
       return true;
     });
     for(const k in seatAssignment) if(seatAssignment[k]===id) delete seatAssignment[k];
-    renderStudents(); renderRuleFields(); renderRules(); renderCanvas();
+    wheelPool = wheelPool.filter(s => s.id !== id);
+    renderStudents(); renderRuleFields(); renderRules(); renderCanvas(); renderDeskEditor();
   }
   // Nombre completo (siempre), para gestión y reglas donde hace falta identificar sin ambigüedad.
   function fullName(s){
@@ -927,13 +1336,56 @@
   function renderStudents(){
     const list = $('studentList'); list.innerHTML = '';
     students.forEach(s => {
-      const li = document.createElement('li');
+      const li = document.createElement('li'); if(s.absent) li.className = 'is-absent';
       const span = document.createElement('span'); span.textContent = fullName(s);
-      const btn = document.createElement('button'); btn.className='danger'; btn.innerHTML=icon('cerrar'); btn.title='Eliminar'; btn.setAttribute('aria-label','Eliminar');
+      const actions = document.createElement('div'); actions.className = 'row-actions';
+      const ab = document.createElement('button'); ab.className = 'absent-btn' + (s.absent ? ' on' : '');
+      ab.textContent = s.absent ? 'Falta hoy' : 'Falta';
+      ab.title = s.absent ? 'Marcar como presente' : 'Marcar que hoy no ha venido';
+      ab.setAttribute('aria-pressed', s.absent ? 'true' : 'false');
+      ab.onclick = () => setAbsent(s.id, !s.absent);
+      const btn = document.createElement('button'); btn.className='danger'; btn.innerHTML=icon('cerrar'); btn.title='Eliminar del alumnado'; btn.setAttribute('aria-label','Eliminar del alumnado');
       btn.onclick = () => removeStudent(s.id);
-      li.appendChild(span); li.appendChild(btn);
+      actions.appendChild(ab); actions.appendChild(btn);
+      li.appendChild(span); li.appendChild(actions);
       list.appendChild(li);
     });
+    renderAbsentSummary();
+  }
+
+  // ---------- Faltan hoy ----------
+  function setAbsent(id, val){
+    const s = students.find(x => x.id === id); if(!s) return;
+    s.absent = !!val;
+    absentDate = todayStr();
+    if(s.absent) wheelPool = wheelPool.filter(x => x.id !== id);
+    else if(!wheelPool.some(x => x.id === id) && $('pickerHistory').children.length === 0) wheelPool.push(s);
+    renderStudents(); renderCanvas(); renderDeskEditor();
+    if(typeof renderWheel === 'function') renderWheel();
+  }
+  function renderAbsentSummary(){
+    const n = students.filter(s => s.absent).length;
+    const badge = $('absentBadge');
+    badge.hidden = n === 0; badge.textContent = n;
+    const el = $('absentSummary'); el.innerHTML = '';
+    if(!students.length) return;
+    const txt = document.createElement('span');
+    txt.innerHTML = n ? `Faltan hoy <strong>${n}</strong> · presentes <strong>${students.length - n}</strong>` : `Están todos (<strong>${students.length}</strong>)`;
+    el.appendChild(txt);
+    if(n){
+      const all = document.createElement('button'); all.className = 'secondary'; all.textContent = 'Todos presentes';
+      all.onclick = () => { students.forEach(s => { if(s.absent) setAbsent(s.id, false); }); };
+      el.appendChild(all);
+    }
+  }
+  // Las ausencias son "de hoy": si la sesión trae ausencias de otro día, se borran.
+  function expireAbsences(){
+    if(absentDate && absentDate !== todayStr() && students.some(s => s.absent)){
+      students.forEach(s => { s.absent = false; });
+      absentDate = '';
+      return true;
+    }
+    return false;
   }
   $('addStudentBtn').onclick = () => { addStudent($('studentInput').value, $('studentLastInput').value); $('studentInput').value=''; $('studentLastInput').value=''; };
   $('studentInput').addEventListener('keydown', e => { if(e.key==='Enter'){ addStudent($('studentInput').value, $('studentLastInput').value); $('studentInput').value=''; $('studentLastInput').value=''; } });
@@ -947,13 +1399,15 @@
     });
     $('bulkInput').value='';
   };
-  $('clearStudentsBtn').onclick = () => { students=[]; rules=[]; seatAssignment={}; renderStudents(); renderRuleFields(); renderRules(); renderCanvas(); };
+  $('clearStudentsBtn').onclick = () => {
+    if(students.length && !window.confirm(`¿Borrar a los ${students.length} alumnos, sus reglas y el plano? Esta acción no se puede deshacer.`)) return;
+    students=[]; rules=[]; seatAssignment={}; wheelPool=[]; renderStudents(); renderRuleFields(); renderRules(); renderCanvas(); };
   $('showLastNames').addEventListener('change', () => { renderCanvas(); if(typeof renderWheel==='function') renderWheel(); });
 
   // ---------- Rules ----------
   function nameOf(id){ const s=students.find(x=>x.id===id); return s? fullName(s) : '?'; }
   function tagNameOf(id){ const t=tags.find(x=>x.id===id); return t? t.name : '?'; }
-  function deskLabel(id){ const idx = desks.findIndex(x=>x.id===id); return idx>=0? `Mesa #${idx+1}` : '?'; }
+  function deskLabel(id){ const idx = desks.findIndex(x=>x.id===id); return idx>=0? `Mesa ${idx+1}` : '?'; }
   function studentOptions(){ return students.map(s=>`<option value="${s.id}">${escapeHtml(fullName(s))}</option>`).join(''); }
 
   function renderRuleFields(){
@@ -962,44 +1416,110 @@
     $('rf_together_a').innerHTML = opts; $('rf_together_b').innerHTML = opts;
     $('rf_tag_student').innerHTML = opts; $('rf_fixed_student').innerHTML = opts;
     $('rf_tag_tag').innerHTML = tags.map(t=>`<option value="${t.id}">${escapeHtml(t.name)}</option>`).join('');
-    $('rf_fixed_desk').innerHTML = desks.map((d,i)=>`<option value="${d.id}">Mesa #${i+1}</option>`).join('');
+    $('rf_fixed_desk').innerHTML = desks.map((d,i)=>`<option value="${d.id}">Mesa ${i+1}</option>`).join('');
   }
   renderRuleFields();
 
-  $('addApartBtn').onclick = () => {
-    if(students.length===0){ setStatus('Añade primero al alumnado.', true); return; }
-    const a=parseInt($('rf_apart_a').value), b=parseInt($('rf_apart_b').value);
-    if(a===b){ setStatus('Elige dos alumnos distintos.', true); return; }
-    rules.push({ id:nextRuleId++, type:'apart', studentA:a, studentB:b }); renderRules();
-  };
-  $('addTogetherBtn').onclick = () => {
-    if(students.length===0){ setStatus('Añade primero al alumnado.', true); return; }
-    const a=parseInt($('rf_together_a').value), b=parseInt($('rf_together_b').value);
-    if(a===b){ setStatus('Elige dos alumnos distintos.', true); return; }
-    rules.push({ id:nextRuleId++, type:'together', studentA:a, studentB:b }); renderRules();
-  };
+  // ---------- Validación de reglas ----------
+  function ruleText(r){
+    if(r.type==='fixed') return `${nameOf(r.studentId)} — sitio fijo (${deskLabel(r.deskId)})`;
+    if(r.type==='tag') return `${nameOf(r.studentId)} — siempre en mesa "${tagNameOf(r.tagId)}"`;
+    if(r.type==='together') return `${nameOf(r.studentA)} y ${nameOf(r.studentB)} — siempre juntos`;
+    if(r.type==='apart') return `${nameOf(r.studentA)} y ${nameOf(r.studentB)} — nunca juntos`;
+    return '?';
+  }
+  const samePair = (r, a, b) => (r.studentA===a && r.studentB===b) || (r.studentA===b && r.studentB===a);
+  const fixedDeskOf = sid => { const r = rules.find(x => x.type==='fixed' && x.studentId===sid); return r ? r.deskId : null; };
+  const deskById = id => desks.find(d => d.id === id);
+
+  // Comprueba si una regla nueva es repetida o choca con las existentes. Devuelve un texto con el problema o null.
+  function ruleConflict(rule){
+    if(rule.type==='apart' || rule.type==='together'){
+      const a = rule.studentA, b = rule.studentB;
+      if(a === b) return 'Elige dos alumnos distintos.';
+      if(rules.some(r => r.type===rule.type && samePair(r, a, b))) return 'Esa regla ya existe.';
+      const opposite = rules.find(r => (r.type==='apart'||r.type==='together') && r.type!==rule.type && samePair(r, a, b));
+      if(opposite) return `Contradice la regla «${ruleText(opposite)}».`;
+      const fa = fixedDeskOf(a), fb = fixedDeskOf(b);
+      if(fa && fb){
+        const adj = isAdjacent(fa, fb);
+        if(rule.type==='apart' && adj) return `${nameOf(a)} y ${nameOf(b)} tienen sitio fijo en mesas contiguas (${deskLabel(fa)} y ${deskLabel(fb)}).`;
+        if(rule.type==='together' && !adj) return `${nameOf(a)} y ${nameOf(b)} tienen sitio fijo en mesas que no están juntas (${deskLabel(fa)} y ${deskLabel(fb)}).`;
+      }
+      return null;
+    }
+    if(rule.type==='tag'){
+      const sid = rule.studentId, tag = tags.find(t => t.id===rule.tagId);
+      if(!tag) return 'Esa etiqueta ya no existe.';
+      if(rules.some(r => r.type==='tag' && r.studentId===sid && r.tagId===rule.tagId)) return 'Esa regla ya existe.';
+      const fd = fixedDeskOf(sid);
+      if(fd && !deskById(fd).tags.includes(tag.id)) return `${nameOf(sid)} tiene sitio fijo en ${deskLabel(fd)}, que no tiene la etiqueta "${tag.name}".`;
+      const tagged = desks.filter(d => d.active && d.tags.includes(tag.id)).length;
+      if(!tagged) return `Ninguna mesa activa tiene la etiqueta "${tag.name}". Asígnala antes a alguna mesa.`;
+      const needing = new Set(rules.filter(r => r.type==='tag' && r.tagId===tag.id).map(r => r.studentId)).size;
+      if(needing + 1 > tagged) return `Solo hay ${tagged} mesa(s) con la etiqueta "${tag.name}" y ya ${needing === 1 ? 'hay 1 alumno que la necesita' : `hay ${needing} alumnos que la necesitan`}.`;
+      return null;
+    }
+    if(rule.type==='fixed'){
+      const sid = rule.studentId, d = deskById(rule.deskId);
+      if(!d) return 'Esa mesa ya no existe.';
+      if(!d.active) return `${deskLabel(d.id)} está desactivada (no admite alumnos).`;
+      const other = rules.find(r => r.type==='fixed' && r.deskId===d.id && r.studentId!==sid);
+      if(other) return `${deskLabel(d.id)} ya es el sitio fijo de ${nameOf(other.studentId)}.`;
+      if(rules.some(r => r.type==='fixed' && r.studentId===sid && r.deskId===d.id)) return 'Esa regla ya existe.';
+      const missingTag = rules.find(r => r.type==='tag' && r.studentId===sid && !d.tags.includes(r.tagId));
+      if(missingTag) return `${nameOf(sid)} debe ir en una mesa con la etiqueta "${tagNameOf(missingTag.tagId)}" y ${deskLabel(d.id)} no la tiene.`;
+      for(const r of rules){
+        if(r.type!=='apart' && r.type!=='together') continue;
+        if(r.studentA!==sid && r.studentB!==sid) continue;
+        const partner = r.studentA===sid ? r.studentB : r.studentA, pd = fixedDeskOf(partner);
+        if(!pd) continue;
+        if(r.type==='apart' && isAdjacent(d.id, pd)) return `Choca con «${ruleText(r)}»: ${nameOf(partner)} tiene sitio fijo al lado (${deskLabel(pd)}).`;
+        if(r.type==='together' && !isAdjacent(d.id, pd)) return `Choca con «${ruleText(r)}»: ${nameOf(partner)} tiene sitio fijo en ${deskLabel(pd)}, que no está al lado.`;
+      }
+      return null;
+    }
+    return 'Regla desconocida.';
+  }
+
+  // Añade una regla si no hay conflicto. Devuelve { ok, msg }.
+  function addRule(rule){
+    const problem = ruleConflict(rule);
+    if(problem) return { ok:false, msg: problem };
+    let msg = 'Regla añadida.';
+    if(rule.type === 'fixed'){
+      const prev = rules.find(r => r.type === 'fixed' && r.studentId === rule.studentId);
+      if(prev){ msg = `Sitio fijo de ${nameOf(rule.studentId)} cambiado de ${deskLabel(prev.deskId)} a ${deskLabel(rule.deskId)}.`; rules = rules.filter(r => r !== prev); }
+    }
+    rules.push({ id: nextRuleId++, ...rule });
+    renderRules();
+    return { ok:true, msg };
+  }
+  function addRuleFromForm(rule){
+    if(students.length===0){ toast('Añade primero al alumnado.', { error:true }); return; }
+    const res = addRule(rule);
+    toast(res.msg, { error: !res.ok });
+  }
+
+  $('addApartBtn').onclick = () => addRuleFromForm({ type:'apart', studentA:parseInt($('rf_apart_a').value), studentB:parseInt($('rf_apart_b').value) });
+  $('addTogetherBtn').onclick = () => addRuleFromForm({ type:'together', studentA:parseInt($('rf_together_a').value), studentB:parseInt($('rf_together_b').value) });
   $('addTagRuleBtn').onclick = () => {
-    if(students.length===0){ setStatus('Añade primero al alumnado.', true); return; }
-    if(tags.length===0){ setStatus('Crea al menos una etiqueta en "Diseñar aula".', true); return; }
-    rules.push({ id:nextRuleId++, type:'tag', studentId:parseInt($('rf_tag_student').value), tagId:parseInt($('rf_tag_tag').value) }); renderRules();
+    if(tags.length===0){ toast('Crea al menos una etiqueta en "Diseñar aula".', { error:true }); return; }
+    addRuleFromForm({ type:'tag', studentId:parseInt($('rf_tag_student').value), tagId:parseInt($('rf_tag_tag').value) });
   };
   $('addFixedBtn').onclick = () => {
-    if(students.length===0){ setStatus('Añade primero al alumnado.', true); return; }
-    if(desks.length===0){ setStatus('Coloca al menos una mesa en el aula.', true); return; }
-    rules.push({ id:nextRuleId++, type:'fixed', studentId:parseInt($('rf_fixed_student').value), deskId:parseInt($('rf_fixed_desk').value) }); renderRules();
+    if(desks.length===0){ toast('Coloca al menos una mesa en el aula.', { error:true }); return; }
+    addRuleFromForm({ type:'fixed', studentId:parseInt($('rf_fixed_student').value), deskId:parseInt($('rf_fixed_desk').value) });
   };
 
   function renderRules(){
     const list = $('ruleList'); list.innerHTML='';
     rules.forEach(r => {
       let label='';
-      if(r.type==='fixed') label = `${icon('chincheta')}${escapeHtml(nameOf(r.studentId))} — sitio fijo (${deskLabel(r.deskId)})`;
-      if(r.type==='tag') label = `${icon('etiqueta')}${escapeHtml(nameOf(r.studentId))} — siempre en mesa "${escapeHtml(tagNameOf(r.tagId))}"`;
-      if(r.type==='together') label = `${icon('juntar')}${escapeHtml(nameOf(r.studentA))} y ${escapeHtml(nameOf(r.studentB))} — siempre juntos`;
-      if(r.type==='apart') label = `${icon('separar')}${escapeHtml(nameOf(r.studentA))} y ${escapeHtml(nameOf(r.studentB))} — nunca juntos`;
+      label = `<svg class="icon ${{ fixed:'ic-sky', tag:'ic-lilac', together:'ic-mint', apart:'ic-coral' }[r.type]}" aria-hidden="true"><use href="#i-${{ fixed:'chincheta', tag:'etiqueta', together:'juntar', apart:'separar' }[r.type]}"/></svg><span>${escapeHtml(ruleText(r))}</span>`;
       const div = document.createElement('div'); div.className='rule-item'; div.innerHTML = `<div>${label}</div>`;
       const btn = document.createElement('button'); btn.className='danger'; btn.textContent='Quitar'; btn.style.marginTop='6px';
-      btn.onclick = () => { rules = rules.filter(x=>x.id!==r.id); renderRules(); };
+      btn.onclick = () => { rules = rules.filter(x=>x.id!==r.id); renderRules(); renderDeskEditor(); };
       div.appendChild(btn); list.appendChild(div);
     });
   }
@@ -1028,14 +1548,16 @@
     return false;
   }
 
-  function shuffle(){
-    const activeDesks = desks.filter(d=>d.active);
-    if(students.length===0){ setStatus('Añade alumnado antes de barajar.', true); return; }
-    if(activeDesks.length===0){ setStatus('Diseña el aula colocando al menos una mesa activa.', true); return; }
-    if(students.length > activeDesks.length){ setStatus(`Hay ${students.length} alumnos pero solo ${activeDesks.length} mesas activas.`, true); return; }
+  // Reglas que afectan solo a alumnado presente (las de alguien que falta hoy se ignoran al barajar y en grupos)
+  function rulesForPresent(){
+    const here = new Set(presentStudents().map(s => s.id));
+    return rules.filter(r => (r.type==='apart'||r.type==='together') ? (here.has(r.studentA) && here.has(r.studentB)) : here.has(r.studentId));
+  }
 
+  // Restricciones de un conjunto de reglas, listas para buscar un plano
+  function buildConstraints(ruleList){
     const fixedMap={}, tagRulesMap={}, togetherGraph={}, apartPairs=[];
-    rules.forEach(r => {
+    ruleList.forEach(r => {
       if(r.type==='fixed') fixedMap[r.studentId]=r.deskId;
       if(r.type==='tag'){ (tagRulesMap[r.studentId]=tagRulesMap[r.studentId]||[]).push(r.tagId); }
       if(r.type==='together'){
@@ -1044,9 +1566,15 @@
       }
       if(r.type==='apart') apartPairs.push([r.studentA, r.studentB]);
     });
+    return { fixedMap, tagRulesMap, togetherGraph, apartPairs };
+  }
 
+  // Busca al azar un plano que cumpla las reglas. Devuelve { assignment: {alumno: mesa}, attempt } o null.
+  // Los grupos de "mantener juntos" se colocan en mesas contiguas; los más restringidos (sitio fijo, etiqueta) primero.
+  function findAssignment(pool, ruleList, maxAttempts){
+    const { fixedMap, tagRulesMap, togetherGraph, apartPairs } = buildConstraints(ruleList);
     const visited=new Set(); const components=[];
-    students.forEach(s => {
+    pool.forEach(s => {
       if(visited.has(s.id)) return;
       const comp=[]; const queue=[s.id]; visited.add(s.id);
       while(queue.length){
@@ -1055,14 +1583,11 @@
       }
       components.push(comp);
     });
-
     function tightness(sid){ if(fixedMap[sid]!==undefined) return 0; if(tagRulesMap[sid]&&tagRulesMap[sid].length) return 1; return 2; }
 
-    const MAX_ATTEMPTS = 500;
-    for(let attempt=0; attempt<MAX_ATTEMPTS; attempt++){
+    for(let attempt=0; attempt<maxAttempts; attempt++){
       const compsOrdered = shuffleArray(components.slice()).sort((a,b)=>Math.min(...a.map(tightness))-Math.min(...b.map(tightness)));
       const assignment={}; const usedDesks=new Set(); let ok=true;
-
       for(const comp of compsOrdered){
         const compSet = new Set(comp);
         const ordered = comp.slice().sort((a,b)=>tightness(a)-tightness(b));
@@ -1074,12 +1599,13 @@
           shuffleArray(neigh).forEach(n=>{ if(!seen.has(n)){ seen.add(n); bfsOrder.push(n); q.push(n); } });
         }
         comp.forEach(m=>{ if(!seen.has(m)){ bfsOrder.push(m); seen.add(m); } });
-
         const placedInComp=[];
         for(const member of bfsOrder){
           let candidates = candidateDesksFor(member, fixedMap, tagRulesMap).filter(d=>!usedDesks.has(d.id));
-          if(placedInComp.length>0){
-            candidates = candidates.filter(d=>placedInComp.some(pid=>isAdjacent(assignment[pid], d.id)));
+          // Debe quedar pegado a todos sus compañeros de "mantener juntos" ya colocados
+          const placedPartners = togetherGraph[member] ? Array.from(togetherGraph[member]).filter(pid => assignment[pid] !== undefined) : [];
+          if(placedPartners.length>0){
+            candidates = candidates.filter(d=>placedPartners.every(pid=>isAdjacent(assignment[pid], d.id)));
           }
           candidates = shuffleArray(candidates.slice());
           candidates = candidates.filter(d=>!violatesApart(member, d.id, assignment, apartPairs));
@@ -1089,23 +1615,223 @@
         }
         if(!ok) break;
       }
-
-      if(ok){
-        seatAssignment={};
-        for(const sid in assignment) seatAssignment[assignment[sid]]=parseInt(sid);
-        renderCanvas();
-        setStatus(`Plano generado (intento ${attempt+1}). Reglas aplicadas: ${rules.length}.`, false);
-        return;
-      }
+      if(ok) return { assignment, attempt };
     }
-    setStatus('No se encontró una combinación que cumpla todas las reglas. Prueba a relajar alguna.', true);
+    return null;
+  }
+
+  // Problemas evidentes que se pueden explicar sin buscar (mesa fija desactivada, faltan mesas con una etiqueta…)
+  function structuralProblems(pool, ruleList){
+    const problems = [];
+    const activeDesks = desks.filter(d => d.active);
+    const fixedByDesk = {};
+    ruleList.filter(r => r.type==='fixed').forEach(r => {
+      const d = deskById(r.deskId);
+      if(!d || !d.active) problems.push({ rule:r, text:`«${ruleText(r)}»: la mesa está desactivada.` });
+      if(fixedByDesk[r.deskId]) problems.push({ rule:r, text:`«${ruleText(r)}»: esa mesa ya es el sitio fijo de ${nameOf(fixedByDesk[r.deskId])}.` });
+      fixedByDesk[r.deskId] = r.studentId;
+    });
+    tags.forEach(t => {
+      const need = [...new Set(ruleList.filter(r => r.type==='tag' && r.tagId===t.id).map(r => r.studentId))];
+      const have = activeDesks.filter(d => d.tags.includes(t.id)).length;
+      if(need.length > have){
+        const r = ruleList.find(x => x.type==='tag' && x.tagId===t.id);
+        problems.push({ rule:r, text:`Hay ${need.length} alumnos que necesitan una mesa "${t.name}" y solo ${have} mesa(s) activa(s) con esa etiqueta.` });
+      }
+    });
+    return problems;
+  }
+
+  // Si no hay plano posible, prueba a quitar cada regla para ver cuáles lo impiden
+  function diagnoseRules(pool, ruleList){
+    const culprits = [];
+    for(const r of ruleList){
+      const rest = ruleList.filter(x => x !== r);
+      if(findAssignment(pool, rest, 150)) culprits.push(r);
+    }
+    return culprits;
+  }
+
+  function renderShuffleDiag(items){
+    const box = $('shuffleDiag'); box.innerHTML = '';
+    items.forEach(({ rule, text }) => {
+      const row = document.createElement('div'); row.className = 'diag-item';
+      const span = document.createElement('span'); span.textContent = text;
+      row.appendChild(span);
+      if(rule){
+        const b = document.createElement('button'); b.className = 'danger'; b.textContent = 'Quitar regla';
+        b.onclick = () => { rules = rules.filter(x => x.id !== rule.id); renderRules(); renderDeskEditor(); renderShuffleDiag([]); setStatus('Regla quitada. Vuelve a barajar.', false); };
+        row.appendChild(b);
+      }
+      box.appendChild(row);
+    });
+  }
+
+  // ---------- Rotación de compañeros ----------
+  const pairKey = (a, b) => a < b ? `${a}-${b}` : `${b}-${a}`;
+  // Parejas de alumnos sentados en mesas contiguas en un plano (seats: mesa -> alumno)
+  function seatedPairs(seats){
+    const occ = desks.filter(d => seats[d.id]);
+    const out = [];
+    for(let i=0;i<occ.length;i++) for(let j=i+1;j<occ.length;j++){
+      if(isAdjacent(occ[i].id, occ[j].id)){ const a = seats[occ[i].id], b = seats[occ[j].id]; out.push(a < b ? [a,b] : [b,a]); }
+    }
+    return out;
+  }
+  // Peso de cada pareja ya vista en los N últimos planos guardados (los más recientes pesan más)
+  function historyPairWeights(n, ruleList){
+    const weights = new Map();
+    const forced = new Set(ruleList.filter(r => r.type==='together').map(r => pairKey(r.studentA, r.studentB)));
+    planHistory.slice(0, n).forEach((h, i) => {
+      h.pairs.forEach(([a,b]) => { const k = pairKey(a,b); if(!forced.has(k)) weights.set(k, (weights.get(k) || 0) + 1 + (n - i) / (n + 1)); });
+    });
+    return weights;
+  }
+  // ¿Cumple el plano (alumno -> mesa) todas las reglas?
+  function assignmentValid(assign, C){
+    for(const sid in assign){
+      const d = deskById(assign[sid]);
+      if(!d || !d.active) return false;
+      if(C.fixedMap[sid] !== undefined && C.fixedMap[sid] !== d.id) return false;
+      const req = C.tagRulesMap[sid];
+      if(req && !req.every(t => d.tags.includes(t))) return false;
+    }
+    for(const [a,b] of C.apartPairs){ if(assign[a] && assign[b] && isAdjacent(assign[a], assign[b])) return false; }
+    for(const a in C.togetherGraph){ for(const b of C.togetherGraph[a]){ if(assign[a] && assign[b] && !isAdjacent(assign[a], assign[b])) return false; } }
+    return true;
+  }
+  // Busca, entre planos válidos, el que menos compañeros repite. Devuelve { assignment, repeats }.
+  function bestRotatedAssignment(pool, ruleList, weights){
+    const C = buildConstraints(ruleList);
+    const adj = new Map(desks.map(d => [d.id, desks.filter(e => e.id !== d.id && isAdjacent(d.id, e.id)).map(e => e.id)]));
+    const score = (assign) => {
+      const byDesk = {}; for(const sid in assign) byDesk[assign[sid]] = Number(sid);
+      let total = 0;
+      for(const dId in byDesk){ for(const e of adj.get(Number(dId))){ if(e > Number(dId) && byDesk[e]) total += weights.get(pairKey(byDesk[dId], byDesk[e])) || 0; } }
+      return total;
+    };
+    let best = null, bestScore = Infinity;
+    const t0 = performance.now();
+    for(let i=0; i<60 && performance.now() - t0 < 300; i++){
+      const f = findAssignment(pool, ruleList, 500); if(!f) break;
+      const sc = score(f.assignment);
+      if(sc < bestScore){ best = f.assignment; bestScore = sc; }
+      if(bestScore === 0) break;
+    }
+    if(!best) return null;
+    // Mejora local: intercambia o mueve alumnos mientras el plano siga cumpliendo las reglas y repita menos
+    const movable = pool.map(s => s.id).filter(id => C.fixedMap[id] === undefined);
+    const activeIds = desks.filter(d => d.active).map(d => d.id);
+    for(let it=0; it<2500 && bestScore > 0 && movable.length; it++){
+      const s1 = movable[Math.floor(Math.random()*movable.length)];
+      const target = activeIds[Math.floor(Math.random()*activeIds.length)];
+      if(best[s1] === target) continue;
+      const cand = { ...best };
+      const s2 = Object.keys(cand).find(k => cand[k] === target);
+      if(s2 !== undefined){ if(C.fixedMap[s2] !== undefined) continue; cand[s2] = cand[s1]; }
+      cand[s1] = target;
+      if(!assignmentValid(cand, C)) continue;
+      const sc = score(cand);
+      if(sc <= bestScore){ best = cand; bestScore = sc; }
+    }
+    return { assignment: best, repeats: bestScore };
+  }
+  function repeatedPairsIn(seats, weights){
+    return seatedPairs(seats).filter(([a,b]) => weights.has(pairKey(a,b)));
+  }
+
+  function shuffle(){
+    renderShuffleDiag([]);
+    const activeDesks = desks.filter(d=>d.active);
+    const present = presentStudents();
+    const absentN = students.length - present.length;
+    if(students.length===0){ setStatus('Añade alumnado antes de barajar.', true); return; }
+    if(present.length===0){ setStatus('Están todos marcados como ausentes.', true); return; }
+    if(activeDesks.length===0){ setStatus('Diseña el aula colocando al menos una mesa activa.', true); return; }
+    if(present.length > activeDesks.length){ setStatus(`Hay ${present.length} alumnos presentes pero solo ${activeDesks.length} mesas activas.`, true); return; }
+
+    const activeRules = rulesForPresent();
+    const problems = structuralProblems(present, activeRules);
+    if(problems.length){
+      setStatus('No se puede barajar así:', true);
+      renderShuffleDiag(problems);
+      return;
+    }
+    const avoidN = parseInt($('avoidRepeats').value) || 0;
+    const weights = avoidN && planHistory.length ? historyPairWeights(avoidN, activeRules) : null;
+    const found = weights ? bestRotatedAssignment(present, activeRules, weights) : findAssignment(present, activeRules, 500);
+    if(found){
+      pushUndo('barajar');
+      seatAssignment={};
+      for(const sid in found.assignment) seatAssignment[found.assignment[sid]]=parseInt(sid);
+      selectedDeskId = null; selectedSwapId = null;
+      renderCanvas(); renderDeskEditor(); renderPlanHistory();
+      let msg = `Plano generado con ${present.length} alumnos${absentN ? ` (faltan ${absentN})` : ''}. Reglas aplicadas: ${activeRules.length}.`;
+      if(weights){
+        const rep = repeatedPairsIn(seatAssignment, weights);
+        const nPlans = Math.min(avoidN, planHistory.length);
+        msg += rep.length === 0
+          ? ` Nadie repite compañero ${nPlans === 1 ? 'del último plano' : `de los ${nPlans} últimos planos`}.`
+          : ` No se ha podido evitar del todo: repiten ${rep.slice(0,4).map(([a,b]) => `${displayName(students.find(x=>x.id===a))}–${displayName(students.find(x=>x.id===b))}`).join(', ')}${rep.length>4 ? '…' : ''}.`;
+      } else if(avoidN && !planHistory.length){
+        msg += ' (Aún no hay planos guardados para evitar repeticiones.)';
+      }
+      setStatus(msg, false);
+      return;
+    }
+    const culprits = diagnoseRules(present, activeRules);
+    if(culprits.length){
+      setStatus(culprits.length === 1 ? 'No hay ningún plano que cumpla todas las reglas. Lo impide esta regla:' : 'No hay ningún plano que cumpla todas las reglas. Quitando cualquiera de estas se podría:', true);
+      renderShuffleDiag(culprits.slice(0, 6).map(r => ({ rule:r, text: ruleText(r) })));
+    } else {
+      setStatus('No hay ningún plano que cumpla todas las reglas a la vez. Ninguna regla por sí sola es la culpable: el conjunto es demasiado estricto para esta distribución de mesas. Prueba a quitar alguna de "juntos" o "separados" (recuerda que se miden por mesas pegadas).', true);
+    }
   }
   $('shuffleBtn').onclick = shuffle;
+
+  // ---------- Historial de planos ----------
+  const seatsEqual = (a, b) => { const ka = Object.keys(a), kb = Object.keys(b); return ka.length === kb.length && ka.every(k => a[k] === b[k]); };
+  function savePlanToHistory(quiet){
+    if(!Object.keys(seatAssignment).length){ if(!quiet) toast('No hay ningún plano que guardar: baraja o sienta antes al alumnado.', { error:true }); return false; }
+    if(planHistory[0] && seatsEqual(planHistory[0].seats, seatAssignment)){ if(!quiet) toast('Este plano ya está guardado en el historial.'); return false; }
+    planHistory.unshift({ id: nextPlanId++, savedAt: new Date().toISOString(), seats: { ...seatAssignment }, pairs: seatedPairs(seatAssignment) });
+    planHistory = planHistory.slice(0, HISTORY_LIMIT);
+    renderPlanHistory();
+    if(!quiet) toast('Plano guardado en el historial. La próxima vez se evitará repetir compañeros.');
+    return true;
+  }
+  function renderPlanHistory(){
+    const list = $('planHistoryList'); list.innerHTML = '';
+    planHistory.forEach(h => {
+      const li = document.createElement('li');
+      const isCurrent = seatsEqual(h.seats, seatAssignment);
+      if(isCurrent) li.className = 'current';
+      const d = new Date(h.savedAt);
+      const when = isNaN(d) ? '' : d.toLocaleDateString('es-ES', { weekday:'short', day:'numeric', month:'short' }) + ', ' + d.toLocaleTimeString('es-ES', { hour:'2-digit', minute:'2-digit' });
+      const main = document.createElement('div'); main.className = 'h-main';
+      main.innerHTML = `<span class="h-date">${escapeHtml(when)}</span><span class="h-meta">${Object.keys(h.seats).length} alumnos${isCurrent ? ' · es el plano actual' : ''}</span>`;
+      const restore = document.createElement('button'); restore.className = 'secondary'; restore.textContent = 'Restaurar';
+      restore.title = 'Volver a este plano (se puede deshacer)';
+      restore.disabled = isCurrent;
+      restore.onclick = () => {
+        pushUndo('restaurar plano');
+        seatAssignment = sanitizeSeats(h.seats, new Set(desks.filter(x=>x.active).map(x => x.id)), new Set(students.map(x => x.id)));
+        selectedDeskId = null; selectedSwapId = null;
+        renderCanvas(); renderDeskEditor(); renderPlanHistory();
+        toast('Plano restaurado', { undo:true });
+      };
+      const del = document.createElement('button'); del.className = 'danger'; del.innerHTML = icon('cerrar'); del.title = 'Borrar del historial'; del.setAttribute('aria-label','Borrar del historial');
+      del.onclick = () => { planHistory = planHistory.filter(x => x.id !== h.id); renderPlanHistory(); };
+      li.appendChild(main); li.appendChild(restore); li.appendChild(del);
+      list.appendChild(li);
+    });
+  }
+  $('savePlanBtn').onclick = () => savePlanToHistory(false);
 
   // ---------- Groups ----------
   function buildTogetherApart(){
     const togetherGraph={}, apartPairs=[];
-    rules.forEach(r => {
+    rulesForPresent().forEach(r => {
       if(r.type==='together'){
         (togetherGraph[r.studentA]=togetherGraph[r.studentA]||new Set()).add(r.studentB);
         (togetherGraph[r.studentB]=togetherGraph[r.studentB]||new Set()).add(r.studentA);
@@ -1117,7 +1843,7 @@
 
   function togetherComponents(togetherGraph){
     const visited=new Set(); const components=[];
-    students.forEach(s => {
+    presentStudents().forEach(s => {
       if(visited.has(s.id)) return;
       const comp=[]; const queue=[s.id]; visited.add(s.id);
       while(queue.length){
@@ -1136,7 +1862,7 @@
   function generateGroupsRespectingRules(size){
     const { togetherGraph, apartPairs } = buildTogetherApart();
     const components = togetherComponents(togetherGraph);
-    const binsCount = Math.max(1, Math.ceil(students.length / size));
+    const binsCount = Math.max(1, Math.ceil(presentStudents().length / size));
     const MAX_ATTEMPTS = 300;
 
     for(let attempt=0; attempt<MAX_ATTEMPTS; attempt++){
@@ -1167,17 +1893,19 @@
 
   $('genGroupsBtn').onclick = () => {
     const size = Math.max(2, parseInt($('groupSize').value) || 2);
-    if(students.length === 0){ $('groupsStatus').textContent = 'Añade alumnado primero.'; $('groupsStatus').className='status error'; return; }
+    const present = presentStudents();
+    const absentNote = students.length > present.length ? ` (faltan ${students.length - present.length})` : '';
+    if(present.length === 0){ $('groupsStatus').textContent = students.length ? 'Están todos marcados como ausentes.' : 'Añade alumnado primero.'; $('groupsStatus').className='status error'; return; }
     const respectRules = $('groupsRespectRules').checked;
 
     if(respectRules){
       const result = generateGroupsRespectingRules(size);
       if(result.ok){
         renderGroups(result.groups);
-        $('groupsStatus').textContent = `${result.groups.length} grupos generados respetando ${rules.filter(r=>r.type==='together'||r.type==='apart').length} regla(s) de juntar/separar.`;
+        $('groupsStatus').textContent = `${result.groups.length} grupos generados${absentNote} respetando ${rulesForPresent().filter(r=>r.type==='together'||r.type==='apart').length} regla(s) de juntar/separar.`;
         $('groupsStatus').className = 'status';
       } else {
-        const pool = shuffleArray(students.slice());
+        const pool = shuffleArray(present.slice());
         const groups = [];
         for(let i=0; i<pool.length; i+=size){ groups.push(pool.slice(i, i+size)); }
         renderGroups(groups);
@@ -1187,11 +1915,11 @@
       return;
     }
 
-    const pool = shuffleArray(students.slice());
+    const pool = shuffleArray(present.slice());
     const groups = [];
     for(let i=0; i<pool.length; i+=size){ groups.push(pool.slice(i, i+size)); }
     renderGroups(groups);
-    $('groupsStatus').textContent = `${groups.length} grupos generados a partir de ${students.length} alumnos.`;
+    $('groupsStatus').textContent = `${groups.length} grupos generados a partir de ${present.length} alumnos${absentNote}.`;
     $('groupsStatus').className = 'status';
   };
   function renderGroups(groups){
@@ -1209,19 +1937,36 @@
   }
 
   // ---------- Picker (wheel) ----------
-  const wheelPalette = ['#e8ab5c','#7fd1c9','#d98a6c','#a3c4bc','#d9bf77','#8fb3a6','#c99a63','#e6cfa6'];
+  const wheelPalette = ['#f4b860','#6fd3c7','#f08a7e','#86c5f2','#b9a6f3','#93d9a3','#f3d26b','#f2a7c3'];
   let wheelPool = [];
   let wheelRotation = 0;
   let spinning = false;
 
   function ensureWheelPool(){
-    if(wheelPool.length === 0 && students.length > 0){ wheelPool = students.slice(); }
+    if(wheelPool.length === 0 && presentStudents().length > 0){ wheelPool = presentStudents(); }
   }
-  $('resetWheelBtn').onclick = () => { wheelPool = students.slice(); wheelRotation = 0; renderWheel(); $('pickerStatus').textContent = 'Ruleta restablecida con todo el alumnado.'; $('pickerStatus').className='status'; };
+  $('resetWheelBtn').onclick = () => { wheelPool = presentStudents(); wheelRotation = 0; renderWheel(); $('pickerStatus').textContent = students.length > wheelPool.length ? `Ruleta restablecida con los ${wheelPool.length} alumnos presentes.` : 'Ruleta restablecida con todo el alumnado.'; $('pickerStatus').className='status'; };
 
   function polarPoint(cx, cy, r, angleDeg){
     const rad = (angleDeg * Math.PI) / 180;
     return { x: cx + r*Math.cos(rad), y: cy + r*Math.sin(rad) };
+  }
+
+  const WHEEL_FONT = 'system-ui, -apple-system, Segoe UI, Roboto, sans-serif';
+  const WHEEL_LABEL_MAX_W = 200 - 16 - 30; // del borde (r-16) hasta el eje central, con margen
+  let wheelMeasureCtx = null;
+  // Reduce la letra hasta que el nombre quepa a lo largo del radio; si ni con la mínima cabe, lo recorta con "…"
+  function fitWheelLabel(text, maxFont){
+    if(!wheelMeasureCtx){ wheelMeasureCtx = document.createElement('canvas').getContext('2d'); }
+    const ctx = wheelMeasureCtx;
+    const width = (t, fs) => { if(!ctx) return t.length * fs * 0.58; ctx.font = `650 ${fs}px ${WHEEL_FONT}`; return ctx.measureText(t).width; };
+    const minFont = Math.min(maxFont, 9);
+    for(let fs = maxFont; fs >= minFont; fs -= 0.5){
+      if(width(text, fs) <= WHEEL_LABEL_MAX_W) return { text, fontSize: fs };
+    }
+    let t = text;
+    while(t.length > 1 && width(t + '…', minFont) > WHEEL_LABEL_MAX_W) t = t.slice(0, -1);
+    return { text: t.trimEnd() + '…', fontSize: minFont };
   }
 
   function renderWheel(){
@@ -1234,6 +1979,8 @@
       return;
     }
     const sliceAngle = 360/n;
+    // Tamaño máximo de letra según el ancho de la porción a media altura del radio
+    const maxFont = Math.max(8, Math.min(16, (2*Math.PI*(r*0.5)/n) * 0.55));
     let html = '';
     wheelPool.forEach((s, i) => {
       const start = i*sliceAngle - 90;
@@ -1244,8 +1991,11 @@
       const color = wheelPalette[i % wheelPalette.length];
       html += `<path d="M${cx},${cy} L${p1.x.toFixed(2)},${p1.y.toFixed(2)} A${r},${r} 0 ${largeArc} 1 ${p2.x.toFixed(2)},${p2.y.toFixed(2)} Z" fill="${color}" stroke="#17302a" stroke-width="2"/>`;
       const mid = start + sliceAngle/2;
-      const tp = polarPoint(cx,cy,r*0.62,mid);
-      html += `<text x="${tp.x.toFixed(2)}" y="${tp.y.toFixed(2)}" fill="#1a2f29" font-family="system-ui, sans-serif" font-size="13" font-weight="650" text-anchor="middle" transform="rotate(${(mid+90).toFixed(2)} ${tp.x.toFixed(2)} ${tp.y.toFixed(2)})">${escapeHtml(displayName(s))}</text>`;
+      // Nombre en dirección radial (del centro hacia el borde): aprovecha todo el largo de la porción
+      // y el nombre que queda bajo la flecha se lee en vertical.
+      const tp = polarPoint(cx,cy,r-16,mid);
+      const label = fitWheelLabel(displayName(s), maxFont);
+      html += `<text x="${tp.x.toFixed(2)}" y="${tp.y.toFixed(2)}" fill="#1a2f29" font-family="${WHEEL_FONT}" font-size="${label.fontSize}" font-weight="650" text-anchor="end" dominant-baseline="central" transform="rotate(${mid.toFixed(2)} ${tp.x.toFixed(2)} ${tp.y.toFixed(2)})">${escapeHtml(label.text)}</text>`;
     });
     html += `<circle cx="${cx}" cy="${cy}" r="18" fill="#17302a" stroke="#f4f1e6" stroke-width="3"/>`;
     svg.innerHTML = html;
@@ -1402,60 +2152,155 @@
       layoutLocked: $('layoutLocked').checked,
       desks, tags, students, rules, seatAssignment,
       wheelPool: wheelPool.map(s=>s.id),
+      absentDate,
+      planHistory, nextPlanId, viewMode,
+      avoidRepeats: parseInt($('avoidRepeats').value) || 0,
       nextDeskId, nextTagId, nextStudentId, nextRuleId
     };
   }
 
-  function setImportExportStatus(msg, isError){
+  function setImportExportStatus(msg, isError, action){
     const el = $('importExportStatus');
     el.textContent = msg;
     el.className = 'status' + (isError ? ' error' : '');
+    if(action){ const b = document.createElement('button'); b.className = 'link'; b.textContent = action.label; b.onclick = action.fn; el.appendChild(b); }
   }
 
-  $('exportBtn').onclick = () => {
+  // Copia de seguridad: descarga un .json con toda la sesión para guardarlo donde se quiera
+  function downloadSession(){
     try{
-      const data = JSON.stringify(collectState(), null, 2);
+      const json = sessionJson();
+      const data = JSON.stringify({ ...JSON.parse(json), savedAt: new Date().toISOString() }, null, 2);
       const blob = new Blob([data], { type: 'application/json' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       const stamp = new Date().toISOString().slice(0,10);
       a.href = url;
-      a.download = `plano-asientos-${stamp}.json`;
+      a.download = `copia-${sessionBaseName()}-${stamp}.json`;
       document.body.appendChild(a);
       a.click();
       a.remove();
       URL.revokeObjectURL(url);
-      setImportExportStatus('Sesión exportada correctamente.', false);
+      markBackup(json);
+      setImportExportStatus('Copia de seguridad descargada. Guárdala donde quieras (un pendrive, tu nube…): con "Restaurar copia" recuperas la clase si se pierde.', false);
     } catch(e){
-      setImportExportStatus('No se pudo exportar la sesión.', true);
+      setImportExportStatus('No se pudo descargar la copia.', true);
     }
-  };
+  }
 
-  // Aplica un estado completo (usado por Importar sesión y por Cargar ejemplo)
-  function applyState(data){
-    if(!data || !Array.isArray(data.students) || !Array.isArray(data.desks)){
+  // Valida y limpia una sesión venida de fuera (archivo importado o copia guardada).
+  // Todo lo que no tenga el tipo esperado se descarta, de modo que un archivo manipulado
+  // no pueda colar HTML/JS en la página ni dejar la app en un estado incoherente.
+  const LIMITS = { desks: 400, tags: 50, students: 250, rules: 500, text: 80 };
+  function sanitizeState(data){
+    if(!data || typeof data !== 'object' || Array.isArray(data) || !Array.isArray(data.students) || !Array.isArray(data.desks)){
       throw new Error('Formato no reconocido');
     }
-    canvasW = data.canvasW || canvasW;
-    canvasH = data.canvasH || canvasH;
-    className = typeof data.className === 'string' ? data.className : className;
-    desks = data.desks || [];
-    tags = data.tags || [];
-    students = (data.students || []).map(s => ({ ...s, lastName: s.lastName || '' }));
-    rules = data.rules || [];
-    seatAssignment = data.seatAssignment || {};
-    nextDeskId = data.nextDeskId || (Math.max(0,...desks.map(d=>d.id))+1);
-    nextTagId = data.nextTagId || (Math.max(0,...tags.map(t=>t.id))+1);
-    nextStudentId = data.nextStudentId || (Math.max(0,...students.map(s=>s.id))+1);
-    nextRuleId = data.nextRuleId || (Math.max(0,...rules.map(r=>r.id))+1);
-    wheelPool = Array.isArray(data.wheelPool) ? data.wheelPool.map(id => students.find(s=>s.id===id)).filter(Boolean) : students.slice();
+    const isId = v => Number.isInteger(v) && v > 0 && v < 1e9;
+    const str = (v, max) => (typeof v === 'string' ? v : '').replace(/[\u0000-\u001f\u007f]/g, ' ').trim().slice(0, max || LIMITS.text);
+    const num = (v, min, max, def) => (typeof v === 'number' && isFinite(v)) ? Math.min(max, Math.max(min, v)) : def;
+    const color = v => (typeof v === 'string' && /^#[0-9a-f]{6}$/i.test(v)) ? v.toLowerCase() : '#e0a458';
+    const uniqueById = (arr, max) => { const seen = new Set(); return arr.filter(x => x && typeof x === 'object' && isId(x.id) && !seen.has(x.id) && seen.add(x.id)).slice(0, max); };
+
+    const out = {};
+    out.canvasW = Math.round(num(data.canvasW, 300, 2000, 760));
+    out.canvasH = Math.round(num(data.canvasH, 300, 2000, 560));
+    out.className = str(data.className);
+    out.showLastNames = data.showLastNames === true;
+    out.layoutLocked = data.layoutLocked === true;
+
+    out.tags = uniqueById(Array.isArray(data.tags) ? data.tags : [], LIMITS.tags)
+      .map(t => ({ id: t.id, name: str(t.name, 40) || 'Etiqueta', color: color(t.color) }));
+    const tagIds = new Set(out.tags.map(t => t.id));
+
+    out.desks = uniqueById(data.desks, LIMITS.desks).map(d => ({
+      id: d.id,
+      x: Math.round(num(d.x, 0, out.canvasW - DESK_SIZE, 0)),
+      y: Math.round(num(d.y, 0, out.canvasH - DESK_SIZE, 0)),
+      tags: Array.isArray(d.tags) ? [...new Set(d.tags.filter(tid => tagIds.has(tid)))] : [],
+      active: d.active !== false
+    }));
+    const deskIds = new Set(out.desks.map(d => d.id));
+
+    out.students = uniqueById(data.students, LIMITS.students)
+      .map(st => ({ id: st.id, name: str(st.name, 60), lastName: str(st.lastName, 60), absent: st.absent === true }))
+      .filter(st => st.name);
+    const studentIds = new Set(out.students.map(st => st.id));
+
+    out.rules = uniqueById(Array.isArray(data.rules) ? data.rules : [], LIMITS.rules).filter(r => {
+      if(r.type === 'apart' || r.type === 'together') return studentIds.has(r.studentA) && studentIds.has(r.studentB) && r.studentA !== r.studentB;
+      if(r.type === 'tag') return studentIds.has(r.studentId) && tagIds.has(r.tagId);
+      if(r.type === 'fixed') return studentIds.has(r.studentId) && deskIds.has(r.deskId);
+      return false;
+    }).map(r => (r.type === 'apart' || r.type === 'together')
+      ? { id: r.id, type: r.type, studentA: r.studentA, studentB: r.studentB }
+      : r.type === 'tag' ? { id: r.id, type: 'tag', studentId: r.studentId, tagId: r.tagId }
+      : { id: r.id, type: 'fixed', studentId: r.studentId, deskId: r.deskId });
+
+    out.seatAssignment = sanitizeSeats(data.seatAssignment, deskIds, studentIds);
+
+    out.planHistory = (Array.isArray(data.planHistory) ? data.planHistory : []).filter(h => h && isId(h.id) && typeof h.savedAt === 'string' && !isNaN(new Date(h.savedAt)))
+      .slice(0, HISTORY_LIMIT).map(h => ({
+        id: h.id, savedAt: new Date(h.savedAt).toISOString(),
+        seats: sanitizeSeats(h.seats, deskIds, studentIds),
+        pairs: (Array.isArray(h.pairs) ? h.pairs : []).filter(pr => Array.isArray(pr) && pr.length === 2 && studentIds.has(pr[0]) && studentIds.has(pr[1]) && pr[0] !== pr[1]).map(pr => pr[0] < pr[1] ? [pr[0], pr[1]] : [pr[1], pr[0]])
+      }));
+    out.nextPlanId = Math.max(isId(data.nextPlanId) ? data.nextPlanId : 1, Math.max(0, ...out.planHistory.map(h => h.id)) + 1);
+    out.viewMode = data.viewMode === 'teacher' ? 'teacher' : 'students';
+    out.avoidRepeats = [0,1,2,3,5,99].includes(data.avoidRepeats) ? data.avoidRepeats : 3;
+    out.absentDate = (typeof data.absentDate === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(data.absentDate)) ? data.absentDate : '';
+    out.wheelPool = Array.isArray(data.wheelPool) ? [...new Set(data.wheelPool.filter(id => studentIds.has(id)))] : null;
+
+    const maxId = arr => Math.max(0, ...arr.map(x => x.id)) + 1;
+    const nextId = (v, arr) => Math.max(isId(v) ? v : 1, maxId(arr));
+    out.nextDeskId = nextId(data.nextDeskId, out.desks);
+    out.nextTagId = nextId(data.nextTagId, out.tags);
+    out.nextStudentId = nextId(data.nextStudentId, out.students);
+    out.nextRuleId = nextId(data.nextRuleId, out.rules);
+    return out;
+  }
+
+  // Asignación mesa -> alumno: solo mesas y alumnos existentes, y cada alumno en una sola mesa.
+  function sanitizeSeats(raw, deskIds, studentIds){
+    const seats = {}, used = new Set();
+    if(raw && typeof raw === 'object' && !Array.isArray(raw)){
+      Object.keys(raw).forEach(k => {
+        const deskId = Number(k), sid = raw[k];
+        if(deskIds.has(deskId) && studentIds.has(sid) && !used.has(sid)){ seats[deskId] = sid; used.add(sid); }
+      });
+    }
+    return seats;
+  }
+
+  // Aplica un estado completo (usado por Importar sesión y por Cargar ejemplo)
+  function applyState(raw){
+    const data = sanitizeState(raw);
+    canvasW = data.canvasW;
+    canvasH = data.canvasH;
+    className = data.className;
+    desks = data.desks;
+    tags = data.tags;
+    students = data.students;
+    rules = data.rules;
+    seatAssignment = data.seatAssignment;
+    nextDeskId = data.nextDeskId;
+    nextTagId = data.nextTagId;
+    nextStudentId = data.nextStudentId;
+    nextRuleId = data.nextRuleId;
+    absentDate = data.absentDate;
+    planHistory = data.planHistory; nextPlanId = data.nextPlanId;
+    setViewMode(data.viewMode);
+    $('avoidRepeats').value = String(data.avoidRepeats);
+    const expired = expireAbsences();
+    wheelPool = (data.wheelPool ? data.wheelPool.map(id => students.find(s=>s.id===id)) : students.slice()).filter(s => !s.absent);
     wheelRotation = 0;
     selectedDeskId = null; selectedSwapId = null;
+    undoStack = []; redoStack = []; updateUndoButtons();
 
     $('canvasW').value = canvasW; $('canvasH').value = canvasH;
     $('className').value = className;
-    $('showLastNames').checked = typeof data.showLastNames === 'boolean' ? data.showLastNames : false;
-    layoutLocked = typeof data.layoutLocked === 'boolean' ? data.layoutLocked : false;
+    $('showLastNames').checked = data.showLastNames;
+    layoutLocked = data.layoutLocked;
     $('layoutLocked').checked = layoutLocked;
     $('addSingleBtn').disabled = layoutLocked;
     $('addPairBtn').disabled = layoutLocked;
@@ -1463,22 +2308,29 @@
     const c = $('canvas'); c.style.width = canvasW+'px'; c.style.height = canvasH+'px';
     c.classList.toggle('locked', layoutLocked);
 
-    renderTags(); renderStudents(); renderRuleFields(); renderRules(); renderCanvas(); renderDeskEditor(); renderWheel();
     $('pickerHistory').innerHTML = '';
+    renderTags(); renderStudents(); renderRuleFields(); renderRules(); renderCanvas(); renderDeskEditor(); renderWheel();
+    renderSaveState();
+    return { expired };
   }
 
-  $('importBtn').onclick = () => { $('importFile').click(); };
+  $('importBtn').onclick = () => {
+    if((students.length || desks.length) && !window.confirm('Se sustituirá la clase actual por la de la copia que elijas. ¿Continuar?')) return;
+    $('importFile').click();
+  };
 
   $('importFile').addEventListener('change', (e) => {
     const file = e.target.files[0];
     if(!file) return;
+    if(file.size > 5*1024*1024){ setImportExportStatus('El archivo es demasiado grande para ser una sesión de esta herramienta.', true); $('importFile').value=''; return; }
     const reader = new FileReader();
     reader.onload = () => {
       try{
         const data = JSON.parse(reader.result);
-        applyState(data);
-        setStatus('Sesión importada correctamente.', false);
-        setImportExportStatus(`Sesión importada: ${students.length} alumnos, ${desks.length} mesas, ${rules.length} reglas.`, false);
+        const res = applyState(data);
+        markBackup(sessionJson());
+        setStatus('Copia restaurada correctamente.', false);
+        setImportExportStatus(`Copia restaurada: ${students.length} alumnos, ${desks.length} mesas, ${rules.length} reglas.${res.expired ? ' Se han borrado las ausencias de otro día.' : ''}`, false);
       } catch(err){
         setImportExportStatus('El archivo no es una sesión válida de esta herramienta.', true);
       }
@@ -1486,6 +2338,94 @@
     };
     reader.readAsText(file);
   });
+
+  // ---------- Guardado: copia automática en el navegador + copias de seguridad en archivo ----------
+  // La sesión se guarda sola en este navegador (localStorage) y se recupera al volver a abrir la app.
+  // Como el navegador puede borrar esos datos, "Guardar copia" descarga un .json para ponerlo a salvo donde se quiera.
+  const AUTOSAVE_KEY = 'planoAsientos.autosave';
+  const BACKUP_KEY = 'planoAsientos.ultimaCopia';
+  const BEFORE_SAMPLE_KEY = 'planoAsientos.antesDelEjemplo';
+  let lastLocalJson = null;
+  let autosaveReady = false;
+  let lastBackup = null; // { at, hash } de la última copia descargada o restaurada en este navegador
+
+  const sessionJson = () => JSON.stringify(collectState());
+  const sessionBaseName = () => {
+    const slug = (className || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/gi, '-').replace(/^-+|-+$/g, '').toLowerCase().slice(0, 40);
+    return slug ? `plano-${slug}` : 'plano-asientos';
+  };
+  const fmtWhen = iso => { const d = new Date(iso); return isNaN(d) ? '' : d.toLocaleDateString('es-ES', { weekday:'long', day:'numeric', month:'short' }) + ' a las ' + d.toLocaleTimeString('es-ES', { hour:'2-digit', minute:'2-digit' }); };
+  const fmtAgo = iso => {
+    const d = new Date(iso); if(isNaN(d)) return '';
+    const days = Math.floor((new Date(todayStr()) - new Date(d.toISOString().slice(0,10))) / 86400000);
+    const hm = d.toLocaleTimeString('es-ES', { hour:'2-digit', minute:'2-digit' });
+    if(days <= 0) return `hoy a las ${hm}`;
+    if(days === 1) return `ayer a las ${hm}`;
+    if(days < 7) return `hace ${days} días`;
+    return d.toLocaleDateString('es-ES', { day:'numeric', month:'short', year:'numeric' });
+  };
+  // Huella corta del estado, para saber si ha cambiado desde la última copia
+  const hashStr = str => { let h = 5381; for(let i = 0; i < str.length; i++) h = ((h << 5) + h + str.charCodeAt(i)) | 0; return (h >>> 0).toString(36); };
+
+  function saveLocal(json){
+    try{ localStorage.setItem(AUTOSAVE_KEY, JSON.stringify({ savedAt: new Date().toISOString(), state: JSON.parse(json) })); lastLocalJson = json; }
+    catch(e){ /* almacenamiento lleno o bloqueado: seguimos sin copia local */ }
+  }
+  function markBackup(json){
+    lastBackup = { at: new Date().toISOString(), hash: hashStr(json) };
+    try{ localStorage.setItem(BACKUP_KEY, JSON.stringify(lastBackup)); }catch(e){}
+    renderSaveState();
+  }
+
+  function renderSaveState(){
+    const el = $('saveState'); el.innerHTML = ''; el.className = 'save-state';
+    if(!students.length && !desks.length) return;
+    const dot = document.createElement('span'); dot.className = 'dot'; el.appendChild(dot);
+    const txt = document.createElement('span');
+    let changed = true;
+    if(lastBackup){ try{ changed = hashStr(sessionJson()) !== lastBackup.hash; }catch(e){} }
+    if(!lastBackup){
+      el.classList.add('warn');
+      txt.innerHTML = 'Se guarda solo en este navegador. Aún no has guardado ninguna <strong>copia de seguridad</strong>: si se borran los datos del navegador, no podrás recuperar la clase.';
+    } else if(changed){
+      el.classList.add('warn');
+      txt.innerHTML = `Se guarda solo en este navegador · Última copia de seguridad: <strong>${escapeHtml(fmtAgo(lastBackup.at))}</strong> (ha habido cambios desde entonces)`;
+    } else {
+      el.classList.add('ok');
+      txt.innerHTML = `Se guarda solo en este navegador · Copia de seguridad al día (<strong>${escapeHtml(fmtAgo(lastBackup.at))}</strong>)`;
+    }
+    el.appendChild(txt);
+    if(changed){
+      const b = document.createElement('button'); b.className = 'link'; b.id = 'backupNowBtn'; b.textContent = 'Guardar copia ahora';
+      b.onclick = downloadSession; el.appendChild(b);
+    }
+  }
+
+  // Cada poco, si algo ha cambiado, se guarda en el navegador
+  function autosaveTick(){
+    if(!autosaveReady) return;
+    let json; try{ json = sessionJson(); }catch(e){ return; }
+    if(json !== lastLocalJson){ saveLocal(json); renderSaveState(); }
+  }
+
+  function restoreOnStartup(){
+    let restored = null;
+    try{ lastBackup = JSON.parse(localStorage.getItem(BACKUP_KEY) || 'null'); }catch(e){ lastBackup = null; }
+    try{
+      const raw = localStorage.getItem(AUTOSAVE_KEY);
+      if(raw){
+        const saved = JSON.parse(raw);
+        const res = applyState(saved.state);
+        restored = { savedAt: saved.savedAt, expired: res.expired };
+      }
+    }catch(e){ restored = null; }
+    lastLocalJson = sessionJson();
+    autosaveReady = true;
+    renderSaveState();
+    setInterval(autosaveTick, 1500);
+    window.addEventListener('pagehide', autosaveTick);
+    return restored;
+  }
 
   // ---------- Export plan as PNG / PDF (estilo minimalista, imprimible) ----------
   function getDeskName(d){
@@ -1533,225 +2473,152 @@
     URL.revokeObjectURL(url);
   }
 
-  // Shared layout math for the printable plan, used by both the PNG and PDF exporters
-  // so they stay visually identical. Mirrors Shuffle Buddy's printed chart: a bordered
-  // room outline, a class-name title above it, a plain board bar (no text) and
-  // grayscale desks with auto-sized names.
-  function planLayout(){
-    const outerMargin = 20;
-    const titleAreaH = 44;
-    const boxPadTop = 30;
-    const boardBarH = 9;
-    const boardBarGap = 26;
-    const boxPadSides = 20;
-    const boxPadBottom = 20;
+  // Dibuja el plano imprimible (blanco y negro, apto para fotocopiar) en un <canvas>.
+  // Lo usan el PNG y el PDF, así que los dos salen idénticos y con cualquier alfabeto.
+  // En la vista del profesor el plano se gira 180°: la pizarra queda abajo, como se ve desde su mesa.
+  function renderPlanCanvas(scale){
+    const teacher = viewMode === 'teacher';
+    const M = 20, titleH = 44, padTop = 26, padSides = 20, padBottom = 20;
+    const boardH = 9, boardLabelH = 14, boardGap = 24;
     const legendH = tags.length ? 30 : 0;
-    const pageW = canvasW + boxPadSides*2 + outerMargin*2;
-    const pageH = titleAreaH + boxPadTop + boardBarH + boardBarGap + canvasH + legendH + boxPadBottom + outerMargin*2;
-    return { outerMargin, titleAreaH, boxPadTop, boardBarH, boardBarGap, boxPadSides, boxPadBottom, legendH, pageW, pageH };
-  }
-
-  function exportPlanPNG(){
-    if(desks.length === 0){ setImportExportStatus('Diseña el aula con al menos una mesa antes de exportar.', true); return; }
-    const L = planLayout();
-    const w = L.pageW, h = L.pageH;
-    const canvasEl = document.createElement('canvas');
-    const scale = 2;
-    canvasEl.width = w*scale; canvasEl.height = h*scale;
-    const ctx = canvasEl.getContext('2d');
-    if(!ctx){ setImportExportStatus('Este navegador no permite generar la imagen.', true); return; }
+    const boardBlock = boardLabelH + boardH + boardGap;
+    const w = canvasW + padSides*2 + M*2;
+    const h = M + titleH + padTop + boardBlock + canvasH + legendH + padBottom + M;
+    const el = document.createElement('canvas');
+    el.width = Math.round(w*scale); el.height = Math.round(h*scale);
+    const ctx = el.getContext('2d');
+    if(!ctx) return null;
     ctx.scale(scale, scale);
+    const FONT = 'Arial, "Helvetica Neue", "Noto Sans", "Segoe UI", sans-serif';
+    ctx.fillStyle = '#ffffff'; ctx.fillRect(0,0,w,h);
 
-    ctx.fillStyle = '#ffffff';
-    ctx.fillRect(0,0,w,h);
-
-    // Title
-    ctx.fillStyle = '#000000';
-    ctx.font = '700 20px Arial, sans-serif';
+    // Título
+    ctx.fillStyle = '#000000'; ctx.font = `700 20px ${FONT}`;
     ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
-    ctx.fillText(planTitle(), w/2, L.outerMargin + 30);
-    ctx.textAlign = 'left';
+    ctx.fillText(planTitle(), w/2, M + (teacher ? 20 : 28));
+    if(teacher){ ctx.font = `12px ${FONT}`; ctx.fillStyle = '#555555'; ctx.fillText('Vista desde la mesa del profesor', w/2, M + 37); }
 
-    // Room border box
-    const boxLeft = L.outerMargin;
-    const boxTop = L.outerMargin + L.titleAreaH;
-    const boxW = w - L.outerMargin*2;
-    const boxH = h - L.outerMargin - boxTop;
-    ctx.strokeStyle = '#000000'; ctx.lineWidth = 1.5;
-    ctx.strokeRect(boxLeft, boxTop, boxW, boxH);
+    // Contorno del aula
+    const boxL = M, boxT = M + titleH, boxW = w - M*2, boxH = h - M - boxT;
+    ctx.strokeStyle = '#000000'; ctx.lineWidth = 1.5; ctx.strokeRect(boxL, boxT, boxW, boxH);
 
-    // Board bar (plain, no text)
-    const boardW = Math.max(80, canvasW*0.55);
-    const boardX = boxLeft + boxW/2 - boardW/2;
-    const boardY = boxTop + L.boxPadTop;
-    ctx.fillStyle = '#adadad';
-    ctx.fillRect(boardX, boardY, boardW, L.boardBarH);
-    ctx.strokeStyle = '#666666'; ctx.lineWidth = 0.75;
-    ctx.strokeRect(boardX, boardY, boardW, L.boardBarH);
+    // Pizarra (arriba en la vista del alumnado, abajo en la del profesor)
+    const deskX0 = boxL + padSides;
+    const deskY0 = teacher ? boxT + padTop : boxT + padTop + boardBlock;
+    const boardW = Math.max(80, canvasW*0.55), boardX = boxL + boxW/2 - boardW/2;
+    const boardY = teacher ? deskY0 + canvasH + boardGap : boxT + padTop + boardLabelH;
+    ctx.fillStyle = '#adadad'; ctx.fillRect(boardX, boardY, boardW, boardH);
+    ctx.strokeStyle = '#666666'; ctx.lineWidth = 0.75; ctx.strokeRect(boardX, boardY, boardW, boardH);
+    ctx.fillStyle = '#777777'; ctx.font = `700 9px ${FONT}`;
+    ctx.textAlign = 'center';
+    const label = 'P I Z A R R A';
+    if(teacher){ ctx.textBaseline = 'top'; ctx.fillText(label, w/2, boardY + boardH + 4); }
+    else { ctx.textBaseline = 'bottom'; ctx.fillText(label, w/2, boardY - 4); }
 
-    // Desks
-    const deskX0 = boxLeft + L.boxPadSides;
-    const deskY0 = boardY + L.boardBarH + L.boardBarGap;
+    // Mesas
     const size = DESK_SIZE;
-    const measureFn = (text, fontSize) => { ctx.font = `600 ${fontSize}px Arial, sans-serif`; return ctx.measureText(text).width; };
-
+    const measureFn = (text, fontSize) => { ctx.font = `600 ${fontSize}px ${FONT}`; return ctx.measureText(text).width; };
     desks.forEach(d => {
-      const x = deskX0 + d.x, y = deskY0 + d.y;
-      const filled = !!seatAssignment[d.id];
+      const px = teacher ? canvasW - size - d.x : d.x, py = teacher ? canvasH - size - d.y : d.y;
+      const x = deskX0 + px, y = deskY0 + py;
       ctx.fillStyle = d.active ? '#cccccc' : '#ececec';
-      ctx.strokeStyle = '#000000';
-      ctx.lineWidth = 1.25;
-      if(!d.active) ctx.setLineDash([3,3]); else ctx.setLineDash([]);
-      ctx.fillRect(x, y, size, size);
-      ctx.strokeRect(x, y, size, size);
+      ctx.strokeStyle = '#000000'; ctx.lineWidth = 1.25;
+      ctx.setLineDash(d.active ? [] : [3,3]);
+      ctx.fillRect(x, y, size, size); ctx.strokeRect(x, y, size, size);
       ctx.setLineDash([]);
-
       (d.tags||[]).forEach((tid,i) => {
         const t = tags.find(tg=>tg.id===tid);
         if(t){ ctx.fillStyle = t.color; ctx.beginPath(); ctx.arc(x+7+i*9, y+7, 3, 0, Math.PI*2); ctx.fill(); }
       });
-
       const name = getDeskName(d);
       if(name){
-        const maxW = size - 8;
-        const fit = fitText(name, maxW, measureFn, 13, 6.5);
+        const fit = fitText(name, size - 8, measureFn, 13, 6.5);
         const lineH = fit.fontSize * 1.15;
-        ctx.fillStyle = '#000000';
-        ctx.font = `600 ${fit.fontSize}px Arial, sans-serif`;
+        ctx.fillStyle = '#000000'; ctx.font = `600 ${fit.fontSize}px ${FONT}`;
         ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
         const startY = y + size/2 - ((fit.lines.length-1)*lineH)/2;
         fit.lines.forEach((line,i) => ctx.fillText(line, x+size/2, startY + i*lineH));
-        ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
       }
     });
 
-    // Legend (tags), inside the box, below the desk area
+    // Leyenda de etiquetas
     if(tags.length){
-      let lx = deskX0; const ly = deskY0 + canvasH + 16;
-      ctx.font = '600 11px Arial, sans-serif'; ctx.fillStyle = '#333333';
+      let lx = deskX0; const ly = teacher ? boardY + boardH + boardLabelH + 22 : deskY0 + canvasH + 16;
+      ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
       tags.forEach(t => {
         ctx.fillStyle = t.color; ctx.fillRect(lx, ly-8, 9, 9);
         ctx.strokeStyle = '#555555'; ctx.lineWidth = 0.75; ctx.strokeRect(lx, ly-8, 9, 9);
-        ctx.fillStyle = '#333333'; ctx.font = '11px Arial, sans-serif';
+        ctx.fillStyle = '#333333'; ctx.font = `11px ${FONT}`;
         ctx.fillText(t.name, lx+13, ly);
         lx += 13 + ctx.measureText(t.name).width + 18;
       });
     }
+    return { canvas: el, width: w, height: h };
+  }
 
-    canvasEl.toBlob(blob => {
+  const exportBaseName = () => {
+    const slug = planTitle().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/gi, '-').replace(/^-+|-+$/g, '').toLowerCase().slice(0, 40) || 'plano';
+    return `plano-${slug}${viewMode === 'teacher' ? '-profesor' : ''}-${todayStr()}`;
+  };
+
+  function exportPlanPNG(){
+    if(desks.length === 0){ setImportExportStatus('Diseña el aula con al menos una mesa antes de exportar.', true); return; }
+    const r = renderPlanCanvas(2);
+    if(!r){ setImportExportStatus('Este navegador no permite generar la imagen.', true); return; }
+    r.canvas.toBlob(blob => {
       if(!blob){ setImportExportStatus('No se pudo generar la imagen.', true); return; }
-      triggerDownloadBlob(blob, `plano-asientos-${new Date().toISOString().slice(0,10)}.png`);
+      triggerDownloadBlob(blob, exportBaseName() + '.png');
       setImportExportStatus('Plano exportado como PNG.', false);
     }, 'image/png');
   }
 
-  function pdfEscape(str){ return String(str).replace(/\\/g,'\\\\').replace(/\(/g,'\\(').replace(/\)/g,'\\)'); }
-  function toLatin1(str){
-    let out = '';
-    for(let i=0;i<str.length;i++){ const code = str.charCodeAt(i); out += code<=255 ? str[i] : '?'; }
+  // PDF de una página A4 (vertical u horizontal según la forma del plano) con el plano como imagen JPEG.
+  // Al ser una imagen, se ven bien todos los nombres, sea cual sea su alfabeto.
+  function buildPdfBytes(jpegBytes, imgW, imgH, title){
+    const landscape = imgW > imgH;
+    const pageW = landscape ? 841.89 : 595.28, pageH = landscape ? 595.28 : 841.89, margin = 28;
+    const k = Math.min((pageW - margin*2) / imgW, (pageH - margin*2) / imgH);
+    const dw = imgW * k, dh = imgH * k, dx = (pageW - dw) / 2, dy = pageH - margin - dh;
+    const n = v => (Math.round(v*100)/100).toString();
+    // Título en UTF-16BE para los metadatos del documento
+    let titleHex = 'FEFF';
+    for(const ch of title){ const cp = ch.codePointAt(0); const u = cp > 0xFFFF ? [0xD800 + ((cp-0x10000) >> 10), 0xDC00 + ((cp-0x10000) & 0x3FF)] : [cp]; u.forEach(x => { titleHex += x.toString(16).padStart(4,'0').toUpperCase(); }); }
+    const content = `q ${n(dw)} 0 0 ${n(dh)} ${n(dx)} ${n(dy)} cm /Im0 Do Q`;
+    const enc = new TextEncoder();
+    const parts = []; const offsets = []; let length = 0;
+    const push = chunk => { const b = typeof chunk === 'string' ? enc.encode(chunk) : chunk; parts.push(b); length += b.length; };
+    const obj = (num, body) => { offsets[num] = length; push(`${num} 0 obj\n`); body(); push('\nendobj\n'); };
+    push('%PDF-1.4\n'); push(new Uint8Array([0x25, 0xE2, 0xE3, 0xCF, 0xD3, 0x0A])); // marca de archivo binario
+    obj(1, () => push('<< /Type /Catalog /Pages 2 0 R >>'));
+    obj(2, () => push('<< /Type /Pages /Kids [3 0 R] /Count 1 >>'));
+    obj(3, () => push(`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${n(pageW)} ${n(pageH)}] /Resources << /XObject << /Im0 5 0 R >> >> /Contents 4 0 R >>`));
+    obj(4, () => push(`<< /Length ${content.length} >>\nstream\n${content}\nendstream`));
+    obj(5, () => { push(`<< /Type /XObject /Subtype /Image /Width ${imgW} /Height ${imgH} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${jpegBytes.length} >>\nstream\n`); push(jpegBytes); push('\nendstream'); });
+    obj(6, () => push(`<< /Title <${titleHex}> /Producer (Plano de Asientos) >>`));
+    const xref = length;
+    let x = `xref\n0 7\n0000000000 65535 f \n`;
+    for(let i=1;i<=6;i++) x += String(offsets[i]).padStart(10,'0') + ' 00000 n \n';
+    push(x + `trailer\n<< /Size 7 /Root 1 0 R /Info 6 0 R >>\nstartxref\n${xref}\n%%EOF`);
+    const out = new Uint8Array(length); let o = 0; parts.forEach(b => { out.set(b, o); o += b.length; });
     return out;
-  }
-  function hexToRgb01(hex){
-    hex = String(hex).replace('#','');
-    return [parseInt(hex.substring(0,2),16)/255, parseInt(hex.substring(2,4),16)/255, parseInt(hex.substring(4,6),16)/255];
-  }
-  function pdfNum(n){ return (Math.round(n*100)/100).toString(); }
-  // Rough Helvetica average-width-per-character heuristic (no real font metrics available
-  // without embedding the font); a small safety margin keeps text comfortably inside desks.
-  function pdfTextWidth(text, fontSize){ return text.length * fontSize * 0.52; }
-
-  function buildPdfString(){
-    const L = planLayout();
-    const pageW = L.pageW, pageH = L.pageH;
-    const boxLeft = L.outerMargin;
-    const boxRight = pageW - L.outerMargin;
-    const boxTop = pageH - L.outerMargin - L.titleAreaH;
-    const boxBottom = L.outerMargin;
-    const deskX0 = boxLeft + L.boxPadSides;
-    const deskYtop0 = boxTop - L.boxPadTop - L.boardBarH - L.boardBarGap;
-
-    let content = '';
-
-    const title = pdfEscape(toLatin1(planTitle()));
-    const titleWidth = title.length * 20 * 0.56;
-    content += `0 0 0 rg BT /F2 20 Tf 1 0 0 1 ${pdfNum(pageW/2 - titleWidth/2)} ${pdfNum(pageH - L.outerMargin - 28)} Tm (${title}) Tj ET\n`;
-
-    content += `0 0 0 RG 1.2 w ${pdfNum(boxLeft)} ${pdfNum(boxBottom)} ${pdfNum(boxRight-boxLeft)} ${pdfNum(boxTop-boxBottom)} re S\n`;
-
-    const boardW = Math.max(80, canvasW*0.55);
-    const boardX = boxLeft + (boxRight-boxLeft)/2 - boardW/2;
-    const boardY = boxTop - L.boxPadTop - L.boardBarH;
-    content += `0.68 0.68 0.68 rg 0.4 0.4 0.4 RG 0.75 w ${pdfNum(boardX)} ${pdfNum(boardY)} ${pdfNum(boardW)} ${pdfNum(L.boardBarH)} re B\n`;
-
-    const size = DESK_SIZE;
-    desks.forEach(d => {
-      const x = deskX0 + d.x;
-      const yTop = deskYtop0 - d.y;
-      const yBottom = yTop - size;
-      const fillColor = d.active ? [0.8,0.8,0.8] : [0.92,0.92,0.92];
-      content += `${pdfNum(fillColor[0])} ${pdfNum(fillColor[1])} ${pdfNum(fillColor[2])} rg 0.2 0.2 0.2 RG 1 w\n`;
-      if(!d.active) content += `[3 3] 0 d\n`;
-      content += `${pdfNum(x)} ${pdfNum(yBottom)} ${pdfNum(size)} ${pdfNum(size)} re B\n`;
-      if(!d.active) content += `[] 0 d\n`;
-
-      const name = getDeskName(d);
-      if(name){
-        const maxW = size - 8;
-        const fit = fitText(name, maxW, pdfTextWidth, 13, 6.5);
-        const lineH = fit.fontSize * 1.15;
-        const startY = yBottom + size/2 + ((fit.lines.length-1)*lineH)/2 - fit.fontSize*0.35;
-        fit.lines.forEach((line, li) => {
-          const lineSafe = pdfEscape(toLatin1(line));
-          const lw = pdfTextWidth(line, fit.fontSize);
-          const tx = x + size/2 - lw/2;
-          const ty = startY - li*lineH;
-          content += `0 0 0 rg BT /F1 ${pdfNum(fit.fontSize)} Tf ${pdfNum(tx)} ${pdfNum(ty)} Td (${lineSafe}) Tj ET\n`;
-        });
-      }
-    });
-
-    if(tags.length){
-      let lx = deskX0; const ly = deskYtop0 - canvasH - 16;
-      tags.forEach(t => {
-        const [r,g,b] = hexToRgb01(t.color);
-        content += `${pdfNum(r)} ${pdfNum(g)} ${pdfNum(b)} rg 0.3 0.3 0.3 RG 0.5 w ${pdfNum(lx)} ${pdfNum(ly-1)} 8 8 re B\n`;
-        const label = pdfEscape(toLatin1(t.name));
-        content += `0.25 0.25 0.25 rg BT /F1 8.5 Tf ${pdfNum(lx+12)} ${pdfNum(ly)} Td (${label}) Tj ET\n`;
-        lx += 12 + label.length*4.8 + 16;
-      });
-    }
-
-    const objects = [];
-    objects.push('<< /Type /Catalog /Pages 2 0 R >>');
-    objects.push('<< /Type /Pages /Kids [3 0 R] /Count 1 >>');
-    objects.push(`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${pdfNum(pageW)} ${pdfNum(pageH)}] /Resources << /Font << /F1 5 0 R /F2 6 0 R >> >> /Contents 4 0 R >>`);
-    objects.push(`<< /Length ${content.length} >>\nstream\n${content}\nendstream`);
-    objects.push('<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>');
-    objects.push('<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>');
-
-    let pdf = '%PDF-1.4\n';
-    const offsets = [];
-    objects.forEach((obj, i) => { offsets[i] = pdf.length; pdf += `${i+1} 0 obj\n${obj}\nendobj\n`; });
-    const xrefStart = pdf.length;
-    pdf += `xref\n0 ${objects.length+1}\n`;
-    pdf += '0000000000 65535 f \n';
-    for(let i=0;i<objects.length;i++){ pdf += String(offsets[i]).padStart(10,'0') + ' 00000 n \n'; }
-    pdf += `trailer\n<< /Size ${objects.length+1} /Root 1 0 R >>\nstartxref\n${xrefStart}\n%%EOF`;
-    return pdf;
   }
 
   function exportPlanPDF(){
     if(desks.length === 0){ setImportExportStatus('Diseña el aula con al menos una mesa antes de exportar.', true); return; }
-    const pdfStr = buildPdfString();
-    const bytes = new Uint8Array(pdfStr.length);
-    for(let i=0;i<pdfStr.length;i++){ bytes[i] = pdfStr.charCodeAt(i) & 0xFF; }
-    const blob = new Blob([bytes], { type: 'application/pdf' });
-    triggerDownloadBlob(blob, `plano-asientos-${new Date().toISOString().slice(0,10)}.pdf`);
-    setImportExportStatus('Plano exportado como PDF.', false);
+    const r = renderPlanCanvas(3);
+    if(!r){ setImportExportStatus('Este navegador no permite generar el PDF.', true); return; }
+    r.canvas.toBlob(async blob => {
+      if(!blob){ setImportExportStatus('No se pudo generar el PDF.', true); return; }
+      const jpeg = new Uint8Array(await blob.arrayBuffer());
+      const pdf = buildPdfBytes(jpeg, r.canvas.width, r.canvas.height, planTitle());
+      triggerDownloadBlob(new Blob([pdf], { type: 'application/pdf' }), exportBaseName() + '.pdf');
+      setImportExportStatus('Plano exportado como PDF (A4).', false);
+    }, 'image/jpeg', 0.92);
   }
 
-  $('exportPngBtn').onclick = exportPlanPNG;
-  $('exportPdfBtn').onclick = exportPlanPDF;
+  $('saveBtn').onclick = downloadSession;
+  $('exportPngBtn').onclick = () => { exportPlanPNG(); if(desks.length) savePlanToHistory(true); };
+  $('exportPdfBtn').onclick = () => { exportPlanPDF(); if(desks.length) savePlanToHistory(true); };
 
   // ---------- Clase de ejemplo ----------
   function buildSampleState(){
@@ -1798,15 +2665,25 @@
   }
 
   function loadSample(){
-    if(students.length > 0 || desks.length > 0){
+    const hadClass = students.length > 0 || desks.length > 0;
+    if(hadClass){
       let ok = true;
-      try{ ok = window.confirm('Se reemplazará la sesión actual por la clase de ejemplo. Si quieres conservarla, cancela y pulsa antes "Exportar sesión". ¿Continuar?'); }catch(e){ ok = true; }
+      try{ ok = window.confirm('Se cargará la clase de ejemplo en lugar de la tuya. Tu clase se aparta y podrás recuperarla con "Volver a mi clase". ¿Continuar?'); }catch(e){ ok = true; }
       if(!ok) return;
+      try{ localStorage.setItem(BEFORE_SAMPLE_KEY, JSON.stringify({ state: collectState() })); }catch(e){}
     }
     applyState(buildSampleState());
     $('groupsGrid').innerHTML = '';
     shuffle();
-    setImportExportStatus('Clase de ejemplo cargada: 22 alumnos ficticios, 24 mesas (primera fila con etiqueta "Visión") y 5 reglas. Explora las pestañas o pulsa "Ayuda".', false);
+    setImportExportStatus('Clase de ejemplo cargada: 22 alumnos ficticios, 24 mesas (primera fila con etiqueta "Visión") y 5 reglas. Explora las pestañas o pulsa "Ayuda".', false,
+      hadClass ? { label: 'Volver a mi clase', fn: restoreBeforeSample } : null);
+  }
+  function restoreBeforeSample(){
+    let stash = null; try{ stash = JSON.parse(localStorage.getItem(BEFORE_SAMPLE_KEY) || 'null'); }catch(e){}
+    if(!stash){ setImportExportStatus('No hay ninguna clase apartada que recuperar.', true); return; }
+    applyState(stash.state);
+    try{ localStorage.removeItem(BEFORE_SAMPLE_KEY); }catch(e){}
+    setImportExportStatus('Has vuelto a tu clase.', false);
   }
   $('sampleBtn').onclick = loadSample;
 
@@ -1831,6 +2708,10 @@
   renderCanvas();
   renderTimerDisplay();
   setStatus('Diseña el aula, añade alumnado y reglas, y pulsa "Barajar asientos".', false);
+  const restored = restoreOnStartup();
+  if(restored && (students.length || desks.length)){
+    setImportExportStatus(`Recuperada tu sesión de este navegador${fmtWhen(restored.savedAt) ? ' (' + fmtWhen(restored.savedAt) + ')' : ''}.${restored.expired ? ' Se han borrado las ausencias de otro día.' : ''}`, false);
+  }
   // Muestra la ayuda automáticamente la primera vez que se abre la app en este navegador
   (function(){
     let seen = false;
