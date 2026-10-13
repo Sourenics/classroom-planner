@@ -18,12 +18,21 @@ No requiere registros, servidores ni configuraciones avanzadas. Puedes usar la h
 
 ## ✨ Características Principales
 
-* 📐 **Generación interactiva de planos:** Diseña y ajusta la distribución de pupitres e integra a los alumnos de manera rápida e intuitiva.
-* 💾 **Exportación e Importación en `.JSON`:** 
-  * Guarda el plano y la lista de tu aula en un archivo de configuración `.json` ligero.
-  * Importa tu archivo en cualquier momento para continuar editando o para **trasladar fácilmente la distribución a otros dispositivos y navegadores** de forma inmediata.
+* 📐 **Generación interactiva de planos:** Diseña la distribución de pupitres arrastrando mesas (sueltas, por parejas o en grupos de 4), numeradas y con etiquetas como "Visión".
+* 🔀 **Barajado con reglas:** Mantener separados, mantener juntos, etiqueta de mesa y sitio fijo. La app avisa si una regla se repite o contradice a otra y, si no hay plano posible, indica qué regla lo impide.
+* 🔁 **Rotación de compañeros:** Guarda los planos que uséis en el historial y, al barajar, se evita repetir compañero de mesa de los últimos planos.
+* ✋ **Ajustes a mano sin romper el aula:** Con el diseño bloqueado, arrastra a un alumno a otra mesa para moverlo o intercambiarlo. Deshacer / rehacer (Ctrl+Z / Ctrl+Y).
+* 🙋 **Faltan hoy:** Marca las ausencias del día; barajar, grupos y ruleta se saltan a quien falta. Se borran solas al día siguiente.
+* 👩‍🏫 **Vista del profesor:** El aula con la pizarra abajo, tal como se ve desde la mesa del docente, también en las exportaciones.
+* 🖨️ **Plano en PNG y PDF (A4):** Versión imprimible en blanco y negro, con nombres en cualquier alfabeto.
+* 🎲 **Grupos, ruleta y temporizador:** Grupos aleatorios (opcionalmente con las reglas), ruleta para elegir alumno y cuenta atrás grande para proyectar.
+* 💾 **Guardado automático y copia en OneDrive:**
+  * La sesión se guarda sola en tu navegador.
+  * En Edge y Chrome, **Guardar** vincula un archivo `.json` (por ejemplo, en tu carpeta de OneDrive) y la app sigue guardando en él automáticamente, para **usar la misma clase en varios equipos**. Si el archivo cambió desde otro equipo, pregunta qué versión conservar.
+  * En otros navegadores, **Guardar** descarga el archivo y **Abrir** lo recupera.
+* 🎨 **Tema oscuro (pizarra) y claro:** El tema claro está pensado para proyectar en aulas con mucha luz.
 * ⚡ **100% Client-side (Sin servidor):** Funciona directamente en tu navegador. No requiere registro ni conexión a bases de datos.
-* 🔒 **Privacidad garantizada:** Los datos de tus estudiantes no salen de tu navegador ni se envían a ningún servidor externo.
+* 🔒 **Privacidad garantizada:** La app no envía los datos de tus estudiantes a ningún servidor: solo se guardan en tu navegador y en el archivo que tú elijas.
 * 🖥️ **Diseño limpio y accesible:** Pensado para un uso ágil en el día a día docente.
 
 ---

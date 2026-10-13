@@ -8,23 +8,40 @@
   :root{
     --bg: #17302a;
     --bg-deep: #10231e;
-    --surface: rgba(244,241,230,0.035);
-    --surface-2: rgba(244,241,230,0.065);
-    --surface-3: rgba(244,241,230,0.10);
+    --surface: rgba(244,241,230,0.04);
+    --surface-2: rgba(244,241,230,0.07);
+    --surface-3: rgba(244,241,230,0.11);
     --chalk: #f4f1e6;
-    --muted: rgba(244,241,230,0.66);
-    --faint: rgba(244,241,230,0.42);
-    --line: rgba(244,241,230,0.11);
-    --line-strong: rgba(244,241,230,0.2);
+    --text-soft: rgba(244,241,230,0.86);
+    --muted: rgba(244,241,230,0.74);
+    --faint: rgba(244,241,230,0.52);
+    --line: rgba(244,241,230,0.12);
+    --line-strong: rgba(244,241,230,0.22);
+    --line-hover: rgba(244,241,230,0.32);
+    --zebra: rgba(244,241,230,0.03);
+    --field-bg: rgba(0,0,0,0.18);
+    --field-bg-focus: rgba(0,0,0,0.24);
+    --inset-bg: rgba(0,0,0,0.15);
+    --toggle-off: rgba(244,241,230,0.2);
+    --floor: rgba(0,0,0,0.13);
+    --floor-dot: rgba(244,241,230,0.12);
+    --tabs-bg: rgba(16,35,30,0.84);
+    --pop-bg: linear-gradient(180deg, #1f3d36, #10231e);
+    --scroll-thumb: rgba(244,241,230,0.14);
+    --card-bg: #1c3731;   /* tarjetas opacas: la decoración de fondo no se transparenta */
     --wood: #8b5e3c;
     --wood-dark: #6b4529;
     --wood-light: #c99a63;
     --ochre: #e8ab5c;
+    --ochre-ink: #f0b866;
+    /* Colores vivos para iconos, grupos y ruleta: pastel saturado, cómodo de ver y proyectar */
+    --c-amber: #f4b860; --c-teal: #6fd3c7; --c-coral: #f08a7e; --c-sky: #86c5f2; --c-lilac: #b9a6f3; --c-mint: #93d9a3; --c-sun: #f3d26b; --c-pink: #f2a7c3;
     --ochre-soft: rgba(232,171,92,0.14);
     --teal: #7fd1c9;
     --danger: #e3826f;
     --danger-soft: rgba(227,130,111,0.12);
     --ok: #9fd3a8;
+    --decor: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22600%22 height=%22600%22 viewBox=%220 0 600 600%22%3E%3Cg fill=%22none%22 stroke=%22%23f4f1e6%22 stroke-opacity=%220.07%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22M70 38l9 19 21 3-15 14 4 21-19-10-19 10 4-21-15-14 21-3z%22/%3E%3Cpath d=%22M210 92l70-34-22 68-17-20-31-14z M241 106l39-48%22/%3E%3Cpath d=%22M200 120c-14 6-26 4-36-4%22 stroke-dasharray=%223 6%22/%3E%3Cpath d=%22M420 140l58-58 14 14-58 58-20 6z M466 94l14 14 M420 140l14 14%22/%3E%3Cpath d=%22M96 262c-18-14-44-4-44 24 0 26 18 46 32 46 6 0 9-3 12-3s6 3 12 3c14 0 32-20 32-46 0-28-26-38-44-24z M96 262c0-10 4-18 12-22 M100 250c8-10 20-10 26-4-8 8-18 9-26 4z%22/%3E%3Cpath d=%22M470 236a30 30 0 0 0-18 54c4 3 6 8 6 13v6h24v-6c0-5 2-10 6-13a30 30 0 0 0-18-54z M460 324h20 M463 334h14 M456 214l-6-10 M470 208v-12 M484 214l6-10%22/%3E%3Cpath d=%22M48 470l120-58 14 30-120 58z M70 470l-6-12 M88 461l-4-8 M106 452l-6-12 M124 444l-4-8 M142 435l-6-12%22/%3E%3Cpath d=%22M250 420c22-10 44-10 60 4 16-14 38-14 60-4v72c-22-10-44-10-60 4-16-14-38-14-60-4z M310 424v72%22/%3E%3Cpath d=%22M372 180v-52l38-8v50 M372 180a10 8 0 1 1-1-1 M410 170a10 8 0 1 1-1-1 M372 140l38-8%22/%3E%3Ccircle cx=%22190%22 cy=%22548%22 r=%2228%22/%3E%3Cpath d=%22M162 548h56 M190 520c-14 16-14 40 0 56 M190 520c14 16 14 40 0 56%22/%3E%3Cpath d=%22M560 40v14 M553 47h14%22/%3E%3Cpath d=%22M330 300v10 M325 305h10%22/%3E%3Cpath d=%22M40 180v10 M35 185h10%22/%3E%3Cpath d=%22M540 560v12 M534 566h12%22/%3E%3Cpath d=%22M400 560c0-8 12-8 12 0s-20 12-20-2 26-18 28 2%22/%3E%3C/g%3E%3Ctext x=%22250%22 y=%22250%22 font-family=%22Georgia, serif%22 font-size=%2230%22 fill=%22%23f4f1e6%22 fill-opacity=%220.07%22 stroke=%22none%22%3E1%2B2=3%3C/text%3E%3Ctext x=%22300%22 y=%2258%22 font-family=%22Georgia, serif%22 font-size=%2228%22 font-style=%22italic%22 fill=%22%23f4f1e6%22 fill-opacity=%220.07%22 stroke=%22none%22%3EA b C%3C/text%3E%3Ctext x=%22480%22 y=%22470%22 font-family=%22Georgia, serif%22 font-size=%2240%22 fill=%22%23f4f1e6%22 fill-opacity=%220.07%22 stroke=%22none%22%3E%CF%80%3C/text%3E%3Ctext x=%2240%22 y=%22380%22 font-family=%22Georgia, serif%22 font-size=%2224%22 fill=%22%23f4f1e6%22 fill-opacity=%220.07%22 stroke=%22none%22%3Ex%C2%B2%3C/text%3E%3C/svg%3E");
     --radius: 10px;
     --radius-sm: 7px;
     --shadow: 0 1px 2px rgba(0,0,0,0.25), 0 8px 24px rgba(0,0,0,0.18);
@@ -32,6 +49,27 @@
     --font-display: 'Iowan Old Style', 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, serif;
     color-scheme: dark;
   }
+  /* Tema claro: papel cálido y tinta oscura. Pensado para proyectar en aulas con mucha luz. */
+  :root[data-theme="light"]{
+    --bg: #f3ecdd; --bg-deep: #fffaf1;
+    --surface: rgba(255,255,255,0.62); --surface-2: rgba(255,255,255,0.85); --surface-3: #ffffff;
+    --chalk: #24332d; --text-soft: rgba(36,51,45,0.88); --muted: rgba(36,51,45,0.74); --faint: rgba(36,51,45,0.55);
+    --line: rgba(36,51,45,0.13); --line-strong: rgba(36,51,45,0.22); --line-hover: rgba(36,51,45,0.36);
+    --zebra: rgba(36,51,45,0.035); --field-bg: #ffffff; --field-bg-focus: #ffffff; --inset-bg: rgba(36,51,45,0.05);
+    --toggle-off: rgba(36,51,45,0.22); --floor: #e9dfca; --floor-dot: rgba(36,51,45,0.16);
+    --tabs-bg: rgba(255,250,241,0.88); --pop-bg: linear-gradient(180deg, #fffdf8, #fbf3e4); --scroll-thumb: rgba(36,51,45,0.2); --card-bg: #fcf9f2;
+    --ochre: #eea548; --ochre-ink: #a85d0c; --ochre-soft: rgba(238,165,72,0.18);
+    --teal: #1f9488; --danger: #c24a37; --danger-soft: rgba(194,74,55,0.1); --ok: #2f9a55;
+    --c-amber: #d98a16; --c-teal: #158a7e; --c-coral: #d4543f; --c-sky: #2a7fc4; --c-lilac: #7a5fd6; --c-mint: #2f9a55; --c-sun: #b98a00; --c-pink: #c64f86;
+    --decor: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22600%22 height=%22600%22 viewBox=%220 0 600 600%22%3E%3Cg fill=%22none%22 stroke=%22%232b3a33%22 stroke-opacity=%220.08%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22M70 38l9 19 21 3-15 14 4 21-19-10-19 10 4-21-15-14 21-3z%22/%3E%3Cpath d=%22M210 92l70-34-22 68-17-20-31-14z M241 106l39-48%22/%3E%3Cpath d=%22M200 120c-14 6-26 4-36-4%22 stroke-dasharray=%223 6%22/%3E%3Cpath d=%22M420 140l58-58 14 14-58 58-20 6z M466 94l14 14 M420 140l14 14%22/%3E%3Cpath d=%22M96 262c-18-14-44-4-44 24 0 26 18 46 32 46 6 0 9-3 12-3s6 3 12 3c14 0 32-20 32-46 0-28-26-38-44-24z M96 262c0-10 4-18 12-22 M100 250c8-10 20-10 26-4-8 8-18 9-26 4z%22/%3E%3Cpath d=%22M470 236a30 30 0 0 0-18 54c4 3 6 8 6 13v6h24v-6c0-5 2-10 6-13a30 30 0 0 0-18-54z M460 324h20 M463 334h14 M456 214l-6-10 M470 208v-12 M484 214l6-10%22/%3E%3Cpath d=%22M48 470l120-58 14 30-120 58z M70 470l-6-12 M88 461l-4-8 M106 452l-6-12 M124 444l-4-8 M142 435l-6-12%22/%3E%3Cpath d=%22M250 420c22-10 44-10 60 4 16-14 38-14 60-4v72c-22-10-44-10-60 4-16-14-38-14-60-4z M310 424v72%22/%3E%3Cpath d=%22M372 180v-52l38-8v50 M372 180a10 8 0 1 1-1-1 M410 170a10 8 0 1 1-1-1 M372 140l38-8%22/%3E%3Ccircle cx=%22190%22 cy=%22548%22 r=%2228%22/%3E%3Cpath d=%22M162 548h56 M190 520c-14 16-14 40 0 56 M190 520c14 16 14 40 0 56%22/%3E%3Cpath d=%22M560 40v14 M553 47h14%22/%3E%3Cpath d=%22M330 300v10 M325 305h10%22/%3E%3Cpath d=%22M40 180v10 M35 185h10%22/%3E%3Cpath d=%22M540 560v12 M534 566h12%22/%3E%3Cpath d=%22M400 560c0-8 12-8 12 0s-20 12-20-2 26-18 28 2%22/%3E%3C/g%3E%3Ctext x=%22250%22 y=%22250%22 font-family=%22Georgia, serif%22 font-size=%2230%22 fill=%22%232b3a33%22 fill-opacity=%220.08%22 stroke=%22none%22%3E1%2B2=3%3C/text%3E%3Ctext x=%22300%22 y=%2258%22 font-family=%22Georgia, serif%22 font-size=%2228%22 font-style=%22italic%22 fill=%22%232b3a33%22 fill-opacity=%220.08%22 stroke=%22none%22%3EA b C%3C/text%3E%3Ctext x=%22480%22 y=%22470%22 font-family=%22Georgia, serif%22 font-size=%2240%22 fill=%22%232b3a33%22 fill-opacity=%220.08%22 stroke=%22none%22%3E%CF%80%3C/text%3E%3Ctext x=%2240%22 y=%22380%22 font-family=%22Georgia, serif%22 font-size=%2224%22 fill=%22%232b3a33%22 fill-opacity=%220.08%22 stroke=%22none%22%3Ex%C2%B2%3C/text%3E%3C/svg%3E");
+    color-scheme: light;
+  }
+  :root[data-theme="light"] body{ background-image: var(--decor), radial-gradient(1200px 600px at 0% -10%, rgba(255,255,255,0.7), transparent 60%); }
+  :root[data-theme="light"] .panel section, :root[data-theme="light"] .stage-card, :root[data-theme="light"] .group-card{ box-shadow: 0 1px 2px rgba(60,40,10,0.06), 0 6px 18px rgba(60,40,10,0.06); }
+  :root[data-theme="light"] .toast{ box-shadow: 0 12px 30px rgba(60,40,10,0.2); }
+  :root[data-theme="light"] select{ background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M2.5 4.5 6 8l3.5-3.5' fill='none' stroke='%2324332d' stroke-opacity='.6' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); }
+  :root[data-theme="light"] .fdesk:not(.filled):not(.inactive){ background-color: rgba(255,255,255,0.55); }
+  :root[data-theme="light"] .modal-overlay{ background: rgba(40,30,15,0.35); }
   *{ box-sizing:border-box; }
   [hidden]{ display:none !important; }
   html{ -webkit-text-size-adjust:100%; }
@@ -39,6 +77,7 @@
     margin:0;
     background-color: var(--bg);
     background-image:
+      var(--decor),
       radial-gradient(1200px 600px at 0% -10%, rgba(255,255,255,0.05), transparent 60%),
       radial-gradient(900px 500px at 100% 110%, rgba(0,0,0,0.25), transparent 60%),
       repeating-linear-gradient(0deg, rgba(255,255,255,0.012) 0px, rgba(255,255,255,0.012) 1px, transparent 1px, transparent 3px);
@@ -51,8 +90,8 @@
   }
   ::selection{ background: rgba(232,171,92,0.35); }
   *::-webkit-scrollbar{ width:10px; height:10px; }
-  *::-webkit-scrollbar-thumb{ background: rgba(244,241,230,0.14); border-radius:10px; border:2px solid transparent; background-clip: padding-box; }
-  *::-webkit-scrollbar-thumb:hover{ background-color: rgba(244,241,230,0.24); }
+  *::-webkit-scrollbar-thumb{ background: var(--scroll-thumb); border-radius:10px; border:2px solid transparent; background-clip: padding-box; }
+  *::-webkit-scrollbar-thumb:hover{ background-color: var(--line-hover); }
   *::-webkit-scrollbar-track{ background: transparent; }
 
   /* ---------- Header ---------- */
@@ -64,30 +103,32 @@
   .app-header h1{ margin:0; font-family: var(--font-display); font-size: 1.65rem; font-weight: 600; letter-spacing: 0.2px; line-height:1.1; }
   .app-header p{ margin: 4px 0 0; font-size: 0.86rem; color: var(--muted); max-width: 62ch; }
   .header-actions{ display:flex; gap:10px; flex-wrap:wrap; }
-  .btn-group{ display:flex; background: var(--surface); border:1px solid var(--line); border-radius: var(--radius); padding:3px; gap:2px; }
+  .btn-group{ display:flex; background: var(--card-bg); border:1px solid var(--line); border-radius: var(--radius); padding:3px; gap:2px; }
   .btn-group button{ background:transparent; border:none; color: var(--chalk); font-weight:500; padding:7px 11px; border-radius: 7px; }
   .btn-group button:hover{ background: var(--surface-3); filter:none; }
   .header-status{ padding: 0 28px; display:flex; flex-wrap:wrap; align-items:center; gap:8px 12px; margin-bottom:12px; }
   .header-status:has(.save-state:empty):has(.status:empty){ display:none; }
-  .save-state{ display:inline-flex; align-items:center; flex-wrap:wrap; gap:6px 10px; font-size:0.8rem; color: var(--muted); }
+  .save-state{ display:block; font-size:0.8rem; color: var(--muted); line-height:1.5; }
+  .save-state > *{ vertical-align: middle; }
+  .save-state .link{ margin-left:10px; }
   .save-state:empty{ display:none; }
-  .save-state .dot{ width:8px; height:8px; border-radius:50%; background: var(--faint); flex-shrink:0; }
+  .save-state .dot{ display:inline-block; width:8px; height:8px; border-radius:50%; background: var(--faint); margin-right:8px; }
   .save-state.ok .dot{ background: var(--ok); box-shadow: 0 0 0 3px rgba(159,211,168,0.18); }
   .save-state.warn .dot{ background: var(--ochre); box-shadow: 0 0 0 3px rgba(232,171,92,0.2); }
   .save-state strong{ color: var(--chalk); font-weight:600; }
-  .save-state .link{ background:none; border:none; padding:0; color: var(--ochre); font-weight:600; font-size:0.8rem; text-decoration: underline; text-underline-offset: 2px; text-decoration-color: rgba(232,171,92,0.45); }
+  .save-state .link{ background:none; border:none; padding:0; color: var(--ochre-ink); font-weight:600; font-size:0.8rem; text-decoration: underline; text-underline-offset: 2px; text-decoration-color: rgba(232,171,92,0.45); }
   .save-state .link:hover{ filter:none; text-decoration-color: var(--ochre); }
-  .header-status .status .link{ margin-left:8px; background:none; border:none; padding:0; color: var(--ochre); font-weight:600; font-size:inherit; text-decoration: underline; }
+  .header-status .status .link{ margin-left:8px; background:none; border:none; padding:0; color: var(--ochre-ink); font-weight:600; font-size:inherit; text-decoration: underline; }
   .choice-box{ max-width: 480px; text-align:left; }
-  .choice-box h2{ margin:0 0 8px; font-family: var(--font-display); color: var(--ochre); font-size:1.3rem; }
+  .choice-box h2{ margin:0 0 8px; font-family: var(--font-display); color: var(--ochre-ink); font-size:1.3rem; }
   .choice-box p{ margin:0 0 18px; font-size:0.9rem; line-height:1.5; color: var(--muted); }
   .choice-box .modal-actions{ justify-content:flex-start; }
   .header-status .status:empty{ display:none; }
-  .header-status .status{ display:inline-block; margin: 0; padding:6px 12px; border-radius:999px; background: var(--surface-2); border:1px solid var(--line); }
+  .header-status .status{ display:inline-block; margin: 0; padding:6px 12px; border-radius:14px; background: var(--surface-2); border:1px solid var(--line); color: var(--text-soft); }
   .header-status .status.error{ background: var(--danger-soft); border-color: rgba(227,130,111,0.35); }
 
   /* ---------- Tabs ---------- */
-  .tabs-bar{ position:sticky; top:0; z-index:50; padding: 10px 28px; background: rgba(16,35,30,0.82); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+  .tabs-bar{ position:sticky; top:0; z-index:50; padding: 10px 28px; background: var(--tabs-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
   .tabs{ display:flex; gap:4px; overflow-x:auto; scrollbar-width:none; }
   @media (max-width: 900px){ .tabs{ -webkit-mask-image: linear-gradient(90deg, #000 85%, transparent); mask-image: linear-gradient(90deg, #000 85%, transparent); padding-right: 24px; } }
   .tabs::-webkit-scrollbar{ display:none; }
@@ -97,21 +138,28 @@
     padding: 7px 14px; border-radius: 999px; cursor:pointer; font-size: 0.86rem; font-weight:500; font-family: inherit;
     transition: background .15s, color .15s, border-color .15s;
   }
-  .tabs button .icon{ width:1.25rem; height:1.25rem; opacity:.85; }
-  .tabs button.active .icon{ opacity:1; }
+  .tabs button .icon{ width:1.25rem; height:1.25rem; }
+  .tab-btn[data-tab="aula"] .icon{ color: var(--c-amber); }
+  .tab-btn[data-tab="alumnado"] .icon{ color: var(--c-sky); }
+  .tab-btn[data-tab="reglas"] .icon{ color: var(--c-lilac); }
+  .tab-btn[data-tab="barajar"] .icon{ color: var(--c-coral); }
+  .tab-btn[data-tab="grupos"] .icon{ color: var(--c-mint); }
+  .tab-btn[data-tab="picker"] .icon{ color: var(--c-sun); }
+  .tab-btn[data-tab="timer"] .icon{ color: var(--c-teal); }
+  .tabs button.active .icon{ color: inherit; }
   .tabs button:hover{ color: var(--chalk); background: var(--surface-2); filter:none; }
   .tabs button.active{ color: #2a1d10; background: var(--ochre); font-weight:600; box-shadow: 0 2px 10px rgba(232,171,92,0.28); }
 
   /* ---------- Layout ---------- */
   .layout{ display:grid; grid-template-columns: 350px minmax(0,1fr); align-items:start; }
   .panel{ padding: 22px 22px 40px 28px; position:sticky; top:58px; max-height: calc(100vh - 58px); overflow-y:auto; }
-  .panel section{ margin-bottom: 14px; background: var(--surface); border:1px solid var(--line); border-radius: var(--radius); padding: 14px 16px 16px; }
-  .panel h2{ font-family: var(--font-display); font-weight:600; font-size: 1.02rem; margin: 0 0 10px; color: var(--ochre); letter-spacing:0.2px; }
+  .panel section{ margin-bottom: 14px; background: var(--card-bg); border:1px solid var(--line); border-radius: var(--radius); padding: 14px 16px 16px; }
+  .panel h2{ font-family: var(--font-display); font-weight:600; font-size: 1.02rem; margin: 0 0 10px; color: var(--ochre-ink); letter-spacing:0.2px; }
   .row{ display:flex; gap:8px; margin-bottom:8px; align-items:center; }
   .row label, label.field{ display:flex; flex-direction:column; gap:5px; font-size:0.76rem; color: var(--muted); font-weight:500; }
 
   input[type=text], input[type=number], select, textarea{
-    background: rgba(0,0,0,0.18); border: 1px solid var(--line-strong); color: var(--chalk);
+    background: var(--field-bg); border: 1px solid var(--line-strong); color: var(--chalk);
     padding: 8px 10px; border-radius: var(--radius-sm); font-size: 0.88rem; font-family: inherit; width:100%;
     transition: border-color .15s, box-shadow .15s, background .15s;
   }
@@ -120,17 +168,20 @@
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M2.5 4.5 6 8l3.5-3.5' fill='none' stroke='%23f4f1e6' stroke-opacity='.6' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
     background-repeat:no-repeat; background-position: right 10px center; }
   select option{ background: var(--bg-deep); color: var(--chalk); }
-  input[type=text]:hover, input[type=number]:hover, select:hover, textarea:hover{ border-color: rgba(244,241,230,0.3); }
-  input[type=text]:focus, input[type=number]:focus, select:focus, textarea:focus{ outline:none; border-color: var(--ochre); box-shadow: 0 0 0 3px rgba(232,171,92,0.2); background: rgba(0,0,0,0.24); }
-  input[type=color]{ flex-shrink:0; width: 40px; height: 36px; padding:3px; border-radius: var(--radius-sm); border:1px solid var(--line-strong); background: rgba(0,0,0,0.18); cursor:pointer; }
+  input[type=text]:hover, input[type=number]:hover, select:hover, textarea:hover{ border-color: var(--line-hover); }
+  input[type=text]:focus, input[type=number]:focus, select:focus, textarea:focus{ outline:none; border-color: var(--ochre); box-shadow: 0 0 0 3px rgba(232,171,92,0.25); background: var(--field-bg-focus); }
+  input[type=color]{ flex-shrink:0; width: 40px; height: 36px; padding:3px; border-radius: var(--radius-sm); border:1px solid var(--line-strong); background: var(--field-bg); cursor:pointer; }
   input[type=color]::-webkit-color-swatch-wrapper{ padding:0; }
   input[type=color]::-webkit-color-swatch{ border:none; border-radius:4px; }
   input::placeholder, textarea::placeholder{ color: var(--faint); }
   .icon{ width:1.2em; height:1.2em; flex-shrink:0; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; overflow:visible; }
   button .icon{ margin:-2px 0; }
-  .btn-group button .icon, button.secondary .icon, .rule-item .icon{ color: var(--ochre); }
+  .btn-group button .icon, button.secondary .icon{ color: var(--ochre-ink); }
+  #helpBtn .icon{ color: var(--c-sky); } #sampleBtn .icon{ color: var(--c-sun); } #themeBtn .icon{ color: var(--c-lilac); }
+  #exportPngBtn .icon{ color: var(--c-teal); } #exportPdfBtn .icon{ color: var(--c-coral); } #saveBtn .icon{ color: var(--c-mint); } #importBtn .icon{ color: var(--c-amber); }
   .panel h2{ display:flex; align-items:center; gap:8px; }
-  .panel h2 .icon, .rule-item .icon{ width:28px; height:28px; padding:5px; border-radius:8px; background: var(--ochre-soft); color: var(--ochre); stroke-width:1.9; }
+  .panel h2 .icon, .rule-item .icon{ --ic: var(--ochre-ink); width:28px; height:28px; padding:5px; border-radius:8px; color: var(--ic); background: color-mix(in srgb, var(--ic) 16%, transparent); stroke-width:1.9; }
+  .ic-coral{ --ic: var(--c-coral) !important; } .ic-mint{ --ic: var(--c-mint) !important; } .ic-lilac{ --ic: var(--c-lilac) !important; } .ic-sky{ --ic: var(--c-sky) !important; } .ic-teal{ --ic: var(--c-teal) !important; } .ic-sun{ --ic: var(--c-sun) !important; }
   .panel h2 .icon{ margin-left:-2px; }
   input[type=checkbox]{ accent-color: var(--ochre); width:16px; height:16px; cursor:pointer; }
 
@@ -140,7 +191,7 @@
   button:active{ transform: translateY(1px); }
   button:focus-visible, .tabs button:focus-visible{ outline: 2px solid var(--ochre); outline-offset: 2px; }
   button.secondary{ background: var(--surface-2); color: var(--chalk); border-color: var(--line-strong); font-weight:500; }
-  button.secondary:hover{ background: var(--surface-3); border-color: rgba(244,241,230,0.3); filter:none; }
+  button.secondary:hover{ background: var(--surface-3); border-color: var(--line-hover); filter:none; }
   button.danger{ background:transparent; color: var(--danger); border:1px solid rgba(227,130,111,0.4); font-weight:500; padding:4px 7px; font-size:0.76rem; border-radius:6px; }
   button.danger:hover{ background: var(--danger-soft); border-color: var(--danger); filter:none; }
   button:disabled{ opacity:0.4; cursor:not-allowed; transform:none; }
@@ -151,7 +202,7 @@
   .student-list{ list-style:none; padding:0; margin:10px 0 0; max-height:320px; overflow-y:auto; }
   .student-list:empty{ display:none; }
   .student-list li{ display:flex; justify-content:space-between; align-items:center; gap:8px; padding:6px 8px; border-radius:6px; font-size:0.88rem; }
-  .student-list li:nth-child(odd){ background: rgba(244,241,230,0.03); }
+  .student-list li:nth-child(odd){ background: var(--zebra); }
   .student-list li:hover{ background: var(--surface-2); }
 
   .tab-badge{ min-width:18px; height:18px; padding:0 5px; border-radius:999px; background: var(--danger); color:#fff; font-size:0.7rem; font-weight:700; display:inline-grid; place-items:center; margin-left:2px; }
@@ -168,10 +219,10 @@
   .fdesk.absent::after{ content:'falta'; position:absolute; bottom:3px; left:5px; font-size:0.56rem; font-weight:700; text-transform:uppercase; letter-spacing:0.6px; color:#fff; background: rgba(192,87,74,0.9); padding:1px 4px; border-radius:4px; text-shadow:none; }
   .tag-swatch{ width:10px; height:10px; border-radius:50%; display:inline-block; flex-shrink:0; box-shadow: 0 0 0 2px rgba(0,0,0,0.2); }
   .tag-list{ list-style:none; padding:0; margin:8px 0 0; }
-  .tag-list li{ display:flex; justify-content:space-between; align-items:center; padding:6px 8px; font-size:0.88rem; border-radius:6px; background: rgba(244,241,230,0.03); margin-bottom:4px; }
+  .tag-list li{ display:flex; justify-content:space-between; align-items:center; padding:6px 8px; font-size:0.88rem; border-radius:6px; background: var(--zebra); margin-bottom:4px; }
 
   .rule-item > div{ display:flex; align-items:center; gap:8px; }
-  .rule-item{ display:flex; justify-content:space-between; align-items:center; gap:10px; background: rgba(0,0,0,0.14); border:1px solid var(--line); border-radius: var(--radius-sm); padding:8px 10px; margin-bottom:6px; font-size:0.85rem; }
+  .rule-item{ display:flex; justify-content:space-between; align-items:center; gap:10px; background: var(--inset-bg); border:1px solid var(--line); border-radius: var(--radius-sm); padding:8px 10px; margin-bottom:6px; font-size:0.85rem; }
   .rule-item button.danger{ margin-top:0 !important; flex-shrink:0; }
   #ruleList:empty::before{ content:'Todavía no hay reglas.'; display:block; font-size:0.8rem; color: var(--faint); }
   .rule-card h2{ margin-bottom:4px; }
@@ -182,7 +233,7 @@
     background: linear-gradient(180deg, rgba(232,171,92,0.13), rgba(232,171,92,0.06)); border:1px solid rgba(232,171,92,0.38); font-size:0.86rem; animation: popIn .15s ease both; }
   .desk-pop[hidden]{ display:none; }
   .desk-pop .pop-head{ min-width: 130px; }
-  .desk-pop .pop-title{ font-family: var(--font-display); font-weight:600; font-size:1.05rem; color: var(--ochre); line-height:1.2; }
+  .desk-pop .pop-title{ font-family: var(--font-display); font-weight:600; font-size:1.05rem; color: var(--ochre-ink); line-height:1.2; }
   .desk-pop .pop-sub{ display:block; font-family: var(--font-ui); font-size:0.9rem; font-weight:600; color: var(--chalk); margin-top:2px; }
   .desk-pop .pop-body{ flex: 1 1 260px; min-width: 0; }
   .desk-pop .pop-body .hint{ margin: 0 0 8px; }
@@ -190,7 +241,7 @@
   .desk-pop .pop-close:hover{ background: var(--surface-3); color: var(--chalk); filter:none; }
   .desk-pop .pop-actions{ display:flex; flex-wrap:wrap; gap:6px; }
   .desk-pop .pop-actions button{ padding:6px 10px; font-size:0.8rem; }
-  .desk-pop .pop-actions button.on{ background: var(--ochre-soft); border-color: rgba(232,171,92,0.6); color: var(--ochre); }
+  .desk-pop .pop-actions button.on{ background: var(--ochre-soft); border-color: rgba(232,171,92,0.6); color: var(--ochre-ink); }
   .desk-pop .pop-section{ flex: 0 1 auto; padding-left: 18px; border-left: 1px solid var(--line); }
   .desk-pop .pop-label{ font-size:0.7rem; letter-spacing:1px; text-transform:uppercase; color: var(--faint); font-weight:700; margin-bottom:4px; }
   .desk-pop select{ max-width: 320px; }
@@ -199,8 +250,8 @@
   .desk-pop .tag-toggle{ display:flex; align-items:center; gap:8px; padding:4px 0; font-size:0.86rem; cursor:pointer; }
 
   .toggle-row{ display:flex; align-items:flex-start; gap:10px; font-size:0.84rem; color: var(--muted); margin:12px 0; cursor:pointer; line-height:1.4; }
-  .toggle-row input{ margin-top:1px; flex-shrink:0; appearance:none; -webkit-appearance:none; width:34px; height:20px; border-radius:999px; background: rgba(244,241,230,0.18); position:relative; transition: background .2s; }
-  .toggle-row input::after{ content:''; position:absolute; top:2px; left:2px; width:16px; height:16px; border-radius:50%; background: var(--chalk); box-shadow: 0 1px 3px rgba(0,0,0,0.35); transition: transform .2s; }
+  .toggle-row input{ margin-top:1px; flex-shrink:0; appearance:none; -webkit-appearance:none; width:34px; height:20px; border-radius:999px; background: var(--toggle-off); position:relative; transition: background .2s; }
+  .toggle-row input::after{ content:''; position:absolute; top:2px; left:2px; width:16px; height:16px; border-radius:50%; background: #ffffff; box-shadow: 0 1px 3px rgba(0,0,0,0.35); transition: transform .2s; }
   .toggle-row input:checked{ background: var(--ochre); }
   .toggle-row input:checked::after{ transform: translateX(14px); }
   .toggle-row input:focus-visible{ outline: 2px solid var(--ochre); outline-offset: 2px; }
@@ -208,7 +259,7 @@
 
   /* ---------- Stage ---------- */
   .stage{ padding: 22px 28px 40px 10px; min-width:0; }
-  .stage-card{ background: var(--surface); border:1px solid var(--line); border-radius: 14px; padding: 22px; }
+  .stage-card{ background: var(--card-bg); border:1px solid var(--line); border-radius: 14px; padding: 22px; }
   .room{ display:flex; flex-direction:column; align-items:center; width:max-content; margin: 0 auto; }
   .board{
     width: min(72%, 560px); min-width: 200px; margin-bottom: 18px; padding: 10px 0 9px; text-align:center;
@@ -235,7 +286,7 @@
   .toast{ position:fixed; left:50%; bottom:24px; transform:translateX(-50%); z-index:1300; display:flex; align-items:center; gap:14px; max-width: calc(100vw - 32px);
     background: var(--bg-deep); color: var(--chalk); border:1px solid var(--line-strong); border-radius: 12px; padding:10px 12px 10px 16px; box-shadow: 0 12px 30px rgba(0,0,0,0.4); font-size:0.88rem; animation: toastIn .2s ease; }
   .toast.error{ border-color: rgba(227,130,111,0.7); box-shadow: 0 12px 30px rgba(0,0,0,0.4), inset 4px 0 0 var(--danger); }
-  .toast-action{ background:transparent; color: var(--ochre); border:1px solid rgba(232,171,92,0.45); padding:5px 10px; font-size:0.82rem; }
+  .toast-action{ background:transparent; color: var(--ochre-ink); border:1px solid rgba(232,171,92,0.45); padding:5px 10px; font-size:0.82rem; }
   .toast-action:hover{ background: var(--ochre-soft); filter:none; }
   @keyframes toastIn{ from{ opacity:0; transform: translate(-50%, 8px); } to{ opacity:1; transform: translate(-50%, 0); } }
   .toolbar .status{ display:flex; gap:8px; align-items:flex-start; }
@@ -244,7 +295,7 @@
   .status.error{ color: var(--danger); }
   .history-list{ list-style:none; margin:10px 0 0; padding:0; display:flex; flex-direction:column; gap:6px; }
   .history-list:empty::before{ content:'Aún no hay planos guardados.'; font-size:0.8rem; color: var(--faint); }
-  .history-list li{ display:flex; align-items:center; gap:8px; padding:7px 8px 7px 10px; border-radius: var(--radius-sm); background: rgba(0,0,0,0.14); border:1px solid var(--line); font-size:0.84rem; }
+  .history-list li{ display:flex; align-items:center; gap:8px; padding:7px 8px 7px 10px; border-radius: var(--radius-sm); background: var(--inset-bg); border:1px solid var(--line); font-size:0.84rem; }
   .history-list li.current{ border-color: rgba(232,171,92,0.55); background: var(--ochre-soft); }
   .history-list .h-main{ flex:1; min-width:0; }
   .history-list .h-date{ font-weight:600; }
@@ -252,15 +303,15 @@
   .history-list button{ padding:4px 8px; font-size:0.76rem; flex-shrink:0; }
   .shuffle-diag{ display:flex; flex-direction:column; gap:6px; margin-top:8px; }
   .shuffle-diag:empty{ display:none; }
-  .diag-item{ display:flex; align-items:center; justify-content:space-between; gap:10px; padding:7px 10px; border-radius: var(--radius-sm); background: rgba(0,0,0,0.15); border:1px solid rgba(227,130,111,0.35); font-size:0.82rem; }
+  .diag-item{ display:flex; align-items:center; justify-content:space-between; gap:10px; padding:7px 10px; border-radius: var(--radius-sm); background: var(--inset-bg); border:1px solid rgba(227,130,111,0.35); font-size:0.82rem; }
   .diag-item button{ flex-shrink:0; }
-  .panel .status:not(:empty){ padding: 8px 10px; border-radius: var(--radius-sm); background: rgba(0,0,0,0.15); border:1px solid var(--line); }
+  .panel .status:not(:empty){ padding: 8px 10px; border-radius: var(--radius-sm); background: var(--inset-bg); border:1px solid var(--line); }
   .panel .status.error:not(:empty){ background: var(--danger-soft); border-color: rgba(227,130,111,0.35); }
 
   .canvas-scroll{ max-width:100%; overflow:auto; border-radius: 12px; }
   .freecanvas{ position:relative; flex-shrink:0; border:1px solid var(--line); border-radius: 12px; overflow:hidden;
-    background-color: rgba(0,0,0,0.12);
-    background-image: radial-gradient(rgba(244,241,230,0.11) 1px, transparent 1.2px); background-size: 16px 16px;
+    background-color: var(--floor);
+    background-image: radial-gradient(var(--floor-dot) 1px, transparent 1.2px); background-size: 16px 16px;
     box-shadow: inset 0 2px 12px rgba(0,0,0,0.25); }
   .fdesk{ position:absolute; width:68px; height:68px; border-radius:8px;
     background: rgba(139,94,60,0.18); border:1.5px solid rgba(201,154,99,0.5);
@@ -273,7 +324,7 @@
   .fdesk.selected{ box-shadow: 0 0 0 3px var(--ochre), 0 6px 16px rgba(0,0,0,0.35); z-index:5; }
   .fdesk.swap-select{ box-shadow: 0 0 0 3px var(--teal), 0 0 18px rgba(127,209,201,0.45); z-index:5; animation: swapPulse 1.2s ease-in-out infinite; }
   @keyframes swapPulse{ 50%{ box-shadow: 0 0 0 5px rgba(127,209,201,0.55), 0 0 22px rgba(127,209,201,0.3); } }
-  .fdesk.inactive{ opacity: 0.45; background: repeating-linear-gradient(45deg, rgba(244,241,230,0.06) 0 6px, transparent 6px 12px); border-style: dashed; border-color: var(--faint); }
+  .fdesk.inactive{ opacity: 0.45; background: repeating-linear-gradient(45deg, var(--surface-3) 0 6px, transparent 6px 12px); border-style: dashed; border-color: var(--faint); }
   .fdesk.dragging{ cursor:grabbing; opacity:0.92; z-index:10; box-shadow: 0 12px 26px rgba(0,0,0,0.45); transform: scale(1.04); }
   .freecanvas.locked .fdesk{ cursor:pointer; }
   .fdesk .dots{ position:absolute; top:5px; left:5px; display:flex; gap:3px; }
@@ -291,13 +342,14 @@
   .groups-grid{ display:grid; grid-template-columns: repeat(auto-fill, minmax(190px,1fr)); gap:14px; }
   .groups-grid:empty::before{ content:'Elige un tamaño de grupo y pulsa "Generar grupos".'; grid-column: 1/-1; display:block; padding: 40px 20px; text-align:center; color: var(--faint); border:1.5px dashed var(--line-strong); border-radius: 12px; }
   .group-card{ position:relative; border:1px solid var(--line); border-radius: var(--radius); padding:14px 16px 12px; background: var(--surface-2); overflow:hidden; animation: popIn .25s ease both; }
-  .group-card::before{ content:''; position:absolute; inset:0 0 auto 0; height:3px; background: var(--ochre); }
-  .group-card:nth-child(4n+2)::before{ background: var(--teal); }
-  .group-card:nth-child(4n+3)::before{ background: var(--wood-light); }
-  .group-card:nth-child(4n+4)::before{ background: var(--danger); }
-  .group-card h3{ margin:0 0 8px; font-size:0.74rem; color: var(--faint); font-weight:700; letter-spacing:1.2px; }
+  .group-card{ --gc: var(--c-amber); background: linear-gradient(180deg, color-mix(in srgb, var(--gc) 13%, var(--card-bg)), var(--card-bg) 70%); }
+  .group-card::before{ content:''; position:absolute; inset:0 0 auto 0; height:4px; background: var(--gc); }
+  .group-card h3{ color: var(--gc) !important; }
+  .group-card:nth-child(8n+2){ --gc: var(--c-teal); } .group-card:nth-child(8n+3){ --gc: var(--c-coral); } .group-card:nth-child(8n+4){ --gc: var(--c-sky); }
+  .group-card:nth-child(8n+5){ --gc: var(--c-lilac); } .group-card:nth-child(8n+6){ --gc: var(--c-mint); } .group-card:nth-child(8n+7){ --gc: var(--c-sun); } .group-card:nth-child(8n+8){ --gc: var(--c-pink); }
+  .group-card h3{ margin:0 0 8px; font-size:0.76rem; font-weight:800; letter-spacing:1.2px; }
   .group-card ul{ list-style:none; margin:0; padding:0; }
-  .group-card li{ padding:4px 0; font-size:0.92rem; border-bottom: 1px solid rgba(244,241,230,0.05); }
+  .group-card li{ padding:4px 0; font-size:0.92rem; border-bottom: 1px solid var(--line); }
   .group-card li:last-child{ border-bottom:none; }
   @keyframes popIn{ from{ opacity:0; transform: translateY(6px) scale(0.98); } to{ opacity:1; transform:none; } }
 
@@ -307,18 +359,18 @@
   #pickerWheel{ display:block; max-width:100%; height:auto; border-radius:50%; transition: transform 4s cubic-bezier(0.17,0.67,0.16,0.99); }
 
   .modal-overlay{ position:fixed; inset:0; background:rgba(6,14,12,0.6); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); display:flex; align-items:center; justify-content:center; z-index:1200; padding:16px; animation: fadeIn .2s ease; }
-  .modal-box{ background: linear-gradient(180deg, #1c3932, var(--bg-deep)); border:1px solid var(--line-strong); border-radius:16px; padding:30px 38px; text-align:center; min-width:280px; box-shadow: 0 24px 60px rgba(0,0,0,0.5); animation: popIn .25s ease both; }
+  .modal-box{ background: var(--pop-bg); border:1px solid var(--line-strong); border-radius:16px; padding:30px 38px; text-align:center; min-width:280px; box-shadow: 0 24px 60px rgba(0,0,0,0.5); animation: popIn .25s ease both; }
   @keyframes fadeIn{ from{ opacity:0; } to{ opacity:1; } }
   .modal-box .picked-label{ font-size:0.74rem; letter-spacing:3px; color: var(--faint); text-transform:uppercase; font-weight:600; }
-  .modal-box .picked-name{ font-size:2.4rem; margin:8px 0 22px; color: var(--ochre); font-family: var(--font-display); font-weight:600; line-height:1.15; }
+  .modal-box .picked-name{ font-size:2.4rem; margin:8px 0 22px; color: var(--ochre-ink); font-family: var(--font-display); font-weight:600; line-height:1.15; }
   .modal-actions{ display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
   .help-box{ text-align:left; max-width:680px; width:100%; max-height:86vh; overflow-y:auto; padding:28px 32px; position:relative; }
-  .help-box h2{ margin:0 0 6px; font-family: var(--font-display); color: var(--ochre); font-size:1.6rem; font-weight:600; }
+  .help-box h2{ margin:0 0 6px; font-family: var(--font-display); color: var(--ochre-ink); font-size:1.6rem; font-weight:600; }
   .help-box h3{ margin:20px 0 6px; font-size:0.98rem; color: var(--chalk); font-weight:650; }
-  .help-box p, .help-box li{ font-size:0.9rem; line-height:1.55; color: rgba(244,241,230,0.85); }
+  .help-box p, .help-box li{ font-size:0.9rem; line-height:1.55; color: var(--text-soft); }
   .help-box ul{ margin:4px 0; padding-left:20px; }
   .help-box li{ margin-bottom:4px; }
-  .help-box li::marker{ color: var(--ochre); }
+  .help-box li::marker{ color: var(--ochre-ink); }
   .help-box strong{ color: var(--chalk); }
   .help-box .help-close{ position:absolute; top:12px; right:12px; width:34px; height:34px; display:grid; place-items:center; background: var(--surface-2); border:1px solid var(--line); border-radius:50%; color: var(--muted); font-size:0.95rem; cursor:pointer; padding:0; }
   .help-box .help-close:hover{ background: var(--surface-3); color: var(--chalk); filter:none; }
@@ -329,7 +381,7 @@
   .timer-display{ font-family: var(--font-display); font-variant-numeric: tabular-nums; font-size: clamp(4rem, 12vw, 9rem); font-weight:600; letter-spacing:2px; color: var(--chalk); line-height:1; transition: color 0.3s ease; text-shadow: 0 4px 24px rgba(0,0,0,0.3); }
   .timer-display.timer-done{ color: var(--danger); animation: timerFlash 1s ease-in-out infinite; }
   @keyframes timerFlash{ 0%,100%{ opacity:1; } 50%{ opacity:0.35; } }
-  .timer-progress{ width: min(520px, 100%); height:8px; border-radius:999px; background: rgba(0,0,0,0.25); overflow:hidden; }
+  .timer-progress{ width: min(520px, 100%); height:8px; border-radius:999px; background: var(--inset-bg); overflow:hidden; }
   .timer-progress > div{ height:100%; width:100%; border-radius:inherit; background: linear-gradient(90deg, var(--ochre), var(--wood-light)); transition: width 1s linear; }
   .timer-presets{ display:flex; gap:8px; flex-wrap:wrap; justify-content:center; }
   .timer-presets button{ border-radius:999px; padding:7px 14px; }
@@ -361,6 +413,7 @@
 </style>
 </head>
 <body>
+<script>try{ if(localStorage.getItem('planoAsientos.theme') === 'light') document.documentElement.dataset.theme = 'light'; }catch(e){}</script>
 <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
   <symbol id="i-aula" viewBox="0 0 24 24"><path d="M4 4.5h16" stroke-width="2.4"/><rect x="3.5" y="10" width="7.5" height="6" rx="1.5" fill="currentColor" fill-opacity=".28"/><rect x="13" y="10" width="7.5" height="6" rx="1.5" fill="currentColor" fill-opacity=".28"/><path d="M7.25 16v3.5M16.75 16v3.5"/></symbol>
   <symbol id="i-alumnado" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2" fill="currentColor" fill-opacity=".28"/><path d="M3.5 19.5c.6-3.3 2.8-5.2 5.5-5.2s4.9 1.9 5.5 5.2"/><path d="M15.2 5.3a3 3 0 1 1 .9 5.7"/><path d="M16.6 14.4c2.3.4 3.7 2.1 4.2 5"/></symbol>
@@ -388,6 +441,7 @@
   <symbol id="i-falta" viewBox="0 0 24 24"><circle cx="10" cy="8" r="3.2" fill="currentColor" fill-opacity=".28"/><path d="M4 19.5c.6-3.3 2.9-5.2 6-5.2 1.2 0 2.3.3 3.2.8"/><path d="m16 15 4.5 4.5M20.5 15 16 19.5"/></symbol>
   <symbol id="i-historial" viewBox="0 0 24 24"><path d="M4.5 12a7.5 7.5 0 1 0 2.2-5.3L4.5 9"/><path d="M4.5 4.5V9H9"/><path d="M12 8v4.3l2.8 1.8"/></symbol>
   <symbol id="i-guardar" viewBox="0 0 24 24"><path d="M5.5 4h10.2L19.5 7.8V18.5a1.5 1.5 0 0 1-1.5 1.5H6a1.5 1.5 0 0 1-1.5-1.5V5.5A1.5 1.5 0 0 1 6 4z" fill="currentColor" fill-opacity=".28"/><path d="M8 4v4.5h7V4M8 20v-6h8v6"/></symbol>
+  <symbol id="i-tema" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.4" fill="currentColor" fill-opacity=".28"/><path d="M12 3.6a8.4 8.4 0 0 1 0 16.8z" fill="currentColor" stroke="none"/></symbol>
   <symbol id="i-mas" viewBox="0 0 24 24"><path d="M12 5.5v13M5.5 12h13"/></symbol>
 </svg>
 
@@ -411,6 +465,7 @@
     <div class="btn-group">
       <button id="helpBtn"><svg class="icon" aria-hidden="true"><use href="#i-ayuda"/></svg>Ayuda</button>
       <button id="sampleBtn"><svg class="icon" aria-hidden="true"><use href="#i-ejemplo"/></svg>Ejemplo</button>
+      <button id="themeBtn" title="Cambiar entre tema oscuro (pizarra) y claro (recomendado para proyectar con mucha luz)"><svg class="icon" aria-hidden="true"><use href="#i-tema"/></svg><span id="themeLabel">Claro</span></button>
     </div>
     <div class="btn-group">
       <button id="exportPngBtn" title="Descargar el plano como imagen"><svg class="icon" aria-hidden="true"><use href="#i-imagen"/></svg>PNG</button>
@@ -488,7 +543,7 @@
 
     <div class="tab-panel" data-tab="alumnado" style="display:none;">
       <section>
-        <h2><svg class="icon" aria-hidden="true"><use href="#i-falta"/></svg>Faltan hoy</h2>
+        <h2><svg class="icon ic-coral" aria-hidden="true"><use href="#i-falta"/></svg>Faltan hoy</h2>
         <p class="hint" style="margin-top:-4px;">Marca a quien no ha venido con el botón <strong>Falta</strong> de la lista. Al barajar, en la ruleta y en los grupos se les salta. Las ausencias se borran solas al día siguiente.</p>
         <div class="absent-summary" id="absentSummary"></div>
         <ul class="student-list" id="studentList"></ul>
@@ -514,7 +569,7 @@
 
     <div class="tab-panel" data-tab="reglas" style="display:none;">
       <section class="rule-card">
-        <h2><svg class="icon" aria-hidden="true"><use href="#i-separar"/></svg>Mantener separados</h2>
+        <h2><svg class="icon ic-coral" aria-hidden="true"><use href="#i-separar"/></svg>Mantener separados</h2>
         <p class="hint" style="margin-top:-4px;">Dos alumnos que nunca deben acabar en mesas contiguas.</p>
         <div class="row"><select id="rf_apart_a"></select></div>
         <div class="row"><select id="rf_apart_b"></select></div>
@@ -522,7 +577,7 @@
       </section>
 
       <section class="rule-card">
-        <h2><svg class="icon" aria-hidden="true"><use href="#i-juntar"/></svg>Mantener juntos</h2>
+        <h2><svg class="icon ic-mint" aria-hidden="true"><use href="#i-juntar"/></svg>Mantener juntos</h2>
         <p class="hint" style="margin-top:-4px;">Dos alumnos que siempre deben acabar en mesas contiguas.</p>
         <div class="row"><select id="rf_together_a"></select></div>
         <div class="row"><select id="rf_together_b"></select></div>
@@ -530,7 +585,7 @@
       </section>
 
       <section class="rule-card">
-        <h2><svg class="icon" aria-hidden="true"><use href="#i-etiqueta"/></svg>Etiqueta de mesa</h2>
+        <h2><svg class="icon ic-lilac" aria-hidden="true"><use href="#i-etiqueta"/></svg>Etiqueta de mesa</h2>
         <p class="hint" style="margin-top:-4px;">Restringe a un alumno a mesas con una etiqueta concreta (pestaña "Diseñar aula").</p>
         <div class="row"><select id="rf_tag_student"></select></div>
         <div class="row"><select id="rf_tag_tag"></select></div>
@@ -538,7 +593,7 @@
       </section>
 
       <section class="rule-card">
-        <h2><svg class="icon" aria-hidden="true"><use href="#i-chincheta"/></svg>Sitio fijo</h2>
+        <h2><svg class="icon ic-sky" aria-hidden="true"><use href="#i-chincheta"/></svg>Sitio fijo</h2>
         <p class="hint" style="margin-top:-4px;">Un alumno que siempre debe sentarse en la misma mesa exacta.</p>
         <div class="row"><select id="rf_fixed_student"></select></div>
         <div class="row"><select id="rf_fixed_desk"></select></div>
@@ -570,7 +625,7 @@
         <p class="hint">Cumple siempre las reglas activas y, entre los planos posibles, elige el que menos compañeros repite respecto a los planos guardados.</p>
       </section>
       <section>
-        <h2><svg class="icon" aria-hidden="true"><use href="#i-historial"/></svg>Historial de planos</h2>
+        <h2><svg class="icon ic-teal" aria-hidden="true"><use href="#i-historial"/></svg>Historial de planos</h2>
         <p class="hint" style="margin-top:-4px;">Guarda el plano que vayáis a usar; así la rotación sabe quién se ha sentado con quién. Al exportar el plano a PNG o PDF también se guarda.</p>
         <button id="savePlanBtn" class="block"><svg class="icon" aria-hidden="true"><use href="#i-guardar"/></svg>Guardar plano en el historial</button>
         <ul class="history-list" id="planHistoryList"></ul>
@@ -709,41 +764,44 @@
   <div class="modal-box help-box">
     <button class="help-close" id="helpCloseX" title="Cerrar" aria-label="Cerrar"><svg class="icon" aria-hidden="true"><use href="#i-cerrar"/></svg></button>
     <h2 id="helpTitle">Cómo funciona</h2>
-    <p>Todo funciona en local, sin conexión. Si quieres probarlo antes de meter a tu clase, pulsa <strong>Ejemplo</strong>: carga un aula con mesas, 22 alumnos ficticios y algunas reglas ya puestas.</p>
+    <p>Todo funciona en local, sin conexión. Si quieres probarlo antes de meter a tu clase, pulsa <strong>Ejemplo</strong>: carga un aula con mesas, 22 alumnos ficticios y algunas reglas ya puestas (tu clase se aparta y puedes volver a ella).</p>
 
     <h3>1. Diseñar aula</h3>
     <ul>
-      <li>Añade mesas sueltas, por parejas o en grupos de 4 y <strong>arrástralas</strong> para copiar la distribución real de tu aula.</li>
-      <li>Haz clic en una mesa vacía para darle <strong>etiquetas</strong> (p.ej. "Visión" para la primera fila), desactivarla o eliminarla.</li>
+      <li>Añade mesas sueltas, por parejas o en grupos de 4 y <strong>arrástralas</strong> para copiar la distribución real de tu aula. Cada mesa lleva su número.</li>
+      <li>Haz clic en una mesa para ver sus opciones: <strong>etiquetas</strong> (p.ej. "Visión" para la primera fila), permitir o no alumnos, eliminarla…</li>
       <li>Cuando el aula esté lista, activa <strong>Bloquear diseño</strong> para no mover mesas sin querer.</li>
+      <li>Con <strong>Vista: Profesor</strong> ves el aula con la pizarra abajo, como desde tu mesa. El PNG y el PDF salen en la vista elegida.</li>
     </ul>
 
     <h3>2. Alumnado</h3>
     <ul>
       <li>Añade alumnos uno a uno o pega una lista (un alumno por línea; usa una coma para el apellido: <em>Jaume, Puig</em>).</li>
-      <li>Por defecto solo se ve el nombre en las mesas. Si dos alumnos se llaman igual, se añade la inicial del apellido (<em>Jaume P</em> / <em>Jaume B</em>). Puedes mostrar el apellido completo con el interruptor.</li>
+      <li><strong>Faltan hoy</strong>: marca con <strong>Falta</strong> a quien no ha venido. Al barajar, en la ruleta y en los grupos se le salta. Las ausencias se borran solas al día siguiente.</li>
+      <li>Por defecto solo se ve el nombre en las mesas. Si dos alumnos se llaman igual, se añade la inicial del apellido (<em>Jaume P</em> / <em>Jaume B</em>).</li>
     </ul>
 
     <h3>3. Reglas</h3>
     <ul>
-      <li><strong>Mantener separados</strong>: dos alumnos nunca se sientan juntos.</li>
-      <li><strong>Mantener juntos</strong>: dos alumnos siempre se sientan al lado.</li>
-      <li><strong>Etiqueta de mesa</strong>: un alumno siempre se sienta en una mesa con esa etiqueta.</li>
-      <li><strong>Sitio fijo</strong>: un alumno siempre en la misma mesa.</li>
+      <li><strong>Mantener separados</strong>: dos alumnos nunca en mesas pegadas. <strong>Mantener juntos</strong>: siempre en mesas pegadas.</li>
+      <li><strong>Etiqueta de mesa</strong>: un alumno siempre en una mesa con esa etiqueta. <strong>Sitio fijo</strong>: siempre en la misma mesa (también desde la mesa: <em>Fijar aquí</em>).</li>
+      <li>Si una regla se repite o choca con otra, la app te avisa y no la añade.</li>
     </ul>
 
     <h3>4. Barajar y ajustar</h3>
     <ul>
-      <li><strong>Barajar asientos</strong> reparte a todo el alumnado al azar respetando las reglas.</li>
-      <li>Para retocar sin volver a barajar: haz clic en una mesa ocupada y luego en otra mesa. Si está vacía, el alumno se mueve; si está ocupada, se intercambian.</li>
-      <li>La <strong>✕</strong> de cada mesa la vacía.</li>
+      <li><strong>Barajar asientos</strong> reparte al alumnado presente respetando las reglas. Si no es posible, te dice qué regla lo impide.</li>
+      <li><strong>Rotación</strong>: guarda en el <strong>Historial</strong> el plano que vayáis a usar (al exportarlo a PNG o PDF se guarda solo). La próxima vez, al barajar se evitará repetir compañero de mesa de los últimos planos.</li>
+      <li>Para retocar sin volver a barajar: con el diseño bloqueado, <strong>arrastra a un alumno</strong> a otra mesa (si está ocupada, se intercambian); o haz clic en su mesa y luego en la mesa destino. Las mesas no se mueven.</li>
+      <li>¿Te has equivocado? <strong>Deshacer</strong> (Ctrl+Z) recupera el plano anterior.</li>
     </ul>
 
     <h3>Otras herramientas</h3>
     <ul>
       <li><strong>Grupos</strong>: divide la clase en grupos aleatorios del tamaño que elijas (opcionalmente respetando las reglas de juntar/separar).</li>
-      <li><strong>Picker</strong>: ruleta para elegir un alumno al azar, con opción de quitarlo de la ruleta y ver el historial.</li>
+      <li><strong>Ruleta</strong>: elige un alumno al azar, con opción de quitarlo de la ruleta y ver el orden de salida.</li>
       <li><strong>Temporizador</strong>: cuenta atrás grande, visible desde toda el aula, con aviso sonoro.</li>
+      <li><strong>Claro / Oscuro</strong> (arriba): el tema claro se ve mejor al proyectar en aulas con mucha luz.</li>
     </ul>
 
     <h3>Guardar y compartir</h3>
@@ -788,6 +846,20 @@
   function todayStr(){ const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
   function presentStudents(){ return students.filter(s => !s.absent); }
   function escapeHtml(str){ return String(str).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+
+  // ---------- Tema (oscuro "pizarra" / claro para proyectar) ----------
+  const THEME_KEY = 'planoAsientos.theme';
+  function applyTheme(theme){
+    if(theme === 'light') document.documentElement.dataset.theme = 'light';
+    else delete document.documentElement.dataset.theme;
+    $('themeLabel').textContent = theme === 'light' ? 'Oscuro' : 'Claro';
+  }
+  $('themeBtn').onclick = () => {
+    const next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+    try{ localStorage.setItem(THEME_KEY, next); }catch(e){}
+    applyTheme(next);
+  };
+  applyTheme(document.documentElement.dataset.theme === 'light' ? 'light' : 'dark');
 
   // ---------- Tabs ----------
   const stageForTab = { grupos: 'stageGroups', picker: 'stagePicker', timer: 'stageTimer' };
@@ -1456,7 +1528,7 @@
     const list = $('ruleList'); list.innerHTML='';
     rules.forEach(r => {
       let label='';
-      label = icon({ fixed:'chincheta', tag:'etiqueta', together:'juntar', apart:'separar' }[r.type]) + `<span>${escapeHtml(ruleText(r))}</span>`;
+      label = `<svg class="icon ${{ fixed:'ic-sky', tag:'ic-lilac', together:'ic-mint', apart:'ic-coral' }[r.type]}" aria-hidden="true"><use href="#i-${{ fixed:'chincheta', tag:'etiqueta', together:'juntar', apart:'separar' }[r.type]}"/></svg><span>${escapeHtml(ruleText(r))}</span>`;
       const div = document.createElement('div'); div.className='rule-item'; div.innerHTML = `<div>${label}</div>`;
       const btn = document.createElement('button'); btn.className='danger'; btn.textContent='Quitar'; btn.style.marginTop='6px';
       btn.onclick = () => { rules = rules.filter(x=>x.id!==r.id); renderRules(); renderDeskEditor(); };
@@ -1877,7 +1949,7 @@
   }
 
   // ---------- Picker (wheel) ----------
-  const wheelPalette = ['#e8ab5c','#7fd1c9','#d98a6c','#a3c4bc','#d9bf77','#8fb3a6','#c99a63','#e6cfa6'];
+  const wheelPalette = ['#f4b860','#6fd3c7','#f08a7e','#86c5f2','#b9a6f3','#93d9a3','#f3d26b','#f2a7c3'];
   let wheelPool = [];
   let wheelRotation = 0;
   let spinning = false;
