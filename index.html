@@ -217,6 +217,14 @@
   .toolbar .status::before{ content:'i'; flex-shrink:0; width:18px; height:18px; border-radius:50%; display:grid; place-items:center; font-size:0.7rem; font-weight:700; font-style:italic; font-family: var(--font-display); color: var(--bg); background: var(--faint); margin-top:1px; }
   .status{ font-size:0.82rem; color: var(--muted); }
   .status.error{ color: var(--danger); }
+  .history-list{ list-style:none; margin:10px 0 0; padding:0; display:flex; flex-direction:column; gap:6px; }
+  .history-list:empty::before{ content:'Aún no hay planos guardados.'; font-size:0.8rem; color: var(--faint); }
+  .history-list li{ display:flex; align-items:center; gap:8px; padding:7px 8px 7px 10px; border-radius: var(--radius-sm); background: rgba(0,0,0,0.14); border:1px solid var(--line); font-size:0.84rem; }
+  .history-list li.current{ border-color: rgba(232,171,92,0.55); background: var(--ochre-soft); }
+  .history-list .h-main{ flex:1; min-width:0; }
+  .history-list .h-date{ font-weight:600; }
+  .history-list .h-meta{ display:block; font-size:0.74rem; color: var(--faint); }
+  .history-list button{ padding:4px 8px; font-size:0.76rem; flex-shrink:0; }
   .shuffle-diag{ display:flex; flex-direction:column; gap:6px; margin-top:8px; }
   .shuffle-diag:empty{ display:none; }
   .diag-item{ display:flex; align-items:center; justify-content:space-between; gap:10px; padding:7px 10px; border-radius: var(--radius-sm); background: rgba(0,0,0,0.15); border:1px solid rgba(227,130,111,0.35); font-size:0.82rem; }
@@ -353,6 +361,8 @@
   <symbol id="i-deshacer" viewBox="0 0 24 24"><path d="M9 14.5 4.5 10 9 5.5"/><path d="M4.8 10H14a5.5 5.5 0 0 1 0 11h-3"/></symbol>
   <symbol id="i-rehacer" viewBox="0 0 24 24"><path d="m15 14.5 4.5-4.5L15 5.5"/><path d="M19.2 10H10a5.5 5.5 0 0 0 0 11h3"/></symbol>
   <symbol id="i-falta" viewBox="0 0 24 24"><circle cx="10" cy="8" r="3.2" fill="currentColor" fill-opacity=".28"/><path d="M4 19.5c.6-3.3 2.9-5.2 6-5.2 1.2 0 2.3.3 3.2.8"/><path d="m16 15 4.5 4.5M20.5 15 16 19.5"/></symbol>
+  <symbol id="i-historial" viewBox="0 0 24 24"><path d="M4.5 12a7.5 7.5 0 1 0 2.2-5.3L4.5 9"/><path d="M4.5 4.5V9H9"/><path d="M12 8v4.3l2.8 1.8"/></symbol>
+  <symbol id="i-guardar" viewBox="0 0 24 24"><path d="M5.5 4h10.2L19.5 7.8V18.5a1.5 1.5 0 0 1-1.5 1.5H6a1.5 1.5 0 0 1-1.5-1.5V5.5A1.5 1.5 0 0 1 6 4z" fill="currentColor" fill-opacity=".28"/><path d="M8 4v4.5h7V4M8 20v-6h8v6"/></symbol>
   <symbol id="i-mas" viewBox="0 0 24 24"><path d="M12 5.5v13M5.5 12h13"/></symbol>
 </svg>
 
@@ -516,10 +526,26 @@
     <div class="tab-panel" data-tab="barajar" style="display:none;">
       <section>
         <h2>Generar plano</h2>
+        <label class="field" style="margin-bottom:12px;">Rotación: no repetir compañero de mesa de…
+          <select id="avoidRepeats">
+            <option value="0">No tenerlo en cuenta</option>
+            <option value="1">el último plano guardado</option>
+            <option value="2">los 2 últimos planos</option>
+            <option value="3" selected>los 3 últimos planos</option>
+            <option value="5">los 5 últimos planos</option>
+            <option value="99">todos los planos guardados</option>
+          </select>
+        </label>
         <button id="shuffleBtn" class="block big"><svg class="icon" aria-hidden="true"><use href="#i-barajar"/></svg>Barajar asientos</button>
         <div class="status" id="statusMsg" style="margin-top:10px;"></div>
         <div class="shuffle-diag" id="shuffleDiag"></div>
-        <p class="hint">Prueba combinaciones aleatorias hasta encontrar una que cumpla todas las reglas activas. Si no lo consigue, te lo indicará.</p>
+        <p class="hint">Cumple siempre las reglas activas y, entre los planos posibles, elige el que menos compañeros repite respecto a los planos guardados.</p>
+      </section>
+      <section>
+        <h2><svg class="icon" aria-hidden="true"><use href="#i-historial"/></svg>Historial de planos</h2>
+        <p class="hint" style="margin-top:-4px;">Guarda el plano que vayáis a usar; así la rotación sabe quién se ha sentado con quién. Al exportar el plano a PNG o PDF también se guarda.</p>
+        <button id="savePlanBtn" class="block"><svg class="icon" aria-hidden="true"><use href="#i-guardar"/></svg>Guardar plano en el historial</button>
+        <ul class="history-list" id="planHistoryList"></ul>
       </section>
     </div>
 
@@ -707,6 +733,9 @@
   let layoutLocked = false;
   let nextDeskId=1, nextTagId=1, nextStudentId=1, nextRuleId=1;
   let absentDate = '';  // día (AAAA-MM-DD) al que corresponden las ausencias marcadas
+  let planHistory = []; // planos guardados, el más reciente primero: {id, savedAt, seats:{mesa:alumno}, pairs:[[a,b]]}
+  let nextPlanId = 1;
+  const HISTORY_LIMIT = 30;
   const DESK_SIZE = 68;
   const ADJ_THRESHOLD = 82; // px between desk centers to count as "adjacent"
 
@@ -996,6 +1025,7 @@
       canvas.appendChild(el);
     });
     renderStageHint();
+    renderPlanHistory();
   }
 
   function renderStageHint(){
@@ -1455,8 +1485,10 @@
         const placedInComp=[];
         for(const member of bfsOrder){
           let candidates = candidateDesksFor(member, fixedMap, tagRulesMap).filter(d=>!usedDesks.has(d.id));
-          if(placedInComp.length>0){
-            candidates = candidates.filter(d=>placedInComp.some(pid=>isAdjacent(assignment[pid], d.id)));
+          // Debe quedar pegado a todos sus compañeros de "mantener juntos" ya colocados
+          const placedPartners = togetherGraph[member] ? Array.from(togetherGraph[member]).filter(pid => assignment[pid] !== undefined) : [];
+          if(placedPartners.length>0){
+            candidates = candidates.filter(d=>placedPartners.every(pid=>isAdjacent(assignment[pid], d.id)));
           }
           candidates = shuffleArray(candidates.slice());
           candidates = candidates.filter(d=>!violatesApart(member, d.id, assignment, apartPairs));
@@ -1518,6 +1550,79 @@
     });
   }
 
+  // ---------- Rotación de compañeros ----------
+  const pairKey = (a, b) => a < b ? `${a}-${b}` : `${b}-${a}`;
+  // Parejas de alumnos sentados en mesas contiguas en un plano (seats: mesa -> alumno)
+  function seatedPairs(seats){
+    const occ = desks.filter(d => seats[d.id]);
+    const out = [];
+    for(let i=0;i<occ.length;i++) for(let j=i+1;j<occ.length;j++){
+      if(isAdjacent(occ[i].id, occ[j].id)){ const a = seats[occ[i].id], b = seats[occ[j].id]; out.push(a < b ? [a,b] : [b,a]); }
+    }
+    return out;
+  }
+  // Peso de cada pareja ya vista en los N últimos planos guardados (los más recientes pesan más)
+  function historyPairWeights(n, ruleList){
+    const weights = new Map();
+    const forced = new Set(ruleList.filter(r => r.type==='together').map(r => pairKey(r.studentA, r.studentB)));
+    planHistory.slice(0, n).forEach((h, i) => {
+      h.pairs.forEach(([a,b]) => { const k = pairKey(a,b); if(!forced.has(k)) weights.set(k, (weights.get(k) || 0) + 1 + (n - i) / (n + 1)); });
+    });
+    return weights;
+  }
+  // ¿Cumple el plano (alumno -> mesa) todas las reglas?
+  function assignmentValid(assign, C){
+    for(const sid in assign){
+      const d = deskById(assign[sid]);
+      if(!d || !d.active) return false;
+      if(C.fixedMap[sid] !== undefined && C.fixedMap[sid] !== d.id) return false;
+      const req = C.tagRulesMap[sid];
+      if(req && !req.every(t => d.tags.includes(t))) return false;
+    }
+    for(const [a,b] of C.apartPairs){ if(assign[a] && assign[b] && isAdjacent(assign[a], assign[b])) return false; }
+    for(const a in C.togetherGraph){ for(const b of C.togetherGraph[a]){ if(assign[a] && assign[b] && !isAdjacent(assign[a], assign[b])) return false; } }
+    return true;
+  }
+  // Busca, entre planos válidos, el que menos compañeros repite. Devuelve { assignment, repeats }.
+  function bestRotatedAssignment(pool, ruleList, weights){
+    const C = buildConstraints(ruleList);
+    const adj = new Map(desks.map(d => [d.id, desks.filter(e => e.id !== d.id && isAdjacent(d.id, e.id)).map(e => e.id)]));
+    const score = (assign) => {
+      const byDesk = {}; for(const sid in assign) byDesk[assign[sid]] = Number(sid);
+      let total = 0;
+      for(const dId in byDesk){ for(const e of adj.get(Number(dId))){ if(e > Number(dId) && byDesk[e]) total += weights.get(pairKey(byDesk[dId], byDesk[e])) || 0; } }
+      return total;
+    };
+    let best = null, bestScore = Infinity;
+    const t0 = performance.now();
+    for(let i=0; i<60 && performance.now() - t0 < 300; i++){
+      const f = findAssignment(pool, ruleList, 500); if(!f) break;
+      const sc = score(f.assignment);
+      if(sc < bestScore){ best = f.assignment; bestScore = sc; }
+      if(bestScore === 0) break;
+    }
+    if(!best) return null;
+    // Mejora local: intercambia o mueve alumnos mientras el plano siga cumpliendo las reglas y repita menos
+    const movable = pool.map(s => s.id).filter(id => C.fixedMap[id] === undefined);
+    const activeIds = desks.filter(d => d.active).map(d => d.id);
+    for(let it=0; it<2500 && bestScore > 0 && movable.length; it++){
+      const s1 = movable[Math.floor(Math.random()*movable.length)];
+      const target = activeIds[Math.floor(Math.random()*activeIds.length)];
+      if(best[s1] === target) continue;
+      const cand = { ...best };
+      const s2 = Object.keys(cand).find(k => cand[k] === target);
+      if(s2 !== undefined){ if(C.fixedMap[s2] !== undefined) continue; cand[s2] = cand[s1]; }
+      cand[s1] = target;
+      if(!assignmentValid(cand, C)) continue;
+      const sc = score(cand);
+      if(sc <= bestScore){ best = cand; bestScore = sc; }
+    }
+    return { assignment: best, repeats: bestScore };
+  }
+  function repeatedPairsIn(seats, weights){
+    return seatedPairs(seats).filter(([a,b]) => weights.has(pairKey(a,b)));
+  }
+
   function shuffle(){
     renderShuffleDiag([]);
     const activeDesks = desks.filter(d=>d.active);
@@ -1535,14 +1640,26 @@
       renderShuffleDiag(problems);
       return;
     }
-    const found = findAssignment(present, activeRules, 500);
+    const avoidN = parseInt($('avoidRepeats').value) || 0;
+    const weights = avoidN && planHistory.length ? historyPairWeights(avoidN, activeRules) : null;
+    const found = weights ? bestRotatedAssignment(present, activeRules, weights) : findAssignment(present, activeRules, 500);
     if(found){
       pushUndo('barajar');
       seatAssignment={};
       for(const sid in found.assignment) seatAssignment[found.assignment[sid]]=parseInt(sid);
       selectedDeskId = null; selectedSwapId = null;
-      renderCanvas(); renderDeskEditor();
-      setStatus(`Plano generado con ${present.length} alumnos${absentN ? ` (faltan ${absentN})` : ''}. Reglas aplicadas: ${activeRules.length}.`, false);
+      renderCanvas(); renderDeskEditor(); renderPlanHistory();
+      let msg = `Plano generado con ${present.length} alumnos${absentN ? ` (faltan ${absentN})` : ''}. Reglas aplicadas: ${activeRules.length}.`;
+      if(weights){
+        const rep = repeatedPairsIn(seatAssignment, weights);
+        const nPlans = Math.min(avoidN, planHistory.length);
+        msg += rep.length === 0
+          ? ` Nadie repite compañero ${nPlans === 1 ? 'del último plano' : `de los ${nPlans} últimos planos`}.`
+          : ` No se ha podido evitar del todo: repiten ${rep.slice(0,4).map(([a,b]) => `${displayName(students.find(x=>x.id===a))}–${displayName(students.find(x=>x.id===b))}`).join(', ')}${rep.length>4 ? '…' : ''}.`;
+      } else if(avoidN && !planHistory.length){
+        msg += ' (Aún no hay planos guardados para evitar repeticiones.)';
+      }
+      setStatus(msg, false);
       return;
     }
     const culprits = diagnoseRules(present, activeRules);
@@ -1554,6 +1671,45 @@
     }
   }
   $('shuffleBtn').onclick = shuffle;
+
+  // ---------- Historial de planos ----------
+  const seatsEqual = (a, b) => { const ka = Object.keys(a), kb = Object.keys(b); return ka.length === kb.length && ka.every(k => a[k] === b[k]); };
+  function savePlanToHistory(quiet){
+    if(!Object.keys(seatAssignment).length){ if(!quiet) toast('No hay ningún plano que guardar: baraja o sienta antes al alumnado.', { error:true }); return false; }
+    if(planHistory[0] && seatsEqual(planHistory[0].seats, seatAssignment)){ if(!quiet) toast('Este plano ya está guardado en el historial.'); return false; }
+    planHistory.unshift({ id: nextPlanId++, savedAt: new Date().toISOString(), seats: { ...seatAssignment }, pairs: seatedPairs(seatAssignment) });
+    planHistory = planHistory.slice(0, HISTORY_LIMIT);
+    renderPlanHistory();
+    if(!quiet) toast('Plano guardado en el historial. La próxima vez se evitará repetir compañeros.');
+    return true;
+  }
+  function renderPlanHistory(){
+    const list = $('planHistoryList'); list.innerHTML = '';
+    planHistory.forEach(h => {
+      const li = document.createElement('li');
+      const isCurrent = seatsEqual(h.seats, seatAssignment);
+      if(isCurrent) li.className = 'current';
+      const d = new Date(h.savedAt);
+      const when = isNaN(d) ? '' : d.toLocaleDateString('es-ES', { weekday:'short', day:'numeric', month:'short' }) + ', ' + d.toLocaleTimeString('es-ES', { hour:'2-digit', minute:'2-digit' });
+      const main = document.createElement('div'); main.className = 'h-main';
+      main.innerHTML = `<span class="h-date">${escapeHtml(when)}</span><span class="h-meta">${Object.keys(h.seats).length} alumnos${isCurrent ? ' · es el plano actual' : ''}</span>`;
+      const restore = document.createElement('button'); restore.className = 'secondary'; restore.textContent = 'Restaurar';
+      restore.title = 'Volver a este plano (se puede deshacer)';
+      restore.disabled = isCurrent;
+      restore.onclick = () => {
+        pushUndo('restaurar plano');
+        seatAssignment = sanitizeSeats(h.seats, new Set(desks.filter(x=>x.active).map(x => x.id)), new Set(students.map(x => x.id)));
+        selectedDeskId = null; selectedSwapId = null;
+        renderCanvas(); renderDeskEditor(); renderPlanHistory();
+        toast('Plano restaurado', { undo:true });
+      };
+      const del = document.createElement('button'); del.className = 'danger'; del.innerHTML = icon('cerrar'); del.title = 'Borrar del historial'; del.setAttribute('aria-label','Borrar del historial');
+      del.onclick = () => { planHistory = planHistory.filter(x => x.id !== h.id); renderPlanHistory(); };
+      li.appendChild(main); li.appendChild(restore); li.appendChild(del);
+      list.appendChild(li);
+    });
+  }
+  $('savePlanBtn').onclick = () => savePlanToHistory(false);
 
   // ---------- Groups ----------
   function buildTogetherApart(){
@@ -1880,6 +2036,8 @@
       desks, tags, students, rules, seatAssignment,
       wheelPool: wheelPool.map(s=>s.id),
       absentDate,
+      planHistory, nextPlanId,
+      avoidRepeats: parseInt($('avoidRepeats').value) || 0,
       nextDeskId, nextTagId, nextStudentId, nextRuleId
     };
   }
@@ -1960,6 +2118,14 @@
 
     out.seatAssignment = sanitizeSeats(data.seatAssignment, deskIds, studentIds);
 
+    out.planHistory = (Array.isArray(data.planHistory) ? data.planHistory : []).filter(h => h && isId(h.id) && typeof h.savedAt === 'string' && !isNaN(new Date(h.savedAt)))
+      .slice(0, HISTORY_LIMIT).map(h => ({
+        id: h.id, savedAt: new Date(h.savedAt).toISOString(),
+        seats: sanitizeSeats(h.seats, deskIds, studentIds),
+        pairs: (Array.isArray(h.pairs) ? h.pairs : []).filter(pr => Array.isArray(pr) && pr.length === 2 && studentIds.has(pr[0]) && studentIds.has(pr[1]) && pr[0] !== pr[1]).map(pr => pr[0] < pr[1] ? [pr[0], pr[1]] : [pr[1], pr[0]])
+      }));
+    out.nextPlanId = Math.max(isId(data.nextPlanId) ? data.nextPlanId : 1, Math.max(0, ...out.planHistory.map(h => h.id)) + 1);
+    out.avoidRepeats = [0,1,2,3,5,99].includes(data.avoidRepeats) ? data.avoidRepeats : 3;
     out.absentDate = (typeof data.absentDate === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(data.absentDate)) ? data.absentDate : '';
     out.wheelPool = Array.isArray(data.wheelPool) ? [...new Set(data.wheelPool.filter(id => studentIds.has(id)))] : null;
 
@@ -2000,6 +2166,8 @@
     nextStudentId = data.nextStudentId;
     nextRuleId = data.nextRuleId;
     absentDate = data.absentDate;
+    planHistory = data.planHistory; nextPlanId = data.nextPlanId;
+    $('avoidRepeats').value = String(data.avoidRepeats);
     const expired = expireAbsences();
     wheelPool = (data.wheelPool ? data.wheelPool.map(id => students.find(s=>s.id===id)) : students.slice()).filter(s => !s.absent);
     wheelRotation = 0;
@@ -2306,8 +2474,8 @@
     setImportExportStatus('Plano exportado como PDF.', false);
   }
 
-  $('exportPngBtn').onclick = exportPlanPNG;
-  $('exportPdfBtn').onclick = exportPlanPDF;
+  $('exportPngBtn').onclick = () => { exportPlanPNG(); if(desks.length) savePlanToHistory(true); };
+  $('exportPdfBtn').onclick = () => { exportPlanPDF(); if(desks.length) savePlanToHistory(true); };
 
   // ---------- Clase de ejemplo ----------
   function buildSampleState(){
