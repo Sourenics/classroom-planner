@@ -1224,6 +1224,23 @@
     return { x: cx + r*Math.cos(rad), y: cy + r*Math.sin(rad) };
   }
 
+  const WHEEL_FONT = 'system-ui, -apple-system, Segoe UI, Roboto, sans-serif';
+  const WHEEL_LABEL_MAX_W = 200 - 16 - 30; // del borde (r-16) hasta el eje central, con margen
+  let wheelMeasureCtx = null;
+  // Reduce la letra hasta que el nombre quepa a lo largo del radio; si ni con la mínima cabe, lo recorta con "…"
+  function fitWheelLabel(text, maxFont){
+    if(!wheelMeasureCtx){ wheelMeasureCtx = document.createElement('canvas').getContext('2d'); }
+    const ctx = wheelMeasureCtx;
+    const width = (t, fs) => { if(!ctx) return t.length * fs * 0.58; ctx.font = `650 ${fs}px ${WHEEL_FONT}`; return ctx.measureText(t).width; };
+    const minFont = Math.min(maxFont, 9);
+    for(let fs = maxFont; fs >= minFont; fs -= 0.5){
+      if(width(text, fs) <= WHEEL_LABEL_MAX_W) return { text, fontSize: fs };
+    }
+    let t = text;
+    while(t.length > 1 && width(t + '…', minFont) > WHEEL_LABEL_MAX_W) t = t.slice(0, -1);
+    return { text: t.trimEnd() + '…', fontSize: minFont };
+  }
+
   function renderWheel(){
     ensureWheelPool();
     const svg = $('pickerWheel');
@@ -1234,6 +1251,8 @@
       return;
     }
     const sliceAngle = 360/n;
+    // Tamaño máximo de letra según el ancho de la porción a media altura del radio
+    const maxFont = Math.max(8, Math.min(16, (2*Math.PI*(r*0.5)/n) * 0.55));
     let html = '';
     wheelPool.forEach((s, i) => {
       const start = i*sliceAngle - 90;
@@ -1244,8 +1263,11 @@
       const color = wheelPalette[i % wheelPalette.length];
       html += `<path d="M${cx},${cy} L${p1.x.toFixed(2)},${p1.y.toFixed(2)} A${r},${r} 0 ${largeArc} 1 ${p2.x.toFixed(2)},${p2.y.toFixed(2)} Z" fill="${color}" stroke="#17302a" stroke-width="2"/>`;
       const mid = start + sliceAngle/2;
-      const tp = polarPoint(cx,cy,r*0.62,mid);
-      html += `<text x="${tp.x.toFixed(2)}" y="${tp.y.toFixed(2)}" fill="#1a2f29" font-family="system-ui, sans-serif" font-size="13" font-weight="650" text-anchor="middle" transform="rotate(${(mid+90).toFixed(2)} ${tp.x.toFixed(2)} ${tp.y.toFixed(2)})">${escapeHtml(displayName(s))}</text>`;
+      // Nombre en dirección radial (del centro hacia el borde): aprovecha todo el largo de la porción
+      // y el nombre que queda bajo la flecha se lee en vertical.
+      const tp = polarPoint(cx,cy,r-16,mid);
+      const label = fitWheelLabel(displayName(s), maxFont);
+      html += `<text x="${tp.x.toFixed(2)}" y="${tp.y.toFixed(2)}" fill="#1a2f29" font-family="${WHEEL_FONT}" font-size="${label.fontSize}" font-weight="650" text-anchor="end" dominant-baseline="central" transform="rotate(${mid.toFixed(2)} ${tp.x.toFixed(2)} ${tp.y.toFixed(2)})">${escapeHtml(label.text)}</text>`;
     });
     html += `<circle cx="${cx}" cy="${cy}" r="18" fill="#17302a" stroke="#f4f1e6" stroke-width="3"/>`;
     svg.innerHTML = html;
