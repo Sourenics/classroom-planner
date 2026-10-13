@@ -733,6 +733,7 @@
   let layoutLocked = false;
   let nextDeskId=1, nextTagId=1, nextStudentId=1, nextRuleId=1;
   let absentDate = '';  // día (AAAA-MM-DD) al que corresponden las ausencias marcadas
+  let viewMode = 'students'; // 'students' (pizarra arriba) o 'teacher' (vista desde la mesa del profesor)
   let planHistory = []; // planos guardados, el más reciente primero: {id, savedAt, seats:{mesa:alumno}, pairs:[[a,b]]}
   let nextPlanId = 1;
   const HISTORY_LIMIT = 30;
@@ -2257,221 +2258,147 @@
     URL.revokeObjectURL(url);
   }
 
-  // Shared layout math for the printable plan, used by both the PNG and PDF exporters
-  // so they stay visually identical. Mirrors Shuffle Buddy's printed chart: a bordered
-  // room outline, a class-name title above it, a plain board bar (no text) and
-  // grayscale desks with auto-sized names.
-  function planLayout(){
-    const outerMargin = 20;
-    const titleAreaH = 44;
-    const boxPadTop = 30;
-    const boardBarH = 9;
-    const boardBarGap = 26;
-    const boxPadSides = 20;
-    const boxPadBottom = 20;
+  // Dibuja el plano imprimible (blanco y negro, apto para fotocopiar) en un <canvas>.
+  // Lo usan el PNG y el PDF, así que los dos salen idénticos y con cualquier alfabeto.
+  // En la vista del profesor el plano se gira 180°: la pizarra queda abajo, como se ve desde su mesa.
+  function renderPlanCanvas(scale){
+    const teacher = viewMode === 'teacher';
+    const M = 20, titleH = 44, padTop = 26, padSides = 20, padBottom = 20;
+    const boardH = 9, boardLabelH = 14, boardGap = 24;
     const legendH = tags.length ? 30 : 0;
-    const pageW = canvasW + boxPadSides*2 + outerMargin*2;
-    const pageH = titleAreaH + boxPadTop + boardBarH + boardBarGap + canvasH + legendH + boxPadBottom + outerMargin*2;
-    return { outerMargin, titleAreaH, boxPadTop, boardBarH, boardBarGap, boxPadSides, boxPadBottom, legendH, pageW, pageH };
-  }
-
-  function exportPlanPNG(){
-    if(desks.length === 0){ setImportExportStatus('Diseña el aula con al menos una mesa antes de exportar.', true); return; }
-    const L = planLayout();
-    const w = L.pageW, h = L.pageH;
-    const canvasEl = document.createElement('canvas');
-    const scale = 2;
-    canvasEl.width = w*scale; canvasEl.height = h*scale;
-    const ctx = canvasEl.getContext('2d');
-    if(!ctx){ setImportExportStatus('Este navegador no permite generar la imagen.', true); return; }
+    const boardBlock = boardLabelH + boardH + boardGap;
+    const w = canvasW + padSides*2 + M*2;
+    const h = M + titleH + padTop + boardBlock + canvasH + legendH + padBottom + M;
+    const el = document.createElement('canvas');
+    el.width = Math.round(w*scale); el.height = Math.round(h*scale);
+    const ctx = el.getContext('2d');
+    if(!ctx) return null;
     ctx.scale(scale, scale);
+    const FONT = 'Arial, "Helvetica Neue", "Noto Sans", "Segoe UI", sans-serif';
+    ctx.fillStyle = '#ffffff'; ctx.fillRect(0,0,w,h);
 
-    ctx.fillStyle = '#ffffff';
-    ctx.fillRect(0,0,w,h);
-
-    // Title
-    ctx.fillStyle = '#000000';
-    ctx.font = '700 20px Arial, sans-serif';
+    // Título
+    ctx.fillStyle = '#000000'; ctx.font = `700 20px ${FONT}`;
     ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
-    ctx.fillText(planTitle(), w/2, L.outerMargin + 30);
-    ctx.textAlign = 'left';
+    ctx.fillText(planTitle(), w/2, M + 28);
+    if(teacher){ ctx.font = `12px ${FONT}`; ctx.fillStyle = '#555555'; ctx.fillText('Vista desde la mesa del profesor', w/2, M + 43); }
 
-    // Room border box
-    const boxLeft = L.outerMargin;
-    const boxTop = L.outerMargin + L.titleAreaH;
-    const boxW = w - L.outerMargin*2;
-    const boxH = h - L.outerMargin - boxTop;
-    ctx.strokeStyle = '#000000'; ctx.lineWidth = 1.5;
-    ctx.strokeRect(boxLeft, boxTop, boxW, boxH);
+    // Contorno del aula
+    const boxL = M, boxT = M + titleH, boxW = w - M*2, boxH = h - M - boxT;
+    ctx.strokeStyle = '#000000'; ctx.lineWidth = 1.5; ctx.strokeRect(boxL, boxT, boxW, boxH);
 
-    // Board bar (plain, no text)
-    const boardW = Math.max(80, canvasW*0.55);
-    const boardX = boxLeft + boxW/2 - boardW/2;
-    const boardY = boxTop + L.boxPadTop;
-    ctx.fillStyle = '#adadad';
-    ctx.fillRect(boardX, boardY, boardW, L.boardBarH);
-    ctx.strokeStyle = '#666666'; ctx.lineWidth = 0.75;
-    ctx.strokeRect(boardX, boardY, boardW, L.boardBarH);
+    // Pizarra (arriba en la vista del alumnado, abajo en la del profesor)
+    const deskX0 = boxL + padSides;
+    const deskY0 = teacher ? boxT + padTop : boxT + padTop + boardBlock;
+    const boardW = Math.max(80, canvasW*0.55), boardX = boxL + boxW/2 - boardW/2;
+    const boardY = teacher ? deskY0 + canvasH + boardGap : boxT + padTop + boardLabelH;
+    ctx.fillStyle = '#adadad'; ctx.fillRect(boardX, boardY, boardW, boardH);
+    ctx.strokeStyle = '#666666'; ctx.lineWidth = 0.75; ctx.strokeRect(boardX, boardY, boardW, boardH);
+    ctx.fillStyle = '#777777'; ctx.font = `700 9px ${FONT}`;
+    ctx.textAlign = 'center';
+    const label = 'P I Z A R R A';
+    if(teacher){ ctx.textBaseline = 'top'; ctx.fillText(label, w/2, boardY + boardH + 4); }
+    else { ctx.textBaseline = 'bottom'; ctx.fillText(label, w/2, boardY - 4); }
 
-    // Desks
-    const deskX0 = boxLeft + L.boxPadSides;
-    const deskY0 = boardY + L.boardBarH + L.boardBarGap;
+    // Mesas
     const size = DESK_SIZE;
-    const measureFn = (text, fontSize) => { ctx.font = `600 ${fontSize}px Arial, sans-serif`; return ctx.measureText(text).width; };
-
+    const measureFn = (text, fontSize) => { ctx.font = `600 ${fontSize}px ${FONT}`; return ctx.measureText(text).width; };
     desks.forEach(d => {
-      const x = deskX0 + d.x, y = deskY0 + d.y;
-      const filled = !!seatAssignment[d.id];
+      const px = teacher ? canvasW - size - d.x : d.x, py = teacher ? canvasH - size - d.y : d.y;
+      const x = deskX0 + px, y = deskY0 + py;
       ctx.fillStyle = d.active ? '#cccccc' : '#ececec';
-      ctx.strokeStyle = '#000000';
-      ctx.lineWidth = 1.25;
-      if(!d.active) ctx.setLineDash([3,3]); else ctx.setLineDash([]);
-      ctx.fillRect(x, y, size, size);
-      ctx.strokeRect(x, y, size, size);
+      ctx.strokeStyle = '#000000'; ctx.lineWidth = 1.25;
+      ctx.setLineDash(d.active ? [] : [3,3]);
+      ctx.fillRect(x, y, size, size); ctx.strokeRect(x, y, size, size);
       ctx.setLineDash([]);
-
       (d.tags||[]).forEach((tid,i) => {
         const t = tags.find(tg=>tg.id===tid);
         if(t){ ctx.fillStyle = t.color; ctx.beginPath(); ctx.arc(x+7+i*9, y+7, 3, 0, Math.PI*2); ctx.fill(); }
       });
-
       const name = getDeskName(d);
       if(name){
-        const maxW = size - 8;
-        const fit = fitText(name, maxW, measureFn, 13, 6.5);
+        const fit = fitText(name, size - 8, measureFn, 13, 6.5);
         const lineH = fit.fontSize * 1.15;
-        ctx.fillStyle = '#000000';
-        ctx.font = `600 ${fit.fontSize}px Arial, sans-serif`;
+        ctx.fillStyle = '#000000'; ctx.font = `600 ${fit.fontSize}px ${FONT}`;
         ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
         const startY = y + size/2 - ((fit.lines.length-1)*lineH)/2;
         fit.lines.forEach((line,i) => ctx.fillText(line, x+size/2, startY + i*lineH));
-        ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
       }
     });
 
-    // Legend (tags), inside the box, below the desk area
+    // Leyenda de etiquetas
     if(tags.length){
-      let lx = deskX0; const ly = deskY0 + canvasH + 16;
-      ctx.font = '600 11px Arial, sans-serif'; ctx.fillStyle = '#333333';
+      let lx = deskX0; const ly = teacher ? boardY + boardH + boardLabelH + 22 : deskY0 + canvasH + 16;
+      ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
       tags.forEach(t => {
         ctx.fillStyle = t.color; ctx.fillRect(lx, ly-8, 9, 9);
         ctx.strokeStyle = '#555555'; ctx.lineWidth = 0.75; ctx.strokeRect(lx, ly-8, 9, 9);
-        ctx.fillStyle = '#333333'; ctx.font = '11px Arial, sans-serif';
+        ctx.fillStyle = '#333333'; ctx.font = `11px ${FONT}`;
         ctx.fillText(t.name, lx+13, ly);
         lx += 13 + ctx.measureText(t.name).width + 18;
       });
     }
+    return { canvas: el, width: w, height: h };
+  }
 
-    canvasEl.toBlob(blob => {
+  const exportBaseName = () => {
+    const slug = planTitle().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/gi, '-').replace(/^-+|-+$/g, '').toLowerCase().slice(0, 40) || 'plano';
+    return `plano-${slug}${viewMode === 'teacher' ? '-profesor' : ''}-${todayStr()}`;
+  };
+
+  function exportPlanPNG(){
+    if(desks.length === 0){ setImportExportStatus('Diseña el aula con al menos una mesa antes de exportar.', true); return; }
+    const r = renderPlanCanvas(2);
+    if(!r){ setImportExportStatus('Este navegador no permite generar la imagen.', true); return; }
+    r.canvas.toBlob(blob => {
       if(!blob){ setImportExportStatus('No se pudo generar la imagen.', true); return; }
-      triggerDownloadBlob(blob, `plano-asientos-${new Date().toISOString().slice(0,10)}.png`);
+      triggerDownloadBlob(blob, exportBaseName() + '.png');
       setImportExportStatus('Plano exportado como PNG.', false);
     }, 'image/png');
   }
 
-  function pdfEscape(str){ return String(str).replace(/\\/g,'\\\\').replace(/\(/g,'\\(').replace(/\)/g,'\\)'); }
-  function toLatin1(str){
-    let out = '';
-    for(let i=0;i<str.length;i++){ const code = str.charCodeAt(i); out += code<=255 ? str[i] : '?'; }
+  // PDF de una página A4 (vertical u horizontal según la forma del plano) con el plano como imagen JPEG.
+  // Al ser una imagen, se ven bien todos los nombres, sea cual sea su alfabeto.
+  function buildPdfBytes(jpegBytes, imgW, imgH, title){
+    const landscape = imgW > imgH;
+    const pageW = landscape ? 841.89 : 595.28, pageH = landscape ? 595.28 : 841.89, margin = 28;
+    const k = Math.min((pageW - margin*2) / imgW, (pageH - margin*2) / imgH);
+    const dw = imgW * k, dh = imgH * k, dx = (pageW - dw) / 2, dy = pageH - margin - dh;
+    const n = v => (Math.round(v*100)/100).toString();
+    // Título en UTF-16BE para los metadatos del documento
+    let titleHex = 'FEFF';
+    for(const ch of title){ const cp = ch.codePointAt(0); const u = cp > 0xFFFF ? [0xD800 + ((cp-0x10000) >> 10), 0xDC00 + ((cp-0x10000) & 0x3FF)] : [cp]; u.forEach(x => { titleHex += x.toString(16).padStart(4,'0').toUpperCase(); }); }
+    const content = `q ${n(dw)} 0 0 ${n(dh)} ${n(dx)} ${n(dy)} cm /Im0 Do Q`;
+    const enc = new TextEncoder();
+    const parts = []; const offsets = []; let length = 0;
+    const push = chunk => { const b = typeof chunk === 'string' ? enc.encode(chunk) : chunk; parts.push(b); length += b.length; };
+    const obj = (num, body) => { offsets[num] = length; push(`${num} 0 obj\n`); body(); push('\nendobj\n'); };
+    push('%PDF-1.4\n'); push(new Uint8Array([0x25, 0xE2, 0xE3, 0xCF, 0xD3, 0x0A])); // marca de archivo binario
+    obj(1, () => push('<< /Type /Catalog /Pages 2 0 R >>'));
+    obj(2, () => push('<< /Type /Pages /Kids [3 0 R] /Count 1 >>'));
+    obj(3, () => push(`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${n(pageW)} ${n(pageH)}] /Resources << /XObject << /Im0 5 0 R >> >> /Contents 4 0 R >>`));
+    obj(4, () => push(`<< /Length ${content.length} >>\nstream\n${content}\nendstream`));
+    obj(5, () => { push(`<< /Type /XObject /Subtype /Image /Width ${imgW} /Height ${imgH} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${jpegBytes.length} >>\nstream\n`); push(jpegBytes); push('\nendstream'); });
+    obj(6, () => push(`<< /Title <${titleHex}> /Producer (Plano de Asientos) >>`));
+    const xref = length;
+    let x = `xref\n0 7\n0000000000 65535 f \n`;
+    for(let i=1;i<=6;i++) x += String(offsets[i]).padStart(10,'0') + ' 00000 n \n';
+    push(x + `trailer\n<< /Size 7 /Root 1 0 R /Info 6 0 R >>\nstartxref\n${xref}\n%%EOF`);
+    const out = new Uint8Array(length); let o = 0; parts.forEach(b => { out.set(b, o); o += b.length; });
     return out;
-  }
-  function hexToRgb01(hex){
-    hex = String(hex).replace('#','');
-    return [parseInt(hex.substring(0,2),16)/255, parseInt(hex.substring(2,4),16)/255, parseInt(hex.substring(4,6),16)/255];
-  }
-  function pdfNum(n){ return (Math.round(n*100)/100).toString(); }
-  // Rough Helvetica average-width-per-character heuristic (no real font metrics available
-  // without embedding the font); a small safety margin keeps text comfortably inside desks.
-  function pdfTextWidth(text, fontSize){ return text.length * fontSize * 0.52; }
-
-  function buildPdfString(){
-    const L = planLayout();
-    const pageW = L.pageW, pageH = L.pageH;
-    const boxLeft = L.outerMargin;
-    const boxRight = pageW - L.outerMargin;
-    const boxTop = pageH - L.outerMargin - L.titleAreaH;
-    const boxBottom = L.outerMargin;
-    const deskX0 = boxLeft + L.boxPadSides;
-    const deskYtop0 = boxTop - L.boxPadTop - L.boardBarH - L.boardBarGap;
-
-    let content = '';
-
-    const title = pdfEscape(toLatin1(planTitle()));
-    const titleWidth = title.length * 20 * 0.56;
-    content += `0 0 0 rg BT /F2 20 Tf 1 0 0 1 ${pdfNum(pageW/2 - titleWidth/2)} ${pdfNum(pageH - L.outerMargin - 28)} Tm (${title}) Tj ET\n`;
-
-    content += `0 0 0 RG 1.2 w ${pdfNum(boxLeft)} ${pdfNum(boxBottom)} ${pdfNum(boxRight-boxLeft)} ${pdfNum(boxTop-boxBottom)} re S\n`;
-
-    const boardW = Math.max(80, canvasW*0.55);
-    const boardX = boxLeft + (boxRight-boxLeft)/2 - boardW/2;
-    const boardY = boxTop - L.boxPadTop - L.boardBarH;
-    content += `0.68 0.68 0.68 rg 0.4 0.4 0.4 RG 0.75 w ${pdfNum(boardX)} ${pdfNum(boardY)} ${pdfNum(boardW)} ${pdfNum(L.boardBarH)} re B\n`;
-
-    const size = DESK_SIZE;
-    desks.forEach(d => {
-      const x = deskX0 + d.x;
-      const yTop = deskYtop0 - d.y;
-      const yBottom = yTop - size;
-      const fillColor = d.active ? [0.8,0.8,0.8] : [0.92,0.92,0.92];
-      content += `${pdfNum(fillColor[0])} ${pdfNum(fillColor[1])} ${pdfNum(fillColor[2])} rg 0.2 0.2 0.2 RG 1 w\n`;
-      if(!d.active) content += `[3 3] 0 d\n`;
-      content += `${pdfNum(x)} ${pdfNum(yBottom)} ${pdfNum(size)} ${pdfNum(size)} re B\n`;
-      if(!d.active) content += `[] 0 d\n`;
-
-      const name = getDeskName(d);
-      if(name){
-        const maxW = size - 8;
-        const fit = fitText(name, maxW, pdfTextWidth, 13, 6.5);
-        const lineH = fit.fontSize * 1.15;
-        const startY = yBottom + size/2 + ((fit.lines.length-1)*lineH)/2 - fit.fontSize*0.35;
-        fit.lines.forEach((line, li) => {
-          const lineSafe = pdfEscape(toLatin1(line));
-          const lw = pdfTextWidth(line, fit.fontSize);
-          const tx = x + size/2 - lw/2;
-          const ty = startY - li*lineH;
-          content += `0 0 0 rg BT /F1 ${pdfNum(fit.fontSize)} Tf ${pdfNum(tx)} ${pdfNum(ty)} Td (${lineSafe}) Tj ET\n`;
-        });
-      }
-    });
-
-    if(tags.length){
-      let lx = deskX0; const ly = deskYtop0 - canvasH - 16;
-      tags.forEach(t => {
-        const [r,g,b] = hexToRgb01(t.color);
-        content += `${pdfNum(r)} ${pdfNum(g)} ${pdfNum(b)} rg 0.3 0.3 0.3 RG 0.5 w ${pdfNum(lx)} ${pdfNum(ly-1)} 8 8 re B\n`;
-        const label = pdfEscape(toLatin1(t.name));
-        content += `0.25 0.25 0.25 rg BT /F1 8.5 Tf ${pdfNum(lx+12)} ${pdfNum(ly)} Td (${label}) Tj ET\n`;
-        lx += 12 + label.length*4.8 + 16;
-      });
-    }
-
-    const objects = [];
-    objects.push('<< /Type /Catalog /Pages 2 0 R >>');
-    objects.push('<< /Type /Pages /Kids [3 0 R] /Count 1 >>');
-    objects.push(`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${pdfNum(pageW)} ${pdfNum(pageH)}] /Resources << /Font << /F1 5 0 R /F2 6 0 R >> >> /Contents 4 0 R >>`);
-    objects.push(`<< /Length ${content.length} >>\nstream\n${content}\nendstream`);
-    objects.push('<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>');
-    objects.push('<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>');
-
-    let pdf = '%PDF-1.4\n';
-    const offsets = [];
-    objects.forEach((obj, i) => { offsets[i] = pdf.length; pdf += `${i+1} 0 obj\n${obj}\nendobj\n`; });
-    const xrefStart = pdf.length;
-    pdf += `xref\n0 ${objects.length+1}\n`;
-    pdf += '0000000000 65535 f \n';
-    for(let i=0;i<objects.length;i++){ pdf += String(offsets[i]).padStart(10,'0') + ' 00000 n \n'; }
-    pdf += `trailer\n<< /Size ${objects.length+1} /Root 1 0 R >>\nstartxref\n${xrefStart}\n%%EOF`;
-    return pdf;
   }
 
   function exportPlanPDF(){
     if(desks.length === 0){ setImportExportStatus('Diseña el aula con al menos una mesa antes de exportar.', true); return; }
-    const pdfStr = buildPdfString();
-    const bytes = new Uint8Array(pdfStr.length);
-    for(let i=0;i<pdfStr.length;i++){ bytes[i] = pdfStr.charCodeAt(i) & 0xFF; }
-    const blob = new Blob([bytes], { type: 'application/pdf' });
-    triggerDownloadBlob(blob, `plano-asientos-${new Date().toISOString().slice(0,10)}.pdf`);
-    setImportExportStatus('Plano exportado como PDF.', false);
+    const r = renderPlanCanvas(3);
+    if(!r){ setImportExportStatus('Este navegador no permite generar el PDF.', true); return; }
+    r.canvas.toBlob(async blob => {
+      if(!blob){ setImportExportStatus('No se pudo generar el PDF.', true); return; }
+      const jpeg = new Uint8Array(await blob.arrayBuffer());
+      const pdf = buildPdfBytes(jpeg, r.canvas.width, r.canvas.height, planTitle());
+      triggerDownloadBlob(new Blob([pdf], { type: 'application/pdf' }), exportBaseName() + '.pdf');
+      setImportExportStatus('Plano exportado como PDF (A4).', false);
+    }, 'image/jpeg', 0.92);
   }
 
   $('exportPngBtn').onclick = () => { exportPlanPNG(); if(desks.length) savePlanToHistory(true); };
