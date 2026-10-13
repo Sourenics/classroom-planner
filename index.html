@@ -140,6 +140,18 @@
   .student-list li:nth-child(odd){ background: rgba(244,241,230,0.03); }
   .student-list li:hover{ background: var(--surface-2); }
 
+  .tab-badge{ min-width:18px; height:18px; padding:0 5px; border-radius:999px; background: var(--danger); color:#fff; font-size:0.7rem; font-weight:700; display:inline-grid; place-items:center; margin-left:2px; }
+  .absent-summary{ display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap; font-size:0.84rem; color: var(--muted); margin-top:10px; }
+  .absent-summary:empty{ display:none; }
+  .absent-summary strong{ color: var(--chalk); }
+  .absent-summary button{ padding:4px 10px; font-size:0.78rem; }
+  .student-list li .row-actions{ display:flex; gap:6px; align-items:center; flex-shrink:0; }
+  .absent-btn{ background:transparent; color: var(--muted); border:1px solid var(--line-strong); font-weight:500; padding:3px 9px; font-size:0.74rem; border-radius:999px; }
+  .absent-btn:hover{ color: var(--chalk); border-color: var(--faint); filter:none; }
+  .absent-btn.on{ background: var(--danger-soft); color: var(--danger); border-color: rgba(227,130,111,0.55); font-weight:600; }
+  .student-list li.is-absent > span{ color: var(--faint); text-decoration: line-through; text-decoration-color: rgba(227,130,111,0.7); }
+  .fdesk.absent .name{ opacity:0.55; text-decoration: line-through; text-decoration-color: rgba(255,255,255,0.6); }
+  .fdesk.absent::after{ content:'falta'; position:absolute; bottom:3px; left:5px; font-size:0.56rem; font-weight:700; text-transform:uppercase; letter-spacing:0.6px; color:#fff; background: rgba(192,87,74,0.9); padding:1px 4px; border-radius:4px; text-shadow:none; }
   .tag-swatch{ width:10px; height:10px; border-radius:50%; display:inline-block; flex-shrink:0; box-shadow: 0 0 0 2px rgba(0,0,0,0.2); }
   .tag-list{ list-style:none; padding:0; margin:8px 0 0; }
   .tag-list li{ display:flex; justify-content:space-between; align-items:center; padding:6px 8px; font-size:0.88rem; border-radius:6px; background: rgba(244,241,230,0.03); margin-bottom:4px; }
@@ -336,6 +348,7 @@
   <symbol id="i-cerrar" viewBox="0 0 24 24"><path d="m6.5 6.5 11 11M17.5 6.5l-11 11"/></symbol>
   <symbol id="i-deshacer" viewBox="0 0 24 24"><path d="M9 14.5 4.5 10 9 5.5"/><path d="M4.8 10H14a5.5 5.5 0 0 1 0 11h-3"/></symbol>
   <symbol id="i-rehacer" viewBox="0 0 24 24"><path d="m15 14.5 4.5-4.5L15 5.5"/><path d="M19.2 10H10a5.5 5.5 0 0 0 0 11h3"/></symbol>
+  <symbol id="i-falta" viewBox="0 0 24 24"><circle cx="10" cy="8" r="3.2" fill="currentColor" fill-opacity=".28"/><path d="M4 19.5c.6-3.3 2.9-5.2 6-5.2 1.2 0 2.3.3 3.2.8"/><path d="m16 15 4.5 4.5M20.5 15 16 19.5"/></symbol>
   <symbol id="i-mas" viewBox="0 0 24 24"><path d="M12 5.5v13M5.5 12h13"/></symbol>
 </svg>
 
@@ -376,7 +389,7 @@
 <nav class="tabs-bar">
   <div class="tabs" role="tablist">
     <button class="tab-btn active" data-tab="aula"><svg class="icon" aria-hidden="true"><use href="#i-aula"/></svg>Diseñar aula</button>
-    <button class="tab-btn" data-tab="alumnado"><svg class="icon" aria-hidden="true"><use href="#i-alumnado"/></svg>Alumnado</button>
+    <button class="tab-btn" data-tab="alumnado"><svg class="icon" aria-hidden="true"><use href="#i-alumnado"/></svg>Alumnado<span class="tab-badge" id="absentBadge" title="Faltan hoy" hidden></span></button>
     <button class="tab-btn" data-tab="reglas"><svg class="icon" aria-hidden="true"><use href="#i-reglas"/></svg>Reglas</button>
     <button class="tab-btn" data-tab="barajar"><svg class="icon" aria-hidden="true"><use href="#i-barajar"/></svg>Barajar</button>
     <button class="tab-btn" data-tab="grupos"><svg class="icon" aria-hidden="true"><use href="#i-grupos"/></svg>Grupos</button>
@@ -433,6 +446,12 @@
 
     <div class="tab-panel" data-tab="alumnado" style="display:none;">
       <section>
+        <h2><svg class="icon" aria-hidden="true"><use href="#i-falta"/></svg>Faltan hoy</h2>
+        <p class="hint" style="margin-top:-4px;">Marca a quien no ha venido con el botón <strong>Falta</strong> de la lista. Al barajar, en la ruleta y en los grupos se les salta. Las ausencias se borran solas al día siguiente.</p>
+        <div class="absent-summary" id="absentSummary"></div>
+        <ul class="student-list" id="studentList"></ul>
+      </section>
+      <section>
         <h2>Añadir alumnado</h2>
         <div class="row">
           <input type="text" id="studentInput" placeholder="Nombre">
@@ -448,7 +467,6 @@
           <input type="checkbox" id="showLastNames">
           <span>Mostrar el apellido completo en las mesas, la ruleta, los grupos y las exportaciones. Si está desmarcado, solo se añade la inicial del apellido cuando dos alumnos comparten nombre (p.ej. "Jaume P" y "Jaume B").</span>
         </label>
-        <ul class="student-list" id="studentList"></ul>
       </section>
     </div>
 
@@ -519,13 +537,13 @@
     <div class="tab-panel" data-tab="picker" style="display:none;">
       <section>
         <h2>Ruleta</h2>
-        <p class="hint" style="margin-top:-4px;">Gira la ruleta para elegir a un alumno al azar, de entre todos los que haya en la clase.</p>
+        <p class="hint" style="margin-top:-4px;">Gira la ruleta para elegir a un alumno al azar entre los presentes (no salen quienes faltan hoy).</p>
         <label class="toggle-row">
           <input type="checkbox" id="pickerAutoRemove" checked>
           <span>Eliminar automáticamente al alumno elegido, para que no pueda volver a salir</span>
         </label>
         <button id="spinBtn" class="block big"><svg class="icon" aria-hidden="true"><use href="#i-ruleta"/></svg>Girar</button>
-        <button id="resetWheelBtn" class="secondary block">Restablecer con todo el alumnado</button>
+        <button id="resetWheelBtn" class="secondary block">Volver a llenar la ruleta</button>
         <div class="status" id="pickerStatus" style="margin-top:6px;"></div>
         <div class="row" style="justify-content:space-between; margin-top:18px;">
           <h2 style="margin:0;">Historial (orden de salida)</h2>
@@ -683,11 +701,14 @@
   let selectedSwapId = null;
   let layoutLocked = false;
   let nextDeskId=1, nextTagId=1, nextStudentId=1, nextRuleId=1;
+  let absentDate = '';  // día (AAAA-MM-DD) al que corresponden las ausencias marcadas
   const DESK_SIZE = 68;
   const ADJ_THRESHOLD = 82; // px between desk centers to count as "adjacent"
 
   const $ = id => document.getElementById(id);
   const icon = name => `<svg class="icon" aria-hidden="true"><use href="#i-${name}"/></svg>`;
+  function todayStr(){ const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
+  function presentStudents(){ return students.filter(s => !s.absent); }
   function escapeHtml(str){ return String(str).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
 
   // ---------- Tabs ----------
@@ -940,7 +961,7 @@
     desks.forEach(d => {
       const sid = seatAssignment[d.id];
       const el = document.createElement('div');
-      el.className = 'fdesk' + (sid?' filled':'') + (selectedDeskId===d.id?' selected':'') + (selectedSwapId===d.id?' swap-select':'') + (!d.active?' inactive':'');
+      el.className = 'fdesk' + (sid?' filled':'') + (selectedDeskId===d.id?' selected':'') + (selectedSwapId===d.id?' swap-select':'') + (!d.active?' inactive':'') + (sid && students.some(x=>x.id===sid && x.absent) ? ' absent' : '');
       el.style.left = d.x+'px'; el.style.top = d.y+'px';
       el.dataset.id = d.id;
       el.tabIndex = 0;
@@ -1008,7 +1029,7 @@
     pop.innerHTML = '';
 
     const head = document.createElement('div'); head.className = 'pop-head';
-    head.innerHTML = `<div class="pop-title">${escapeHtml(deskLabel(d.id))}<span class="pop-sub">${st ? escapeHtml(fullName(st)) : (d.active ? 'Vacía' : 'Desactivada')}</span></div>`;
+    head.innerHTML = `<div class="pop-title">${escapeHtml(deskLabel(d.id))}<span class="pop-sub">${st ? escapeHtml(fullName(st)) + (st.absent ? ' · falta hoy' : '') : (d.active ? 'Vacía' : 'Desactivada')}</span></div>`;
     const close = document.createElement('button'); close.className = 'pop-close'; close.innerHTML = icon('cerrar'); close.title = 'Cerrar (Esc)'; close.setAttribute('aria-label','Cerrar');
     close.onclick = deselectDesk;
     pop.appendChild(head); pop.appendChild(close);
@@ -1030,7 +1051,11 @@
         }
         renderRules(); renderDeskEditor();
       };
-      actions.appendChild(clearB); actions.appendChild(fixB);
+      const abB = document.createElement('button'); abB.className = 'secondary' + (st.absent ? ' on' : '');
+      abB.innerHTML = icon('falta') + (st.absent ? 'Falta hoy ✓' : 'Falta hoy');
+      abB.title = st.absent ? 'Marcar como presente' : 'Marcar que hoy no ha venido (conserva su sitio)';
+      abB.onclick = () => setAbsent(st.id, !st.absent);
+      actions.appendChild(clearB); actions.appendChild(fixB); actions.appendChild(abB);
       body.appendChild(actions);
     } else if(d.active){
       const lbl = document.createElement('div'); lbl.className = 'pop-label'; lbl.textContent = 'Sentar aquí a';
@@ -1038,7 +1063,7 @@
       const seatOf = {}; for(const k in seatAssignment) seatOf[seatAssignment[k]] = Number(k);
       const sorted = students.slice().sort((a,b) => (seatOf[a.id]?1:0) - (seatOf[b.id]?1:0) || fullName(a).localeCompare(fullName(b), 'es'));
       sel.innerHTML = '<option value="">— Elige alumno —</option>' + sorted.map(x =>
-        `<option value="${x.id}">${escapeHtml(fullName(x))}${seatOf[x.id] ? ' (ahora en ' + escapeHtml(deskLabel(seatOf[x.id])) + ')' : ' (sin sitio)'}</option>`).join('');
+        `<option value="${x.id}">${escapeHtml(fullName(x))}${seatOf[x.id] ? ' (ahora en ' + escapeHtml(deskLabel(seatOf[x.id])) + ')' : ' (sin sitio)'}${x.absent ? ' · falta hoy' : ''}</option>`).join('');
       sel.onchange = () => { if(sel.value) seatStudentAt(Number(sel.value), d.id); };
       if(!students.length){ sel.disabled = true; sel.innerHTML = '<option>Añade alumnado primero</option>'; }
       body.appendChild(lbl); body.appendChild(sel);
@@ -1136,7 +1161,8 @@
       return true;
     });
     for(const k in seatAssignment) if(seatAssignment[k]===id) delete seatAssignment[k];
-    renderStudents(); renderRuleFields(); renderRules(); renderCanvas();
+    wheelPool = wheelPool.filter(s => s.id !== id);
+    renderStudents(); renderRuleFields(); renderRules(); renderCanvas(); renderDeskEditor();
   }
   // Nombre completo (siempre), para gestión y reglas donde hace falta identificar sin ambigüedad.
   function fullName(s){
@@ -1159,13 +1185,56 @@
   function renderStudents(){
     const list = $('studentList'); list.innerHTML = '';
     students.forEach(s => {
-      const li = document.createElement('li');
+      const li = document.createElement('li'); if(s.absent) li.className = 'is-absent';
       const span = document.createElement('span'); span.textContent = fullName(s);
-      const btn = document.createElement('button'); btn.className='danger'; btn.innerHTML=icon('cerrar'); btn.title='Eliminar'; btn.setAttribute('aria-label','Eliminar');
+      const actions = document.createElement('div'); actions.className = 'row-actions';
+      const ab = document.createElement('button'); ab.className = 'absent-btn' + (s.absent ? ' on' : '');
+      ab.textContent = s.absent ? 'Falta hoy' : 'Falta';
+      ab.title = s.absent ? 'Marcar como presente' : 'Marcar que hoy no ha venido';
+      ab.setAttribute('aria-pressed', s.absent ? 'true' : 'false');
+      ab.onclick = () => setAbsent(s.id, !s.absent);
+      const btn = document.createElement('button'); btn.className='danger'; btn.innerHTML=icon('cerrar'); btn.title='Eliminar del alumnado'; btn.setAttribute('aria-label','Eliminar del alumnado');
       btn.onclick = () => removeStudent(s.id);
-      li.appendChild(span); li.appendChild(btn);
+      actions.appendChild(ab); actions.appendChild(btn);
+      li.appendChild(span); li.appendChild(actions);
       list.appendChild(li);
     });
+    renderAbsentSummary();
+  }
+
+  // ---------- Faltan hoy ----------
+  function setAbsent(id, val){
+    const s = students.find(x => x.id === id); if(!s) return;
+    s.absent = !!val;
+    absentDate = todayStr();
+    if(s.absent) wheelPool = wheelPool.filter(x => x.id !== id);
+    else if(!wheelPool.some(x => x.id === id) && $('pickerHistory').children.length === 0) wheelPool.push(s);
+    renderStudents(); renderCanvas(); renderDeskEditor();
+    if(typeof renderWheel === 'function') renderWheel();
+  }
+  function renderAbsentSummary(){
+    const n = students.filter(s => s.absent).length;
+    const badge = $('absentBadge');
+    badge.hidden = n === 0; badge.textContent = n;
+    const el = $('absentSummary'); el.innerHTML = '';
+    if(!students.length) return;
+    const txt = document.createElement('span');
+    txt.innerHTML = n ? `Faltan hoy <strong>${n}</strong> · presentes <strong>${students.length - n}</strong>` : `Están todos (<strong>${students.length}</strong>)`;
+    el.appendChild(txt);
+    if(n){
+      const all = document.createElement('button'); all.className = 'secondary'; all.textContent = 'Todos presentes';
+      all.onclick = () => { students.forEach(s => { if(s.absent) setAbsent(s.id, false); }); };
+      el.appendChild(all);
+    }
+  }
+  // Las ausencias son "de hoy": si la sesión trae ausencias de otro día, se borran.
+  function expireAbsences(){
+    if(absentDate && absentDate !== todayStr() && students.some(s => s.absent)){
+      students.forEach(s => { s.absent = false; });
+      absentDate = '';
+      return true;
+    }
+    return false;
   }
   $('addStudentBtn').onclick = () => { addStudent($('studentInput').value, $('studentLastInput').value); $('studentInput').value=''; $('studentLastInput').value=''; };
   $('studentInput').addEventListener('keydown', e => { if(e.key==='Enter'){ addStudent($('studentInput').value, $('studentLastInput').value); $('studentInput').value=''; $('studentLastInput').value=''; } });
@@ -1179,7 +1248,7 @@
     });
     $('bulkInput').value='';
   };
-  $('clearStudentsBtn').onclick = () => { students=[]; rules=[]; seatAssignment={}; renderStudents(); renderRuleFields(); renderRules(); renderCanvas(); };
+  $('clearStudentsBtn').onclick = () => { students=[]; rules=[]; seatAssignment={}; wheelPool=[]; renderStudents(); renderRuleFields(); renderRules(); renderCanvas(); };
   $('showLastNames').addEventListener('change', () => { renderCanvas(); if(typeof renderWheel==='function') renderWheel(); });
 
   // ---------- Rules ----------
@@ -1272,14 +1341,24 @@
     return false;
   }
 
+  // Reglas que afectan solo a alumnado presente (las de alguien que falta hoy se ignoran al barajar y en grupos)
+  function rulesForPresent(){
+    const here = new Set(presentStudents().map(s => s.id));
+    return rules.filter(r => (r.type==='apart'||r.type==='together') ? (here.has(r.studentA) && here.has(r.studentB)) : here.has(r.studentId));
+  }
+
   function shuffle(){
     const activeDesks = desks.filter(d=>d.active);
+    const present = presentStudents();
+    const absentN = students.length - present.length;
     if(students.length===0){ setStatus('Añade alumnado antes de barajar.', true); return; }
+    if(present.length===0){ setStatus('Están todos marcados como ausentes.', true); return; }
     if(activeDesks.length===0){ setStatus('Diseña el aula colocando al menos una mesa activa.', true); return; }
-    if(students.length > activeDesks.length){ setStatus(`Hay ${students.length} alumnos pero solo ${activeDesks.length} mesas activas.`, true); return; }
+    if(present.length > activeDesks.length){ setStatus(`Hay ${present.length} alumnos presentes pero solo ${activeDesks.length} mesas activas.`, true); return; }
 
     const fixedMap={}, tagRulesMap={}, togetherGraph={}, apartPairs=[];
-    rules.forEach(r => {
+    const activeRules = rulesForPresent();
+    activeRules.forEach(r => {
       if(r.type==='fixed') fixedMap[r.studentId]=r.deskId;
       if(r.type==='tag'){ (tagRulesMap[r.studentId]=tagRulesMap[r.studentId]||[]).push(r.tagId); }
       if(r.type==='together'){
@@ -1290,7 +1369,7 @@
     });
 
     const visited=new Set(); const components=[];
-    students.forEach(s => {
+    present.forEach(s => {
       if(visited.has(s.id)) return;
       const comp=[]; const queue=[s.id]; visited.add(s.id);
       while(queue.length){
@@ -1339,7 +1418,7 @@
         seatAssignment={};
         for(const sid in assignment) seatAssignment[assignment[sid]]=parseInt(sid);
         renderCanvas();
-        setStatus(`Plano generado (intento ${attempt+1}). Reglas aplicadas: ${rules.length}.`, false);
+        setStatus(`Plano generado con ${present.length} alumnos${absentN ? ` (faltan ${absentN})` : ''}. Reglas aplicadas: ${activeRules.length}.`, false);
         return;
       }
     }
@@ -1350,7 +1429,7 @@
   // ---------- Groups ----------
   function buildTogetherApart(){
     const togetherGraph={}, apartPairs=[];
-    rules.forEach(r => {
+    rulesForPresent().forEach(r => {
       if(r.type==='together'){
         (togetherGraph[r.studentA]=togetherGraph[r.studentA]||new Set()).add(r.studentB);
         (togetherGraph[r.studentB]=togetherGraph[r.studentB]||new Set()).add(r.studentA);
@@ -1362,7 +1441,7 @@
 
   function togetherComponents(togetherGraph){
     const visited=new Set(); const components=[];
-    students.forEach(s => {
+    presentStudents().forEach(s => {
       if(visited.has(s.id)) return;
       const comp=[]; const queue=[s.id]; visited.add(s.id);
       while(queue.length){
@@ -1381,7 +1460,7 @@
   function generateGroupsRespectingRules(size){
     const { togetherGraph, apartPairs } = buildTogetherApart();
     const components = togetherComponents(togetherGraph);
-    const binsCount = Math.max(1, Math.ceil(students.length / size));
+    const binsCount = Math.max(1, Math.ceil(presentStudents().length / size));
     const MAX_ATTEMPTS = 300;
 
     for(let attempt=0; attempt<MAX_ATTEMPTS; attempt++){
@@ -1412,17 +1491,19 @@
 
   $('genGroupsBtn').onclick = () => {
     const size = Math.max(2, parseInt($('groupSize').value) || 2);
-    if(students.length === 0){ $('groupsStatus').textContent = 'Añade alumnado primero.'; $('groupsStatus').className='status error'; return; }
+    const present = presentStudents();
+    const absentNote = students.length > present.length ? ` (faltan ${students.length - present.length})` : '';
+    if(present.length === 0){ $('groupsStatus').textContent = students.length ? 'Están todos marcados como ausentes.' : 'Añade alumnado primero.'; $('groupsStatus').className='status error'; return; }
     const respectRules = $('groupsRespectRules').checked;
 
     if(respectRules){
       const result = generateGroupsRespectingRules(size);
       if(result.ok){
         renderGroups(result.groups);
-        $('groupsStatus').textContent = `${result.groups.length} grupos generados respetando ${rules.filter(r=>r.type==='together'||r.type==='apart').length} regla(s) de juntar/separar.`;
+        $('groupsStatus').textContent = `${result.groups.length} grupos generados${absentNote} respetando ${rulesForPresent().filter(r=>r.type==='together'||r.type==='apart').length} regla(s) de juntar/separar.`;
         $('groupsStatus').className = 'status';
       } else {
-        const pool = shuffleArray(students.slice());
+        const pool = shuffleArray(present.slice());
         const groups = [];
         for(let i=0; i<pool.length; i+=size){ groups.push(pool.slice(i, i+size)); }
         renderGroups(groups);
@@ -1432,11 +1513,11 @@
       return;
     }
 
-    const pool = shuffleArray(students.slice());
+    const pool = shuffleArray(present.slice());
     const groups = [];
     for(let i=0; i<pool.length; i+=size){ groups.push(pool.slice(i, i+size)); }
     renderGroups(groups);
-    $('groupsStatus').textContent = `${groups.length} grupos generados a partir de ${students.length} alumnos.`;
+    $('groupsStatus').textContent = `${groups.length} grupos generados a partir de ${present.length} alumnos${absentNote}.`;
     $('groupsStatus').className = 'status';
   };
   function renderGroups(groups){
@@ -1460,9 +1541,9 @@
   let spinning = false;
 
   function ensureWheelPool(){
-    if(wheelPool.length === 0 && students.length > 0){ wheelPool = students.slice(); }
+    if(wheelPool.length === 0 && presentStudents().length > 0){ wheelPool = presentStudents(); }
   }
-  $('resetWheelBtn').onclick = () => { wheelPool = students.slice(); wheelRotation = 0; renderWheel(); $('pickerStatus').textContent = 'Ruleta restablecida con todo el alumnado.'; $('pickerStatus').className='status'; };
+  $('resetWheelBtn').onclick = () => { wheelPool = presentStudents(); wheelRotation = 0; renderWheel(); $('pickerStatus').textContent = students.length > wheelPool.length ? `Ruleta restablecida con los ${wheelPool.length} alumnos presentes.` : 'Ruleta restablecida con todo el alumnado.'; $('pickerStatus').className='status'; };
 
   function polarPoint(cx, cy, r, angleDeg){
     const rad = (angleDeg * Math.PI) / 180;
@@ -1669,6 +1750,7 @@
       layoutLocked: $('layoutLocked').checked,
       desks, tags, students, rules, seatAssignment,
       wheelPool: wheelPool.map(s=>s.id),
+      absentDate,
       nextDeskId, nextTagId, nextStudentId, nextRuleId
     };
   }
@@ -1733,7 +1815,7 @@
     const deskIds = new Set(out.desks.map(d => d.id));
 
     out.students = uniqueById(data.students, LIMITS.students)
-      .map(st => ({ id: st.id, name: str(st.name, 60), lastName: str(st.lastName, 60) }))
+      .map(st => ({ id: st.id, name: str(st.name, 60), lastName: str(st.lastName, 60), absent: st.absent === true }))
       .filter(st => st.name);
     const studentIds = new Set(out.students.map(st => st.id));
 
@@ -1749,6 +1831,7 @@
 
     out.seatAssignment = sanitizeSeats(data.seatAssignment, deskIds, studentIds);
 
+    out.absentDate = (typeof data.absentDate === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(data.absentDate)) ? data.absentDate : '';
     out.wheelPool = Array.isArray(data.wheelPool) ? [...new Set(data.wheelPool.filter(id => studentIds.has(id)))] : null;
 
     const maxId = arr => Math.max(0, ...arr.map(x => x.id)) + 1;
@@ -1787,7 +1870,9 @@
     nextTagId = data.nextTagId;
     nextStudentId = data.nextStudentId;
     nextRuleId = data.nextRuleId;
-    wheelPool = data.wheelPool ? data.wheelPool.map(id => students.find(s=>s.id===id)) : students.slice();
+    absentDate = data.absentDate;
+    const expired = expireAbsences();
+    wheelPool = (data.wheelPool ? data.wheelPool.map(id => students.find(s=>s.id===id)) : students.slice()).filter(s => !s.absent);
     wheelRotation = 0;
     selectedDeskId = null; selectedSwapId = null;
     undoStack = []; redoStack = []; updateUndoButtons();
@@ -1803,8 +1888,9 @@
     const c = $('canvas'); c.style.width = canvasW+'px'; c.style.height = canvasH+'px';
     c.classList.toggle('locked', layoutLocked);
 
-    renderTags(); renderStudents(); renderRuleFields(); renderRules(); renderCanvas(); renderDeskEditor(); renderWheel();
     $('pickerHistory').innerHTML = '';
+    renderTags(); renderStudents(); renderRuleFields(); renderRules(); renderCanvas(); renderDeskEditor(); renderWheel();
+    return { expired };
   }
 
   $('importBtn').onclick = () => { $('importFile').click(); };
@@ -1817,9 +1903,9 @@
     reader.onload = () => {
       try{
         const data = JSON.parse(reader.result);
-        applyState(data);
+        const res = applyState(data);
         setStatus('Sesión importada correctamente.', false);
-        setImportExportStatus(`Sesión importada: ${students.length} alumnos, ${desks.length} mesas, ${rules.length} reglas.`, false);
+        setImportExportStatus(`Sesión importada: ${students.length} alumnos, ${desks.length} mesas, ${rules.length} reglas.${res.expired ? ' Se han borrado las ausencias de otro día.' : ''}`, false);
       } catch(err){
         setImportExportStatus('El archivo no es una sesión válida de esta herramienta.', true);
       }
