@@ -173,7 +173,16 @@
     box-shadow: inset 0 0 18px rgba(0,0,0,0.35), 0 6px 14px rgba(0,0,0,0.3);
     font-family: var(--font-display); font-size:0.78rem; letter-spacing: 4px; text-transform: uppercase;
   }
-  .toolbar{ display:flex; gap:10px; align-items:center; margin-bottom:14px; flex-wrap:wrap; }
+  .toolbar{ display:flex; gap:10px 16px; align-items:center; justify-content:space-between; margin-bottom:14px; flex-wrap:wrap; }
+  .toolbar > .status{ flex: 1 1 320px; }
+  .toolbar-actions{ display:flex; gap:6px; flex-wrap:wrap; align-items:center; }
+  .toolbar-actions button{ padding:6px 11px; }
+  .toast{ position:fixed; left:50%; bottom:24px; transform:translateX(-50%); z-index:1300; display:flex; align-items:center; gap:14px; max-width: calc(100vw - 32px);
+    background: var(--bg-deep); color: var(--chalk); border:1px solid var(--line-strong); border-radius: 12px; padding:10px 12px 10px 16px; box-shadow: 0 12px 30px rgba(0,0,0,0.4); font-size:0.88rem; animation: toastIn .2s ease; }
+  .toast[hidden]{ display:none; }
+  .toast-action{ background:transparent; color: var(--ochre); border:1px solid rgba(232,171,92,0.45); padding:5px 10px; font-size:0.82rem; }
+  .toast-action:hover{ background: var(--ochre-soft); filter:none; }
+  @keyframes toastIn{ from{ opacity:0; transform: translate(-50%, 8px); } to{ opacity:1; transform: translate(-50%, 0); } }
   .toolbar .status{ display:flex; gap:8px; align-items:flex-start; }
   .toolbar .status::before{ content:'i'; flex-shrink:0; width:18px; height:18px; border-radius:50%; display:grid; place-items:center; font-size:0.7rem; font-weight:700; font-style:italic; font-family: var(--font-display); color: var(--bg); background: var(--faint); margin-top:1px; }
   .status{ font-size:0.82rem; color: var(--muted); }
@@ -302,6 +311,8 @@
   <symbol id="i-pausa" viewBox="0 0 24 24"><rect x="6.8" y="5.5" width="3.6" height="13" rx="1.2" fill="currentColor" stroke="none"/><rect x="13.6" y="5.5" width="3.6" height="13" rx="1.2" fill="currentColor" stroke="none"/></symbol>
   <symbol id="i-reiniciar" viewBox="0 0 24 24"><path d="M4.6 12a7.4 7.4 0 1 0 2.2-5.3L4.6 9"/><path d="M4.6 4.5V9h4.5"/></symbol>
   <symbol id="i-cerrar" viewBox="0 0 24 24"><path d="m6.5 6.5 11 11M17.5 6.5l-11 11"/></symbol>
+  <symbol id="i-deshacer" viewBox="0 0 24 24"><path d="M9 14.5 4.5 10 9 5.5"/><path d="M4.8 10H14a5.5 5.5 0 0 1 0 11h-3"/></symbol>
+  <symbol id="i-rehacer" viewBox="0 0 24 24"><path d="m15 14.5 4.5-4.5L15 5.5"/><path d="M19.2 10H10a5.5 5.5 0 0 0 0 11h3"/></symbol>
   <symbol id="i-mas" viewBox="0 0 24 24"><path d="M12 5.5v13M5.5 12h13"/></symbol>
 </svg>
 
@@ -526,7 +537,13 @@
 
   <div class="stage">
     <div id="stageAula" class="stage-card">
-      <div class="toolbar"><span class="status">Arrastra las mesas para colocarlas (si el diseño no está bloqueado). Para mover a un alumno: clic en su mesa y luego en la mesa destino. La ✕ vacía la mesa.</span></div>
+      <div class="toolbar">
+        <span class="status" id="stageHint">Arrastra las mesas para colocarlas (si el diseño no está bloqueado). Para mover a un alumno: clic en su mesa y luego en la mesa destino. La ✕ vacía la mesa.</span>
+        <div class="toolbar-actions">
+          <button class="secondary" id="undoBtn" title="Deshacer (Ctrl+Z)" disabled><svg class="icon" aria-hidden="true"><use href="#i-deshacer"/></svg>Deshacer</button>
+          <button class="secondary" id="redoBtn" title="Rehacer (Ctrl+Y)" disabled aria-label="Rehacer"><svg class="icon" aria-hidden="true"><use href="#i-rehacer"/></svg></button>
+        </div>
+      </div>
       <div class="canvas-scroll">
         <div class="room">
           <div class="board">Pizarra</div>
@@ -565,6 +582,8 @@
     </div>
   </div>
 </div>
+
+<div id="toast" class="toast" role="status" aria-live="polite" hidden><span id="toastMsg"></span><button class="toast-action" id="toastUndo">Deshacer</button></div>
 
 <div id="pickerModal" class="modal-overlay" style="display:none;">
   <div class="modal-box">
@@ -694,12 +713,14 @@
 
   $('addSingleBtn').onclick = () => {
     if(layoutLocked) return;
+    pushUndo('añadir mesa');
     const p = nextCascadePos();
     addDeskAt(p.x, p.y);
     renderCanvas();
   };
   $('addPairBtn').onclick = () => {
     if(layoutLocked) return;
+    pushUndo('añadir pareja de mesas');
     const p = nextCascadePos();
     addDeskAt(p.x, p.y);
     addDeskAt(p.x + DESK_SIZE, p.y);
@@ -707,6 +728,7 @@
   };
   $('addQuadBtn').onclick = () => {
     if(layoutLocked) return;
+    pushUndo('añadir grupo de 4');
     const p = nextCascadePos();
     addDeskAt(p.x, p.y);
     addDeskAt(p.x + DESK_SIZE, p.y);
@@ -732,6 +754,65 @@
     return Math.sqrt(dx*dx + dy*dy) <= ADJ_THRESHOLD;
   }
 
+  // ---------- Deshacer / rehacer ----------
+  // Guarda una foto del plano (asientos + mesas) antes de cada cambio. No incluye alumnado ni reglas,
+  // para que deshacer un barajado nunca borre, por ejemplo, una regla creada después.
+  let undoStack = [], redoStack = [];
+  const UNDO_LIMIT = 50;
+  function snapshot(){ return { seats: { ...seatAssignment }, desks: desks.map(d => ({ ...d, tags: d.tags.slice() })) }; }
+  function pushUndo(label, snap){
+    undoStack.push({ label, snap: snap || snapshot() });
+    if(undoStack.length > UNDO_LIMIT) undoStack.shift();
+    redoStack = [];
+    updateUndoButtons();
+  }
+  function restoreSnapshot(snap){
+    desks = snap.desks.map(d => ({ ...d, tags: d.tags.filter(tid => tags.some(t => t.id === tid)) }));
+    const deskIds = new Set(desks.map(d => d.id));
+    seatAssignment = sanitizeSeats(snap.seats, deskIds, new Set(students.map(st => st.id)));
+    rules = rules.filter(r => r.type !== 'fixed' || deskIds.has(r.deskId));
+    selectedDeskId = null; selectedSwapId = null;
+    renderCanvas(); renderDeskEditor(); renderRuleFields(); renderRules();
+  }
+  function undo(){
+    const entry = undoStack.pop(); if(!entry) return;
+    redoStack.push({ label: entry.label, snap: snapshot() });
+    restoreSnapshot(entry.snap); updateUndoButtons();
+    toast(`Deshecho: ${entry.label}`);
+  }
+  function redo(){
+    const entry = redoStack.pop(); if(!entry) return;
+    undoStack.push({ label: entry.label, snap: snapshot() });
+    restoreSnapshot(entry.snap); updateUndoButtons();
+    toast(`Rehecho: ${entry.label}`);
+  }
+  function updateUndoButtons(){
+    const u = undoStack[undoStack.length-1], r = redoStack[redoStack.length-1];
+    $('undoBtn').disabled = !u; $('undoBtn').title = u ? `Deshacer: ${u.label} (Ctrl+Z)` : 'Nada que deshacer';
+    $('redoBtn').disabled = !r; $('redoBtn').title = r ? `Rehacer: ${r.label} (Ctrl+Y)` : 'Nada que rehacer';
+  }
+  $('undoBtn').onclick = undo;
+  $('redoBtn').onclick = redo;
+  document.addEventListener('keydown', (e) => {
+    const t = e.target, typing = t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.tagName === 'SELECT' || t.isContentEditable);
+    if(typing || !(e.ctrlKey || e.metaKey) || e.altKey) return;
+    const k = e.key.toLowerCase();
+    if(k === 'z' && !e.shiftKey){ e.preventDefault(); undo(); }
+    else if(k === 'y' || (k === 'z' && e.shiftKey)){ e.preventDefault(); redo(); }
+  });
+
+  // Aviso breve en la parte inferior, con acceso directo a "Deshacer"
+  let toastTimer = null;
+  function toast(msg, opts){
+    const el = $('toast');
+    $('toastMsg').textContent = msg;
+    $('toastUndo').hidden = !(opts && opts.undo);
+    el.hidden = false;
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => { el.hidden = true; }, (opts && opts.undo) ? 6000 : 2500);
+  }
+  $('toastUndo').onclick = () => { $('toast').hidden = true; undo(); };
+
   // Mueve/intercambia alumnado entre mesas. Primer clic en una mesa ocupada marca el origen;
   // un segundo clic en cualquier otra mesa (vacía u ocupada) completa el movimiento/intercambio.
   // Funciona siempre, incluso con el diseño del aula bloqueado.
@@ -740,19 +821,22 @@
     else if(selectedSwapId === deskId){ selectedSwapId = null; }
     else {
       const a = seatAssignment[selectedSwapId], b = seatAssignment[deskId];
+      const sa = students.find(x=>x.id===a), sb = students.find(x=>x.id===b);
+      pushUndo(b ? 'intercambiar alumnos' : 'mover alumno');
       if(a) seatAssignment[deskId]=a; else delete seatAssignment[deskId];
       if(b) seatAssignment[selectedSwapId]=b; else delete seatAssignment[selectedSwapId];
       selectedSwapId = null;
+      if(sa) toast(sb ? `${displayName(sa)} y ${displayName(sb)} intercambiados` : `${displayName(sa)} movido a ${deskLabel(deskId)}`, { undo: true });
     }
     renderCanvas();
   }
 
   function attachDrag(el, d){
-    let startX, startY, origX, origY, moved, pointerId;
+    let startX, startY, origX, origY, moved, pointerId, snapBefore;
     el.addEventListener('pointerdown', (e) => {
       e.preventDefault();
       startX = e.clientX; startY = e.clientY;
-      origX = d.x; origY = d.y; moved = false;
+      origX = d.x; origY = d.y; moved = false; snapBefore = null;
       pointerId = e.pointerId;
       el.setPointerCapture(pointerId);
       if(!layoutLocked) el.classList.add('dragging');
@@ -761,7 +845,7 @@
       if(startX === undefined) return;
       if(layoutLocked) return; // diseño bloqueado: nunca reposicionar, siempre se tratará como clic
       const dx = e.clientX - startX, dy = e.clientY - startY;
-      if(Math.abs(dx) > 3 || Math.abs(dy) > 3) moved = true;
+      if(!moved && (Math.abs(dx) > 3 || Math.abs(dy) > 3)){ moved = true; pushUndo('mover mesa', snapshot()); }
       if(moved){
         let nx = origX + dx, ny = origY + dy;
         nx = Math.max(0, Math.min(canvasW - DESK_SIZE, nx));
@@ -813,7 +897,7 @@
         const clearBtn = document.createElement('button');
         clearBtn.className = 'clearx'; clearBtn.innerHTML = icon('cerrar'); clearBtn.title='Vaciar esta mesa'; clearBtn.setAttribute('aria-label','Vaciar esta mesa');
         clearBtn.addEventListener('pointerdown', e => e.stopPropagation());
-        clearBtn.onclick = (e) => { e.stopPropagation(); delete seatAssignment[d.id]; if(selectedSwapId===d.id) selectedSwapId=null; renderCanvas(); };
+        clearBtn.onclick = (e) => { e.stopPropagation(); pushUndo('vaciar mesa'); delete seatAssignment[d.id]; if(selectedSwapId===d.id) selectedSwapId=null; renderCanvas(); };
         el.appendChild(clearBtn);
       }
       attachDrag(el, d);
@@ -835,7 +919,7 @@
     activeLabel.className = 'tag-toggle';
     activeLabel.innerHTML = `<input type="checkbox" id="deskActiveToggle" ${d.active?'checked':''}> Permitir alumnos aquí`;
     editor.appendChild(activeLabel);
-    activeLabel.querySelector('input').onchange = (e) => { d.active = e.target.checked; if(!d.active){ delete seatAssignment[d.id]; } renderCanvas(); };
+    activeLabel.querySelector('input').onchange = (e) => { pushUndo(e.target.checked ? 'activar mesa' : 'desactivar mesa'); d.active = e.target.checked; if(!d.active){ delete seatAssignment[d.id]; } renderCanvas(); };
 
     const tagsTitle = document.createElement('p'); tagsTitle.className='hint'; tagsTitle.style.marginTop='10px'; tagsTitle.textContent = tags.length? 'Etiquetas:' : 'Crea etiquetas arriba para poder asignarlas.';
     editor.appendChild(tagsTitle);
@@ -845,6 +929,7 @@
       label.className = 'tag-toggle';
       label.innerHTML = `<input type="checkbox" ${checked?'checked':''}> <span class="tag-swatch" style="background:${escapeHtml(t.color)}"></span> ${escapeHtml(t.name)}`;
       label.querySelector('input').onchange = (e) => {
+        pushUndo('cambiar etiquetas de mesa');
         if(e.target.checked){ if(!d.tags.includes(t.id)) d.tags.push(t.id); }
         else { d.tags = d.tags.filter(x=>x!==t.id); }
         renderCanvas();
@@ -854,6 +939,7 @@
     const removeBtn = document.createElement('button');
     removeBtn.className='danger'; removeBtn.textContent='Eliminar mesa'; removeBtn.style.marginTop='10px';
     removeBtn.onclick = () => {
+      pushUndo('eliminar mesa');
       desks = desks.filter(x=>x.id!==d.id);
       rules = rules.filter(r => !(r.type==='fixed' && r.deskId===d.id));
       delete seatAssignment[d.id];
@@ -1091,6 +1177,7 @@
       }
 
       if(ok){
+        pushUndo('barajar');
         seatAssignment={};
         for(const sid in assignment) seatAssignment[assignment[sid]]=parseInt(sid);
         renderCanvas();
@@ -1545,6 +1632,7 @@
     wheelPool = data.wheelPool ? data.wheelPool.map(id => students.find(s=>s.id===id)) : students.slice();
     wheelRotation = 0;
     selectedDeskId = null; selectedSwapId = null;
+    undoStack = []; redoStack = []; updateUndoButtons();
 
     $('canvasW').value = canvasW; $('canvasH').value = canvasH;
     $('className').value = className;
