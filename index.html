@@ -207,6 +207,17 @@
   .toolbar > .status{ flex: 1 1 320px; }
   .toolbar-actions{ display:flex; gap:6px; flex-wrap:wrap; align-items:center; }
   .toolbar-actions button{ padding:6px 11px; }
+  .segmented{ display:inline-flex; align-items:center; gap:2px; padding:3px; border-radius: 9px; background: var(--surface); border:1px solid var(--line); margin-right:4px; }
+  .segmented .seg-label{ font-size:0.72rem; color: var(--faint); padding: 0 6px 0 6px; font-weight:600; letter-spacing:0.5px; text-transform:uppercase; }
+  .toolbar-actions .segmented button{ background:transparent; color: var(--muted); border:none; padding:5px 10px; border-radius:6px; font-weight:500; }
+  .toolbar-actions .segmented button:hover{ color: var(--chalk); background: var(--surface-2); filter:none; }
+  .toolbar-actions .segmented button.active{ background: var(--ochre); color:#2a1d10; font-weight:600; }
+  /* Vista del profesor: el aula gira 180° (pizarra abajo) y cada mesa vuelve a girar para que el texto se lea derecho */
+  .room.teacher-view{ flex-direction: column-reverse; }
+  .room.teacher-view .board{ margin: 18px 0 0; border-bottom-width:6px; border-top-width:9px; }
+  .room.teacher-view .freecanvas{ rotate: 180deg; }
+  .room.teacher-view .fdesk{ rotate: 180deg; }
+
   .toast{ position:fixed; left:50%; bottom:24px; transform:translateX(-50%); z-index:1300; display:flex; align-items:center; gap:14px; max-width: calc(100vw - 32px);
     background: var(--bg-deep); color: var(--chalk); border:1px solid var(--line-strong); border-radius: 12px; padding:10px 12px 10px 16px; box-shadow: 0 12px 30px rgba(0,0,0,0.4); font-size:0.88rem; animation: toastIn .2s ease; }
   .toast.error{ border-color: rgba(227,130,111,0.7); box-shadow: 0 12px 30px rgba(0,0,0,0.4), inset 4px 0 0 var(--danger); }
@@ -607,6 +618,11 @@
       <div class="toolbar">
         <span class="status" id="stageHint"></span>
         <div class="toolbar-actions">
+          <div class="segmented" role="group" aria-label="Vista del plano">
+            <span class="seg-label">Vista</span>
+            <button id="viewStudentsBtn" class="active" aria-pressed="true" title="Pizarra arriba: el aula vista desde el alumnado">Alumnado</button>
+            <button id="viewTeacherBtn" aria-pressed="false" title="Pizarra abajo: el aula vista desde la mesa del profesor">Profesor</button>
+          </div>
           <button class="secondary" id="undoBtn" title="Deshacer (Ctrl+Z)" disabled><svg class="icon" aria-hidden="true"><use href="#i-deshacer"/></svg>Deshacer</button>
           <button class="secondary" id="redoBtn" title="Rehacer (Ctrl+Y)" disabled aria-label="Rehacer"><svg class="icon" aria-hidden="true"><use href="#i-rehacer"/></svg></button>
         </div>
@@ -932,7 +948,7 @@
   function attachDrag(el, d){
     let startX, startY, origX, origY, moved, mode, ghost, dropEl;
     const deskAt = (x, y) => { const t = document.elementFromPoint(x, y); return t ? t.closest('.fdesk') : null; };
-    const teacherFlip = () => (typeof viewMode !== 'undefined' && viewMode === 'teacher') ? -1 : 1;
+    const teacherFlip = () => viewMode === 'teacher' ? -1 : 1;
     el.addEventListener('pointerdown', (e) => {
       if(e.button !== 0) return;
       e.preventDefault();
@@ -1028,6 +1044,17 @@
     renderStageHint();
     renderPlanHistory();
   }
+
+  function setViewMode(mode){
+    viewMode = mode === 'teacher' ? 'teacher' : 'students';
+    document.querySelector('.room').classList.toggle('teacher-view', viewMode === 'teacher');
+    $('viewStudentsBtn').classList.toggle('active', viewMode === 'students');
+    $('viewTeacherBtn').classList.toggle('active', viewMode === 'teacher');
+    $('viewStudentsBtn').setAttribute('aria-pressed', viewMode === 'students');
+    $('viewTeacherBtn').setAttribute('aria-pressed', viewMode === 'teacher');
+  }
+  $('viewStudentsBtn').onclick = () => setViewMode('students');
+  $('viewTeacherBtn').onclick = () => setViewMode('teacher');
 
   function renderStageHint(){
     const hint = $('stageHint'); if(!hint) return;
@@ -2037,7 +2064,7 @@
       desks, tags, students, rules, seatAssignment,
       wheelPool: wheelPool.map(s=>s.id),
       absentDate,
-      planHistory, nextPlanId,
+      planHistory, nextPlanId, viewMode,
       avoidRepeats: parseInt($('avoidRepeats').value) || 0,
       nextDeskId, nextTagId, nextStudentId, nextRuleId
     };
@@ -2126,6 +2153,7 @@
         pairs: (Array.isArray(h.pairs) ? h.pairs : []).filter(pr => Array.isArray(pr) && pr.length === 2 && studentIds.has(pr[0]) && studentIds.has(pr[1]) && pr[0] !== pr[1]).map(pr => pr[0] < pr[1] ? [pr[0], pr[1]] : [pr[1], pr[0]])
       }));
     out.nextPlanId = Math.max(isId(data.nextPlanId) ? data.nextPlanId : 1, Math.max(0, ...out.planHistory.map(h => h.id)) + 1);
+    out.viewMode = data.viewMode === 'teacher' ? 'teacher' : 'students';
     out.avoidRepeats = [0,1,2,3,5,99].includes(data.avoidRepeats) ? data.avoidRepeats : 3;
     out.absentDate = (typeof data.absentDate === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(data.absentDate)) ? data.absentDate : '';
     out.wheelPool = Array.isArray(data.wheelPool) ? [...new Set(data.wheelPool.filter(id => studentIds.has(id)))] : null;
@@ -2168,6 +2196,7 @@
     nextRuleId = data.nextRuleId;
     absentDate = data.absentDate;
     planHistory = data.planHistory; nextPlanId = data.nextPlanId;
+    setViewMode(data.viewMode);
     $('avoidRepeats').value = String(data.avoidRepeats);
     const expired = expireAbsences();
     wheelPool = (data.wheelPool ? data.wheelPool.map(id => students.find(s=>s.id===id)) : students.slice()).filter(s => !s.absent);
@@ -2280,8 +2309,8 @@
     // Título
     ctx.fillStyle = '#000000'; ctx.font = `700 20px ${FONT}`;
     ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
-    ctx.fillText(planTitle(), w/2, M + 28);
-    if(teacher){ ctx.font = `12px ${FONT}`; ctx.fillStyle = '#555555'; ctx.fillText('Vista desde la mesa del profesor', w/2, M + 43); }
+    ctx.fillText(planTitle(), w/2, M + (teacher ? 20 : 28));
+    if(teacher){ ctx.font = `12px ${FONT}`; ctx.fillStyle = '#555555'; ctx.fillText('Vista desde la mesa del profesor', w/2, M + 37); }
 
     // Contorno del aula
     const boxL = M, boxT = M + titleH, boxW = w - M*2, boxH = h - M - boxT;
